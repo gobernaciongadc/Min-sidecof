@@ -1,0 +1,426 @@
+.titulo-gadc {
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+.text-formulario-101 {
+    font-size: 1rem;
+}
+
+.cuadro-form {
+    border-right: 1px solid #dee2e6;
+    border-left: 1px solid #dee2e6;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.nro-text-form {
+    color: #dc3545;
+    font-size: 2rem;
+}
+
+.minerales {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.head-titulo {
+    font-weight: 500;
+    font-size: 1rem;
+
+}
+
+.custom-borde {
+    border: 1px solid #e2e2e2ee;
+    border-radius: 10px;
+}
+
+.bg-observaciones {
+    background-color: #744ac4;
+}
+
+
+.loader {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    background: linear-gradient(0deg, rgba(117, 74, 196, 0.226) 33%, #744ac4 100%);
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+
+}
+
+.otros-datos {
+    font-weight: bold;
+}
+
+.otros-datos span {
+    font-weight: lighter;
+}
+
+.btn-emitidos {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-separar {
+    margin-top: 5px;
+}
+
+@media (min-width: 1305px) {
+    .btn-emitidos {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .btn-separar {
+        margin-top: 0px;
+        margin-left: 5px;
+    }
+}
+
+
+.btn-staging {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-separar_staging {
+    margin-top: 5px;
+}
+
+
+@media (min-width: 1304px) {
+
+    .btn-staging {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .btn-separar_staging {
+        margin-top: 0px;
+        margin-left: 5px;
+    }
+}
+
+.bg_gestion_busqueda {
+    background-color: #1e5991a9;
+}
+
+.disabled-link {
+    pointer-events: none;
+    color: rgba(128, 128, 128, 0.425);
+    /* Cambiar el color a gris u otro que indique que está deshabilitado */
+    text-decoration: none;
+    background-color: #d7d8da70;
+    border: none;
+    /* O quitar subrayado, si es necesario */
+}
+
+.error {
+    width: 100%;
+    margin-top: .25rem;
+    font-size: .875em;
+    color: var(--bs-form-invalid-color)
+}
+
+.bg_gestion_actividad {
+    background-color: #1e917ea9;
+}
+
+
+/* Municipios */
+.opciones-btn-municipio {
+    display: flex;
+    flex-direction: column;
+}
+
+.opcion-btn-municipio__margen {
+    margin-top: 5px;
+}
+
+.color-titulo {
+    color: #012970;
+}
+
+
+@media (min-width: 934px) {
+
+    /* Municipios */
+    .opciones-btn-municipio {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .opcion-btn-municipio__margen {
+        margin-left: 5px;
+    }
+}
+
+/* Metalicos */
+.opciones-btn-metal {
+    display: flex;
+    flex-direction: column;
+}
+
+.opcion-btn-metal__margen {
+    margin-top: 5px;
+}
+
+@media (min-width: 934px) {
+
+    /* Municipios */
+    .opciones-btn-metal {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .opcion-btn-metal__margen {
+        margin-left: 5px;
+    }
+}
+
+
+/* NO Metalicos */
+.opciones-btn-nometal {
+    display: flex;
+    flex-direction: column;
+}
+
+.opcion-btn-nometal__margen {
+    margin-top: 5px;
+}
+
+@media (min-width: 934px) {
+
+    /* Municipios */
+    .opciones-btn-nometal {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .opcion-btn-nometal__margen {
+        margin-left: 5px;
+    }
+}
+
+/* Empresa */
+.opciones-btn-empresa {
+    display: flex;
+    flex-direction: column;
+}
+
+.opcion-btn-empresa__margen {
+    margin-top: 5px;
+}
+
+@media (min-width: 934px) {
+
+    /* Municipios */
+    .opciones-btn-empresa {
+        flex-direction: row;
+    }
+
+    .opcion-btn-empresa__margen {
+        margin-left: 5px;
+    }
+}
+
+
+/* Comercializadoras RUIM */
+.opciones-btn-ruim {
+    display: flex;
+    flex-direction: column;
+}
+
+.opciones-btn-ruim__margen {
+    margin-top: 5px;
+}
+
+@media (min-width: 934px) {
+
+    /* Municipios */
+    .opciones-btn-ruim {
+        flex-direction: row;
+    }
+
+    .opciones-btn-ruim__margen {
+        margin-left: 5px;
+    }
+}
+
+.bg-gestion-datos-index {
+    background-color: #1e92ff;
+}
+
+.bg-gestion-datos-create {
+    background-color: #1e3799
+}
+
+.bg-gestion-datos-edit {
+    background-color: #eccc68;
+}
+
+.bg-gestion-datos-show {
+    background-color: #0abde3;
+}
+
+.bg-card-login {
+    background-color: #852860
+}
+
+/* Gestion Usuarios */
+.opciones-btn-usuarios {
+    display: flex;
+    flex-direction: column;
+}
+
+.opciones-btn-usuarios__margen {
+    margin-top: 5px;
+}
+
+@media (min-width: 934px) {
+
+    /* Municipios */
+    .opciones-btn-usuarios {
+        flex-direction: row;
+    }
+
+    .opciones-btn-usuarios__margen {
+        margin-left: 5px;
+    }
+}
+
+.font-select {
+    font-size: 14px;
+    /* Tamaño de letra del select */
+}
+
+.font-select option {
+    font-size: 14px;
+    /* Tamaño de letra de las opciones */
+}
+
+.text-tipo {
+    font-size: small;
+}
+
+.nro_form_text {
+    font-size: 1rem;
+}
+
+.nro-lote {
+    margin-top: 35px;
+}
+
+.nro-quimico {
+    margin-top: 35px;
+}
+
+.bg_gestion_busqueda_ubicacion {
+    background-color: #1e915ba9;
+}
+
+.seguimiento__titulo {
+    margin-top: 40px;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 0px;
+}
+
+.seguimiento__nroformulario {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.datos-form {
+    margin-bottom: 7px;
+}
+
+.asterisco {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.changes-password {
+    border: 1px solid rgba(169, 169, 169, 0.192);
+    border-radius: 5px;
+}
+
+/* Reportes */
+.bg-reportes {
+    background-color: #833471;
+}
+
+.borde-consulta {
+
+    width: 100%;
+    padding: .375rem .75rem;
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out
+}
+
+.reporte-logo {
+    display: flex;
+    justify-content: space-evenly
+}
+
+.reporte-logo__img {
+    width: 200px;
+    display: none;
+}
+
+.reporte-logo__titulo {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1rem;
+    align-self: center;
+}
+
+@media (min-width: 1400px) {
+    .reporte-logo__img {
+        display: block;
+    }
+}
+
+.select2-container .select2-selection--single {
+    height: 37px !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #444;
+    line-height: 34px !important;
+}
+
+.borde-all {
+    padding: .375rem .75rem;
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out
+}
+
+.bg-externo {
+    background-color: #70a1ff;
+}
+
+.bg-interno {
+    background-color: #3742fa;
+}

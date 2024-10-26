@@ -1,0 +1,23 @@
+/* Acelerando las animaciones */
+.fast {
+    -webkit-animation-duration: 0.3s;
+    animation-duration: 0.3s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both
+}
+
+.dataTables_filter {
+    text-align: end !important;
+    margin-bottom: 20px !important;
+}
+
+.pagination {
+    float: right;
+}
+
+@media (max-width: 1475px) {
+    .table-responsive--custom {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
