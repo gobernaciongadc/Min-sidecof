@@ -10,3 +10,5 @@ php artisan storage:link
 2.- Version PHP 8.1
 3.- Version Laravel 10.28.0
 4.- Version de postgres 15
+
+Es importante
