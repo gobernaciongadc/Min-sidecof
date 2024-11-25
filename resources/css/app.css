@@ -424,3 +424,7 @@
 .bg-interno {
     background-color: #3742fa;
 }
+
+a {
+    text-decoration: none !important;
+}
