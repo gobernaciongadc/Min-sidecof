@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property $ruim
  * @property $reg_partida
  * @property $tipo_min_metalico
+ * @property $presentacion
  * @property $nro_lote
  * @property $tipo_min_nometalico
  * @property $cert_analisis_quimico
@@ -23,14 +24,18 @@ use Illuminate\Database\Eloquent\Model;
  * @property $peso_neto_kg
  * @property $tara_kg
  * @property $hum_merma
+ * @property $merma
  * @property $municipio
  * @property $origen_destino_comercializadora
  * @property $alicuota
+ * @property $aduana
+ * @property $comprador
  * @property $transporte
  * @property $declarcion_jurada
  * @property $fecha_emision
  * @property $fecha_valides
  * @property $observaciones
+ * @property $senarecom
  * @property $comercio
  * @property $estado
  * @property $users_id
@@ -239,6 +244,7 @@ class Formulario extends Model
 		'reg_partida',
 		'tipo_min_metalico',
 		'nro_lote',
+		'presentacion',
 		'tipo_min_nometalico',
 		'cert_analisis_quimico',
 		'unidad',
@@ -246,11 +252,14 @@ class Formulario extends Model
 		'peso_neto_kg',
 		'tara_kg',
 		'hum_merma',
+		'merma',
 		'codigo',
 		'municipio',
 		'origen',
 		'destino',
 		'comercializadora',
+		'aduana',
+		'comprador',
 		'alicuota',
 		'transporte',
 		'chofer',
@@ -259,6 +268,7 @@ class Formulario extends Model
 		'fecha_emision',
 		'fecha_valides',
 		'observaciones',
+		'senarecom',
 		'comercio',
 		'estado',
 		'staging',

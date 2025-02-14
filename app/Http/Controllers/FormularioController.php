@@ -46,7 +46,6 @@ class FormularioController extends Controller
      */
     public function create()
     {
-
         $mensaje = null;
 
         $alta = null;
@@ -118,6 +117,88 @@ class FormularioController extends Controller
         return view('dashboard/formulario.create', compact('formulario', 'metales', 'nometales', 'municipios', 'cantStaging', 'tipo', 'empresa', 'mensaje', 'alta', 'comercios'));
     }
 
+
+    // Se agrego recientemente
+    public function createTipos($opcion)
+    {
+
+
+        $mensaje = null;
+
+        $alta = null;
+
+        if ($opcion == 'interno') {
+            $comercios = 'Interno';
+        } else {
+            $comercios = 'Externo';
+        }
+
+        // Pasando varias variables por un arreglo asociativo
+        $formulario = new Formulario();
+        $metales = Metalico::all();
+        $nometales = Nometalico::all();
+        $municipios = Municipio::all();
+
+        $user = Auth::user(); // Accede al usuario autenticado
+
+        $alta = $user->estado;
+
+        // Mensaje de caducidad a 5 dias del reistro del NIM
+        $user = User::find($user->id);
+        if ($user->name_bd == 'empresas') {
+            $empresa = Empresa::find($user->id_login);
+            $fechaCaducidad = $empresa->fecha_caducidad;
+
+            $fechaActual = new DateTime();
+
+            $fechaInicio = Carbon::parse($fechaActual);
+            $fechaFin = Carbon::parse($fechaCaducidad);
+
+            $diasRestantes = ceil($fechaInicio->diffInHours($fechaFin) / 24);
+
+            // Si la fecha de caducidad es anterior a la fecha actual, la diferencia será negativa
+            if ($fechaFin < $fechaInicio) {
+                $diasRestantes = -$diasRestantes;
+            }
+            if ($diasRestantes > 0 && $diasRestantes <= 5) {
+                // Mensaje para advertir que está a punto de vencer
+                $mensaje = "Su registro NIM ya esta a punto de vencer en: " . $diasRestantes . ' Dia(s), Regularice su registro a la brevedad posible.';
+            } elseif ($diasRestantes < 0) {
+                // Mensaje para indicar que ya venció
+                $mensaje = "Su registro NIM ya vencio, Regularice su registro a la brevedad posible.";
+            }
+        }
+
+        // Devuelve la cantidad de formularios puestos en escena
+        $staging = Formulario::where('staging', 0)
+            ->where('users_id', $user->id)
+            ->get(); // Devuelve un objeto
+        // Convierte el resultado en un array
+        $stagingArray = $staging->toArray();
+        $cantStaging = count($stagingArray);
+        $tipo = 'create';
+
+        if ($user->name_bd == 'empresas') {
+            $empresa = Empresa::where('id', $user->id_login)
+                ->first(); // Devuelve un objeto
+        } else {
+            // Carga datos al formulario solo si es RUIM / empresa/cooperativa
+            $empresa = json_decode(json_encode([
+                'nombres' => '',
+                'ruim' => '',
+                'nro_nit' => '',
+                'nro_nim' => '',
+                'municipio' => json_decode(json_encode([
+                    'codigo' => '',
+                    'municipio' => ''
+                ]))
+            ]));
+        }
+
+        return view('dashboard/formulario.create', compact('formulario', 'metales', 'nometales', 'municipios', 'cantStaging', 'tipo', 'empresa', 'mensaje', 'alta', 'comercios', 'opcion'));
+    }
+
+
     /**
      * Store a newly created resource in storage.
      *
@@ -127,10 +208,13 @@ class FormularioController extends Controller
     public function store(Request $request)
     {
 
+        dd($request->all());
+
         // 1.-Recoger los usuarios por post
         $params = (object) $request->all(); // Devuelve un obejto
         $paramsArray = $request->all(); // Devuelve un Array
 
+        // Comercio es para la validació de camposya
         if ($params->comercio == 'Interno') {
             // Comercio externo
             request()->validate(Formulario::$rules);

@@ -21,6 +21,7 @@ class RoleSeeder extends Seeder
         $role2 = Role::create(['name' => 'ruim']);
         $role3 = Role::create(['name' => 'funcionario']);
         $role4 = Role::create(['name' => 'seguimiento']);
+        $role5 = Role::create(['name' => 'rocmin']);  //  Aumento para el formulario 101
 
         $usuario1 = User::create(['name' => 'admin', 'id_login' => 1, 'name_bd' => 'funcionarios', 'roles_id' => '1', 'email' => 'admin', 'password' => '12345']);
         // $usuario2 = User::create(['name' => 'david', 'id_login' => 1, 'name_bd' => 'mineros', 'rol' => '2', 'email' => 'david@gmail.com', 'password' => '12345']);
@@ -33,7 +34,7 @@ class RoleSeeder extends Seeder
         // $usuario3->assignRole($role3);
         // $usuario4->assignRole($role3);
 
-        Permission::create(['name' => 'home'])->syncRoles([$role1, $role2, $role3, $role4]);
+        Permission::create(['name' => 'home'])->syncRoles([$role1, $role2, $role3, $role4, $role5]);
 
         Permission::create(['name' => 'admin.municipios.index'])->syncRoles([$role1, $role3]);
         Permission::create(['name' => 'admin.municipios.create'])->syncRoles([$role1, $role3]);
@@ -69,25 +70,27 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'admin.mineros.edit'])->syncRoles([$role1]);
         Permission::create(['name' => 'admin.mineros.destroy'])->syncRoles([$role1]);
         Permission::create(['name' => 'admin.verdocumentopdfminero'])->syncRoles([$role1]);
-        Permission::create(['name' => 'admin.formularios.index'])->syncRoles([$role1, $role2]);
-        Permission::create(['name' => 'admin.formularios.create'])->syncRoles([$role1, $role2]);
-        Permission::create(['name' => 'admin.formularios.edit'])->syncRoles([$role1, $role2]);
-        Permission::create(['name' => 'admin.formularios.destroy'])->syncRoles([$role1, $role2]);
-        Permission::create(['name' => 'admin.staging'])->syncRoles([$role1, $role2]);
-        Permission::create(['name' => 'admin.emitidos'])->syncRoles([$role1, $role2]);
-        Permission::create(['name' => 'admin.observacion'])->syncRoles([$role1, $role2]);
-        Permission::create(['name' => 'admin.buscarFormulario'])->syncRoles([$role1, $role2]);
-        Permission::create(['name' => 'admin.updateObservacion'])->syncRoles([$role1, $role2]);
-        Permission::create(['name' => 'admin.updated_staging'])->syncRoles([$role1, $role2]);
-        Permission::create(['name' => 'admin.prueba_pdf'])->syncRoles([$role1, $role2]);
-        Permission::create(['name' => 'admin.gestionbuscar'])->syncRoles([$role1, $role2, $role3, $role4]);
-        Permission::create(['name' => 'admin.datosgestionbuscar'])->syncRoles([$role1, $role2, $role3, $role4]);
+
+        Permission::create(['name' => 'admin.formularios.index'])->syncRoles([$role1, $role2, $role5]);
+        Permission::create(['name' => 'admin.formularios.create'])->syncRoles([$role1, $role2, $role5]);
+        Permission::create(['name' => 'admin.formularios.edit'])->syncRoles([$role1, $role2, $role5]);
+        Permission::create(['name' => 'admin.formularios.destroy'])->syncRoles([$role1, $role2, $role5]);
+
+        Permission::create(['name' => 'admin.staging'])->syncRoles([$role1, $role2, $role5]);
+        Permission::create(['name' => 'admin.emitidos'])->syncRoles([$role1, $role2, $role5]);
+        Permission::create(['name' => 'admin.observacion'])->syncRoles([$role1, $role2, $role5]);
+        Permission::create(['name' => 'admin.buscarFormulario'])->syncRoles([$role1, $role2, $role5]);
+        Permission::create(['name' => 'admin.updateObservacion'])->syncRoles([$role1, $role2, $role5]);
+        Permission::create(['name' => 'admin.updated_staging'])->syncRoles([$role1, $role2, $role5]);
+        Permission::create(['name' => 'admin.prueba_pdf'])->syncRoles([$role1, $role2, $role5]);
+        Permission::create(['name' => 'admin.gestionbuscar'])->syncRoles([$role1, $role2, $role5, $role3, $role4]);
+        Permission::create(['name' => 'admin.datosgestionbuscar'])->syncRoles([$role1, $role2, $role5, $role3, $role4]);
 
         Permission::create(['name' => 'admin.actividad'])->syncRoles([$role1, $role4]);
         Permission::create(['name' => 'admin.datosactividad'])->syncRoles([$role1, $role4]);
         Permission::create(['name' => 'admin.storeactividad'])->syncRoles([$role1, $role4]);
-        Permission::create(['name' => 'admin.gestionbuscarubicacion'])->syncRoles([$role1, $role2, $role3, $role4]);
-        Permission::create(['name' => 'admin.datosgestionbuscarubicacion'])->syncRoles([$role1, $role2, $role3, $role4]);
+        Permission::create(['name' => 'admin.gestionbuscarubicacion'])->syncRoles([$role1, $role2, $role5, $role3, $role4]);
+        Permission::create(['name' => 'admin.datosgestionbuscarubicacion'])->syncRoles([$role1, $role2, $role5, $role3, $role4]);
 
         Permission::create(['name' => 'admin.usuarios.index'])->syncRoles([$role1]);
         Permission::create(['name' => 'admin.usuarios.create'])->syncRoles([$role1]);
@@ -95,11 +98,11 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'admin.usuarios.destroy'])->syncRoles([$role1]);
         Permission::create(['name' => 'admin.indexusuarios'])->syncRoles([$role1]);
         Permission::create(['name' => 'admin.habilitaruser'])->syncRoles([$role1]);
-        Permission::create(['name' => 'admin.viewpassword'])->syncRoles([$role1, $role2, $role3]);
-        Permission::create(['name' => 'admin.changespassword'])->syncRoles([$role1, $role2, $role3]);
-        Permission::create(['name' => 'admin.gestionbuscarfinalizar'])->syncRoles([$role1, $role2, $role3]);
-        Permission::create(['name' => 'admin.datosgestionbuscarfinalizar'])->syncRoles([$role1, $role2, $role3]);
-        Permission::create(['name' => 'admin.finalizarformulario'])->syncRoles([$role1, $role2, $role3]);
+        Permission::create(['name' => 'admin.viewpassword'])->syncRoles([$role1, $role2, $role5, $role3]);
+        Permission::create(['name' => 'admin.changespassword'])->syncRoles([$role1, $role2, $role5, $role3]);
+        Permission::create(['name' => 'admin.gestionbuscarfinalizar'])->syncRoles([$role1, $role2, $role5, $role3]);
+        Permission::create(['name' => 'admin.datosgestionbuscarfinalizar'])->syncRoles([$role1, $role2, $role5, $role3]);
+        Permission::create(['name' => 'admin.finalizarformulario'])->syncRoles([$role1, $role2, $role5, $role3]);
 
         Permission::create(['name' => 'admin.cantidadformularios'])->syncRoles([$role1, $role3]);
         Permission::create(['name' => 'admin.resultadosreporteuno'])->syncRoles([$role1, $role3]);

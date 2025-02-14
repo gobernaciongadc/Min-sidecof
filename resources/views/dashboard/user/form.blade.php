@@ -10,7 +10,7 @@
                         <option value="" disabled selected>--Seleccione--</option>
                         <option value="Funcionario">Funcionario</option>
                         <option value="RUIM">RUIM</option>
-                        <!-- <option value="ROCMIN">ROCMIN</option> -->
+                        <option value="ROCMIN">ROCMIN</option>
                     </select>
                 </div>
                 <script>

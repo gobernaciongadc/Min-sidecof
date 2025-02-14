@@ -1,21 +1,26 @@
 ## Sistema de Regalias Mineras y Salida de Mineral Formulario 101
 
-1.- comandos para instalar
-composer install
-npm install
-php artisan key:generate
-php migrate --seed
+-- comandos para instalar
 
---Linux
-rm public/storage
-php artisan storage:link
+-   composer install
+-   npm install
+-   php artisan key:generate
+-   php migrate --seed
 
---Windows
-rmdir public\storage
-php artisan storage:link
+-- Linux
 
-php artisan optimize:clear
+-   rm public/storage
+-   php artisan storage:link
 
-2.- Version PHP 8.1
-3.- Version Laravel 10.28.0
-4.- Version de postgres 15
+-- Windows
+
+-   rmdir public\storage
+-   php artisan storage:link
+
+-- php artisan optimize:clear
+-- php artisan migrate:fresh
+-- php artisan db:seed
+
+-   Version PHP 8.1
+-   Version Laravel 10.28.0
+-   Version de postgres 15

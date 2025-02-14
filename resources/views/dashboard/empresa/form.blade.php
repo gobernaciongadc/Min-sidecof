@@ -123,7 +123,6 @@
 
 
 
-
                     <div class="col-12 mt-3">
                         <label for="nombres">Empresa y/o Cooperativa:</label>
                         <span class="text-danger">*</span>

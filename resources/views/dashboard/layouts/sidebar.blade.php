@@ -58,8 +58,14 @@
       <ul id="components-formulario" class="nav-content collapse " data-bs-parent="#sidebar-nav">
         @can('admin.formularios.create')
         <li>
-          <a href="{{route('admin.formularios.create')}}">
+          <!-- <a href="{{route('admin.formularios.create')}}">
             <i class="bi bi-circle"></i><span>Crear formulario 101</span>
+          </a> -->
+          <a href="{{route('admin.tipo.formularios.create',['opcion'=>'externo'])}}">
+            <i class="bi bi-circle"></i><span>Formulario 101 de Exportacion</span>
+          </a>
+          <a href="{{route('admin.tipo.formularios.create',['opcion'=>'interno'])}}">
+            <i class="bi bi-circle"></i><span>Formulario 101 de Transporte Interno</span>
           </a>
         </li>
         @endcan

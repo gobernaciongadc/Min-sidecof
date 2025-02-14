@@ -19,6 +19,31 @@
                         {!! $errors->first('nombres', '<div class="invalid-feedback">:message</div>') !!}
                     </div>
 
+                    <!-- NIT -->
+                    <div class="col-12 mt-3">
+                        {{ Form::label('nro_nit','NIT') }}
+                        <span class="text-danger">*</span>
+                        {{ Form::text('nro_nit', $minero->nro_nit, ['class' => 'form-control' . ($errors->has('nro_nit') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese un número de NIT']) }}
+                        {!! $errors->first('nro_nit', '<div class="invalid-feedback">:message</div>') !!}
+                    </div>
+
+                    <!-- NIM -->
+                    <div class="col-12 mt-3">
+                        {{ Form::label('nro_nim','NIM') }}
+                        <span class="text-danger">*</span>
+                        {{ Form::text('nro_nim', $minero->nro_nim, ['class' => 'form-control' . ($errors->has('nro_nim') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese un codigo de NIM']) }}
+                        {!! $errors->first('nro_nim', '<div class="invalid-feedback">:message</div>') !!}
+                    </div>
+
+                    <!-- Fecha-caducidad -->
+                    <div class="col-12 mt-3">
+                        {{ Form::label('fecha_caducidad','Fecha de caducidad de NIM') }}
+                        <span class="text-danger">*</span>
+                        {{ Form::input('datetime-local', 'fecha_caducidad', $minero->fecha_caducidad, ['class' => 'form-control' . ($errors->has('fecha_caducidad') ? ' is-invalid' : ''), 'id' => 'fecha_caducidad']) }}
+                        {!! $errors->first('fecha_caducidad', '<div class="invalid-feedback">:message</div>') !!}
+
+                    </div>
+
                     <div class="col-12 mt-3">
                         <div class="form-group">
                             {{ Form::label('fecha_inscripcion','Fecha de incripción') }}

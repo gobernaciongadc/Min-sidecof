@@ -51,6 +51,8 @@ class MineroController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
+
         // 1.-Recoger los usuarios por post
         $params = (object) $request->all(); // Devulve un obejto
         $paramsArray = $request->all(); // Devulve un Array
@@ -59,11 +61,8 @@ class MineroController extends Controller
 
         // Obtiene el usuario autenticado
         $user = Auth::user(); // Accede al usuario autenticado
-
         $paramsArray['users_id'] = $user->id;
-
         $minero = Minero::create($paramsArray);
-
 
         // 6. Maneja la carga del archivo
         if ($request->hasFile('archivo_pdf')) {
@@ -80,8 +79,6 @@ class MineroController extends Controller
             $minero->archivo_pdf = $nombreArchivo;
             $minero->save();
         }
-
-
         return redirect()->route('admin.mineros.index')
             ->with('success', 'El comercializadora se creo correctamente.');
     }
@@ -123,7 +120,6 @@ class MineroController extends Controller
     {
         // print_r('<pre>' . $municipio . '</pre>');
         // die();
-
         $params = (object) $request->all(); // Devuelve un obejto
         $paramsArray = $request->all(); // Es un array
 
@@ -133,7 +129,6 @@ class MineroController extends Controller
         if ($minero['rocmin'] == $paramsArray['rocmin']) {
             unset($paramsArray['rocmin']);
         }
-
 
         if ($request->hasFile('nuevo_archivo_pdf')) {
             $nuevoArchivoPdf = $request->file('nuevo_archivo_pdf');
@@ -149,9 +144,7 @@ class MineroController extends Controller
             $paramsArray['archivo_pdf'] = $nombreArchivo;
         }
 
-
         $minero->update($paramsArray);
-
         return redirect()->route('admin.mineros.index')
             ->with('success', 'la comercializadora se modifico correctamente');
     }

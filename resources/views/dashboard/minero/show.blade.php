@@ -37,6 +37,20 @@
                                 <strong>Nombre y/o Razón social</strong>
                                 {{ $minero->nombres }}
                             </div>
+
+                            <div class="form-group mt-2">
+                                <strong>Nro. de NIT</strong>
+                                {{ $minero->nro_nit }}
+                            </div>
+                            <div class="form-group mt-2">
+                                <strong>Nro. de NIM</strong>
+                                {{ $minero->nro_nim }}
+                            </div>
+                            <div class="form-group mt-2">
+                                <strong>Fecha de Caducidad NIM</strong>
+                                {{ $minero->fecha_caducidad }}
+                            </div>
+
                             <div class="form-group mt-2">
                                 <strong>Fecha de inscripcion:</strong>
                                 {{ $minero->fecha_inscripcion }}

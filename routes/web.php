@@ -11,6 +11,7 @@ use App\Http\Controllers\ReportesController;
 use App\Http\Controllers\UbicacionController;
 use App\Http\Controllers\UserController;
 use App\Models\Empresa;
+use App\Models\Formulario;
 use App\Models\Minero;
 use App\Models\Ubicacion;
 use Illuminate\Support\Facades\Route;
@@ -63,6 +64,15 @@ Route::group(['middleware' => ['auth']], function () {
 
     /*************RUTAS FORMULARIOS********/
     Route::resource('dashboard/formulario', FormularioController::class)->names('admin.formularios');
+
+
+    Route::get('dashboard/formulario/opcion/{opcion}', [FormularioController::class, 'createTipos'])->name('admin.tipo.formularios.create');
+
+    // Externo
+    Route::resource('dashboard/externo', FormularioController::class)->names('admin.formularios');
+    // Interno
+    Route::resource('dashboard/interno', FormularioController::class)->names('admin.formularios');
+
     // Ruta personalizada para mostrar el perfil con un parámetro adicional
     Route::get('dashboard/formulario/{id}/{datos}', [FormularioController::class, 'show']);
 

@@ -26,7 +26,11 @@
                     <form method="POST" action="{{ route('admin.formularios.store') }}" role="form" enctype="multipart/form-data">
                         @csrf
 
-                        @include('dashboard/formulario.form')
+                        @if($opcion == 'interno')
+                        @include('dashboard/formulario.interno')
+                        @else
+                        @include('dashboard/formulario.externo')
+                        @endif
 
                     </form>
                     @else

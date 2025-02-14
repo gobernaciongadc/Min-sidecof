@@ -16,6 +16,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property $tipo_operacion
  * @property $lugar_operacion
  * @property $estado
+ * @property $nro_nit
+ * @property $nro_nim
+ * @property $fecha_caducidad
  * @property $users_id
  * @property $longitud
  * @property $latitud
@@ -36,6 +39,9 @@ class Minero extends Model
     'procedencia' => 'required|max:300',
     'telefono' => 'required|max:12,telefono|regex:/^[0-9]{1,12}$/',
     'estado' => 'required',
+    'nro_nit' => 'required',
+    'nro_nim' => 'required',
+    'fecha_caducidad' => 'required',
     'longitud' => 'required',
     'latitud' => 'required',
     'archivo_pdf' => 'nullable|mimes:pdf', // PDF y tamaño máximo de 30 MB 
@@ -48,7 +54,22 @@ class Minero extends Model
    *
    * @var array
    */
-  protected $fillable = ['rocmin', 'nombres', 'fecha_inscripcion', 'procedencia', 'telefono', 'estado', 'users_id', 'user_active', 'longitud', 'latitud', 'archivo_pdf'];
+  protected $fillable = [
+    'rocmin',
+    'nombres',
+    'fecha_inscripcion',
+    'procedencia',
+    'telefono',
+    'estado',
+    'nro_nit',
+    'nro_nim',
+    'fecha_caducidad',
+    'users_id',
+    'user_active',
+    'longitud',
+    'latitud',
+    'archivo_pdf'
+  ];
 
 
   /**

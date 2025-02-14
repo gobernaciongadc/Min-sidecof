@@ -212,30 +212,19 @@ class EmpresaController extends Controller
         // Encuentra el funcionario por su ID
         $empresa = Empresa::find($id);
 
-        $userAutencated = Auth::user(); // Accede al usuario autenticado
+        // Verifica si se encontró el funcionario
+        if ($empresa) {
+            // Actualiza el estado a "No habilitado"
+            $empresa->update(['estado' => 'No habilitado']);
 
-        $user = User::where('id_login', $id)
-            ->where('name_bd', 'empresas')
-            ->first();
-
-        if ($userAutencated->id != $user->id) {
-            // Verifica si se encontró el funcionario
-            if ($empresa) {
-                // Actualiza el estado a "No habilitado"
-                $empresa->update(['estado' => 'No habilitado']);
-
-                User::where('id_login', $id)
-                    ->where('name_bd', 'empresas')
-                    ->update(['estado' => 'No habilitado']);
-                return redirect()->route('admin.empresas.index')
-                    ->with('success', 'La empresa y/o cooperativa fue dado de baja correctamente');
-            } else {
-                return redirect()->route('admin.empresas.index')
-                    ->with('error', 'No se encontró este registro');
-            }
+            User::where('id_login', $id)
+                ->where('name_bd', 'empresas')
+                ->update(['estado' => 'No habilitado']);
+            return redirect()->route('admin.empresas.index')
+                ->with('success', 'La empresa y/o cooperativa fue dado de baja correctamente');
         } else {
             return redirect()->route('admin.empresas.index')
-                ->with('error', 'NO PUEDES DARTE DE BAJA ASI MISMO');
+                ->with('error', 'No se encontró este registro');
         }
     }
 

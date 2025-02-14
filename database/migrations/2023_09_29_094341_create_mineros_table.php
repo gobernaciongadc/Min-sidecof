@@ -16,6 +16,11 @@ return new class extends Migration
             $table->string('rocmin');
             $table->string('nombres');
             $table->dateTime('fecha_inscripcion');
+
+            $table->string('nro_nit');
+            $table->string('nro_nim');
+            $table->dateTime('fecha_caducidad');
+
             $table->string('procedencia');
             $table->string('telefono');
             $table->string('estado')->default('Habilitado');

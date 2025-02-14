@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('reg_partida')->nullable(); // 5
 
             $table->string('tipo_min_metalico')->nullable(); // 6
+            $table->string('presentacion')->nullable(); // 6
             $table->string('nro_lote')->nullable(); // 7
             $table->string('tipo_min_nometalico')->nullable(); // 8
             $table->string('cert_analisis_quimico')->nullable(); // 9
@@ -30,6 +31,8 @@ return new class extends Migration
             $table->string('peso_neto_kg')->nullable(); // 11
             $table->string('tara_kg')->nullable(); // 12
             $table->string('hum_merma')->nullable(); // 13
+            $table->string('merma')->nullable(); // 12
+            $table->string('ley')->nullable(); // 12
 
             $table->string('codigo');
 
@@ -37,7 +40,10 @@ return new class extends Migration
 
             $table->string('origen');
             $table->string('destino');
+            $table->string('comprador')->nullable();
             $table->string('comercializadora');
+            $table->string('aduana')->nullable();
+            $table->string('senarecom')->nullable();
 
             $table->string('alicuota'); // 16
             $table->string('transporte'); // 17
