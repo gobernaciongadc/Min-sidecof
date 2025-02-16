@@ -15,4 +15,9 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    server: {
+        https: true, // Activa HTTPS en el servidor de desarrollo
+        host: '0.0.0.0', // Permite acceso desde cualquier IP
+        port: 5173, // Puedes cambiarlo si lo necesitas
+    }
 });

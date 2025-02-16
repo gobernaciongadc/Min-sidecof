@@ -17,10 +17,14 @@
 -   rmdir public\storage
 -   php artisan storage:link
 
--- php artisan optimize:clear
+# Pasos para instalar en el servidor
+
 -- php artisan migrate:fresh
 -- php artisan db:seed
+-- php artisan optimize:clear
 
 -   Version PHP 8.1
 -   Version Laravel 10.28.0
 -   Version de postgres 15
+
+# Posibles configuraciones en consola para VITE
