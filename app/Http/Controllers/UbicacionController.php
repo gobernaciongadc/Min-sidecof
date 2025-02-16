@@ -141,6 +141,39 @@ class UbicacionController extends Controller
                 return response()->json($data, $data['code']);
                 break;
 
+            case 'mineros':
+                try {
+                    // Encuentra el formulario siempre encuentra (1) en la posision [0].
+                    $gestionBuscar = Formulario::with('user')
+                        ->where('nro_formulario', $params->gestion_buscar)
+                        ->Where('users_id', $user->id)
+                        ->get();
+
+                    if ($gestionBuscar->isEmpty()) {
+                        $destino = null;
+                    } else {
+                        // Consulta para extraer todos los registros de formulario
+                        $listaUbicaciones = Ubicacion::with('user')
+                            ->where('formularios_id',  $gestionBuscar[0]->nro_formulario)
+                            ->orderBy('id', 'asc')
+                            ->get();
+                    }
+                    $data = array(
+                        'code' => 200,
+                        'status' => 'success',
+                        'datos_gestion_buscar' => $gestionBuscar,
+                        'dato_adicional' => $listaUbicaciones
+                    );
+                } catch (Exception $e) {
+                    $data = array(
+                        'code' => 400,
+                        'status' => 'error',
+                        'error' => $e->getMessage(),
+                    );
+                }
+                return response()->json($data, $data['code']);
+                break;
+
             case 'funcionarios':
                 try {
                     $gestionBuscar = Formulario::with('user')

@@ -14,21 +14,22 @@
             <div class="card card-default">
                 <div class="card-header bg-warning d-flex justify-content-between">
                     <div class="float-left">
-                        <span class="card-title">{{ __('Modificar') }} Formulario</span>
+                        <span class="card-title text-uppercase">{{ __('Modificar') }} Formulario</span>
+                    </div>
+                    <div class="float-right">
+                        <a class="btn btn-primary btn-sm text-uppercase" href="{{ route('admin.staging') }}"> {{ __('Regresar') }} a puesto en escena</a>
                     </div>
 
                 </div>
                 <div class="card-body">
-                    <div class="d-flex justify-content-end mt-2">
-                        <a class="btn btn-primary text-uppercase" href="{{ route('admin.staging') }}"> {{ __('Regresar') }} a puesto en escena</a>
-                    </div>
+
                     @if($alta == 'Habilitado')
                     <form method="POST" action="{{ route('admin.formularios.update', $formulario->id) }}" role="form" enctype="multipart/form-data">
                         {{ method_field('PATCH') }}
                         @csrf
 
 
-                        @if($opcion == 'interno')
+                        @if($comercios == 'Interno')
                         @include('dashboard/formulario.interno')
                         @else
                         @include('dashboard/formulario.externo')

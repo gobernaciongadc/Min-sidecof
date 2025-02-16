@@ -58,14 +58,14 @@ class Formulario extends Model
 		'nro_nit' => 'required|max:15',
 		'ruim' => 'required|max:15',
 
-		'reg_partida' => 'nullable|max:15',
+		// 'reg_partida' => 'nullable|max:15',
 
 		// 'tipo_min_metalico' => 'required',
 		// 'nro_lote' => 'required',
 		'nro_lote' => 'nullable|max:15',
 		// 'tipo_min_nometalico' => 'required',
 
-		'cert_analisis_quimico' => 'nullable|max:15',
+		// 'cert_analisis_quimico' => 'nullable|max:15',
 
 		'peso_bruto_kg' => 'nullable|max:10',
 		'peso_neto_kg' => 'nullable|max:10',
@@ -79,7 +79,8 @@ class Formulario extends Model
 		'origen' => 'required|max:13',
 		'destino' => 'required|max:13',
 
-		'comercializadora' => 'required|max:16',
+		// 'comercializadora' => 'required|max:16',
+		'comprador' => 'required|max:35',
 
 		'alicuota' => 'required|max:30',
 		'transporte' => 'required',
@@ -192,14 +193,14 @@ class Formulario extends Model
 		'nro_nit' => 'required|max:15',
 		'ruim' => 'required|max:15',
 
-		'reg_partida' => 'nullable|max:15',
+		// 'reg_partida' => 'nullable|max:15',
 
 		// 'tipo_min_metalico' => 'required',
 		// 'nro_lote' => 'required',
 		'nro_lote' => 'nullable|max:15',
 		// 'tipo_min_nometalico' => 'required',
 
-		'cert_analisis_quimico' => 'nullable|max:15',
+		// 'cert_analisis_quimico' => 'nullable|max:15',
 
 		'peso_bruto_kg' => 'nullable|max:10',
 		'peso_neto_kg' => 'nullable|max:10',
@@ -213,7 +214,7 @@ class Formulario extends Model
 		'origen' => 'required|max:13',
 		'destino' => 'required|max:13',
 
-		'comercializadora' => 'required|max:16',
+		// 'comercializadora' => 'required|max:16',
 
 		'alicuota' => 'required|max:30',
 		'transporte' => 'required',
@@ -238,6 +239,7 @@ class Formulario extends Model
 	 * @var array
 	 */
 	protected $fillable = [
+		'users_id',
 		'nro_formulario',
 		'razon_social',
 		'nro_nim',

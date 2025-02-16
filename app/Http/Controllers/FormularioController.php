@@ -224,32 +224,35 @@ class FormularioController extends Controller
      */
     public function store(Request $request)
     {
+        // 1.- Recoger los datos del request
+        $paramsArray = $request->all();
 
-
-        // 1.-Recoger los usuarios por post
-        $params = (object) $request->all(); // Devuelve un obejto
-        $paramsArray = $request->all(); // Devuelve un Array
-
-
-        // Comercio es para la validació de camposya
-        if ($params->comercio == 'Interno') {
-            // Comercio externo
-            request()->validate(Formulario::$rules);
+        // 2.- Validación de comercio
+        if ($request->comercio == 'Interno') {
+            $request->validate(Formulario::$rules);
         } else {
-
-            request()->validate(Formulario::$rules_externo);
+            $request->validate(Formulario::$rules_externo);
         }
 
+        // 3.- Verificar si el usuario está autenticado
+        $user = Auth::user();
+        if (!$user) {
+            return redirect()->back()->with('error', 'Usuario no autenticado.');
+        }
 
-
-        $user = Auth::user(); // Accede al usuario autenticado
+        // 4.- Agregar el user_id
         $paramsArray['users_id'] = $user->id;
 
+        // 5.- Verificar que users_id está en el array antes de insertar
+        // dd($paramsArray); // <- Revisa si ahora aparece "users_id"
+
+        // 6.- Insertar en la base de datos
         $formulario = Formulario::create($paramsArray);
 
         return redirect()->route('admin.staging')
             ->with('success', 'El Formulario 101 se ha creado correctamente.');
     }
+
 
     /**
      * Display the specified resource.
@@ -280,6 +283,8 @@ class FormularioController extends Controller
 
         $opcion = $formulario->comercio;
         $comercios = $formulario->comercio;
+
+        // dd($opcion, $comercios);
 
         $metales = Metalico::all();
         $nometales = Nometalico::all();
@@ -569,6 +574,26 @@ class FormularioController extends Controller
                 return response()->json($data, $data['code']);
                 break;
 
+            case 'mineros':
+                try {
+                    $gestionBuscar = Formulario::where('nro_formulario', $params->gestion_buscar)
+                        ->Where('users_id', $user->id)
+                        ->get();
+                    $data = array(
+                        'code' => 200,
+                        'status' => 'success',
+                        'datos_gestion_buscar' => $gestionBuscar
+                    );
+                } catch (Exception $e) {
+                    $data = array(
+                        'code' => 400,
+                        'status' => 'error',
+                        'error' => $e->getMessage(),
+                    );
+                }
+                return response()->json($data, $data['code']);
+                break;
+
             case 'funcionarios':
 
                 try {
@@ -629,8 +654,27 @@ class FormularioController extends Controller
                 }
                 return response()->json($data, $data['code']);
                 break;
+            case 'empresas':
+                try {
+                    $gestionBuscar = Formulario::where('nro_formulario', $params->gestion_buscar)
+                        ->Where('users_id', $user->id)
+                        ->get();
+                    $data = array(
+                        'code' => 200,
+                        'status' => 'success',
+                        'datos_gestion_buscar' => $gestionBuscar
+                    );
+                } catch (Exception $e) {
+                    $data = array(
+                        'code' => 400,
+                        'status' => 'error',
+                        'error' => $e->getMessage(),
+                    );
+                }
+                return response()->json($data, $data['code']);
+                break;
 
-            case 'funcionarios':
+            case 'mineros':
 
                 try {
                     $gestionBuscar = Formulario::where('nro_formulario', $params->gestion_buscar)

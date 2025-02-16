@@ -1,3 +1,13 @@
+@if ($errors->any())
+<div class="alert alert-danger">
+    <strong>¡Error!</strong> Por favor, corrige los siguientes errores:<br><br>
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
 <div>
     <div class="card-body">
         <div class="row pt-3 pb-3">
@@ -24,93 +34,7 @@
         <P class="text-danger mt-2 text-uppercase">Tienes {{ $cantStaging }} formularios en escena para su emisión.</P>
         @endif
 
-        <!-- Al actualizar para externo -->
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                const comercioSelect = document.getElementById('comercio');
-                const comercializadora = document.getElementById('label-comercializadora');
-                const via_ferrea = document.getElementById('label-viaferrea');
-                const as_partida = document.getElementById('as-partida');
-                const as_lote = document.getElementById('as-lote');
-                const as_quimico = document.getElementById('as-quimico');
-                const as_bruto = document.getElementById('as-bruto');
-                const as_neto = document.getElementById('as-neto');
-                const as_tara = document.getElementById('as-tara');
-                const as_merma = document.getElementById('as-merma');
-
-                const unidad = document.getElementById('unidad');
-                console.log(unidad.value);
-
-                if (comercioSelect.value === 'Externo') {
-                    comercializadora.innerText = 'Comer/Comprador';
-                    via_ferrea.innerText = 'Otros';
-                    as_partida.innerText = '*';
-                    as_lote.innerText = '*';
-                    as_quimico.innerText = '*';
-                    as_bruto.innerText = '*';
-                    as_neto.innerText = '*';
-                    as_tara.innerText = '*';
-                    as_merma.innerText = '*';
-                }
-
-
-
-            });
-        </script>
-        <!-- FIN Al actualizar para externo -->
-
-        <!-- Comercio -->
-        @if($tipo=='create')
-        <!-- <div class="col-12 col-md-4 mb-2">
-            <div class="form-group">
-                {{ Form::label('comercio', 'SELECCIONAR UN TIPO DE COMERCIO',['class'=>'text-danger']) }}
-                <span class="text-danger">*</span>
-                {{ Form::select('comercio', ['Interno' => 'Interno', 'Externo' => 'Externo'], $formulario->comercio ?? 'Interno', ['class' => 'form-select' . ($errors->has('comercio') ? ' is-invalid' : ''), 'id' => 'comercio']) }}
-                {!! $errors->first('comercio', '<div class="invalid-feedback">:message</div>') !!}
-                <span id="error_comercio" class="invalid-feedback"></span>
-                </div>
-                </div> -->
-        {{ Form::select('comercio', ['Interno' => 'Interno', 'Externo' => 'Externo'], $formulario->comercio ?? 'Interno', ['class' => 'form-select d-none', 'id' => 'comercio']) }}
-        @else
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-
-                const comercioSelect = document.getElementById('comercio');
-                const comercializadora = document.getElementById('label-comercializadora');
-                const via_ferrea = document.getElementById('label-viaferrea');
-                const as_partida = document.getElementById('as-partida');
-                const as_lote = document.getElementById('as-lote');
-                const as_quimico = document.getElementById('as-quimico');
-                const as_bruto = document.getElementById('as-bruto');
-                const as_neto = document.getElementById('as-neto');
-                const as_tara = document.getElementById('as-tara');
-                const as_merma = document.getElementById('as-merma');
-
-                if (comercioSelect.value === 'Externo') {
-                    comercializadora.innerText = 'Comer/Comprador';
-                    via_ferrea.innerText = 'Otros';
-                    as_partida.innerText = '*';
-                    as_lote.innerText = '*';
-                    as_quimico.innerText = '*';
-                    as_bruto.innerText = '*';
-                    as_neto.innerText = '*';
-                    as_tara.innerText = '*';
-                    as_merma.innerText = '*';
-                }
-
-            });
-        </script>
-        <div class="col-12 col-md-4 mb-2">
-            <div class="form-group">
-                {{ Form::label('comercio', 'SELECCIONAR UN TIPO DE COMERCIO',['class'=>'text-danger']) }}
-                <span class="text-danger">*</span>
-                {{ Form::select('comercio', ['Interno' => 'Interno', 'Externo' => 'Externo'], $formulario->comercio ?? 'Interno', ['class' => 'form-select' . ($errors->has('comercio') ? ' is-invalid' : ''), 'id' => 'comercio','disabled' => 'disabled']) }}
-                {!! $errors->first('comercio', '<div class="invalid-feedback">:message</div>') !!}
-                <span id="error_comercio" class="invalid-feedback"></span>
-            </div>
-            {{ Form::hidden('comercio_edit', $formulario->comercio) }}
-        </div>
-        @endif
+        {{ Form::hidden('comercio', $comercios, ['id' => 'comercio']) }}
 
         <script>
             document.addEventListener('DOMContentLoaded', () => {
@@ -118,7 +42,6 @@
                 const bg_comercio = document.getElementById('bg-comercio');
                 const text_formularios = document.getElementById('text-formularios');
 
-                const comercioSelect = document.getElementById('comercio');
                 const fechaValidezInput = document.getElementById('fecha_valides');
                 // Cambios en el formulario
                 const comercializadora = document.getElementById('label-comercializadora');
@@ -154,13 +77,9 @@
                 const placa = document.getElementById('placa');
                 const observaciones = document.getElementById('observaciones');
 
-
-
                 // btn enviar
                 const btn_enviar = document.getElementById('enviar-button');
-
                 const p_externo = document.querySelector('.p-externo');
-
 
                 function limpiar() {
                     partida.value = '';
@@ -184,43 +103,6 @@
                     $('input[name="transporte"]').prop('checked', false);
                 }
 
-                comercioSelect.addEventListener('change', (event) => {
-                    // Aquí puedes agregar el código que se ejecutará cuando se seleccione una opción
-                    // Por ejemplo, puedes acceder al valor seleccionado con event.target.value
-                    console.log('Opción seleccionada:', event.target.value);
-
-                    limpiar();
-
-                    const comercio = event.target.value;
-                    fechaValidezInput.value = '';
-                    fechaEmisionInput.value = '';
-
-                    if (comercio === 'Interno') {
-                        comercializadora.innerText = 'Comercializadora';
-                        via_ferrea.innerText = 'Via ferrea';
-                        as_partida.innerText = '';
-                        as_lote.innerText = '';
-                        as_quimico.innerText = '';
-                        as_bruto.innerText = '';
-                        as_neto.innerText = '';
-                        as_tara.innerText = '';
-                        as_merma.innerText = '';
-
-                    } else {
-                        comercializadora.innerText = 'Comer/Comprador';
-                        via_ferrea.innerText = 'Otros';
-                        as_partida.innerText = '*';
-                        as_lote.innerText = '*';
-                        as_quimico.innerText = '*';
-                        as_bruto.innerText = '*';
-                        as_neto.innerText = '*';
-                        as_tara.innerText = '*';
-                        as_merma.innerText = '*';
-
-                    }
-
-                    // Puedes añadir más lógica o disparar eventos según lo que necesites hacer
-                });
 
             });
         </script>
@@ -268,9 +150,14 @@
 
                 const comercioSelect = document.getElementById('comercio');
 
+                console.log(comercio);
+
 
                 fechaEmisionInput.addEventListener('change', () => {
                     let fechaEmision = new Date(fechaEmisionInput.value);
+
+                    console.log(fechaEmision);
+
 
                     // Restar la diferencia horaria entre tu zona horaria y UTC
                     let zonaHorariaOffset = fechaEmision.getTimezoneOffset() * 60 * 1000;
