@@ -27,7 +27,12 @@
                         {{ method_field('PATCH') }}
                         @csrf
 
-                        @include('dashboard/formulario.form')
+
+                        @if($opcion == 'interno')
+                        @include('dashboard/formulario.interno')
+                        @else
+                        @include('dashboard/formulario.externo')
+                        @endif
 
                     </form>
                     @else

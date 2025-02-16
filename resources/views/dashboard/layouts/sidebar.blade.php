@@ -61,12 +61,25 @@
           <!-- <a href="{{route('admin.formularios.create')}}">
             <i class="bi bi-circle"></i><span>Crear formulario 101</span>
           </a> -->
-          <a href="{{route('admin.tipo.formularios.create',['opcion'=>'externo'])}}">
-            <i class="bi bi-circle"></i><span>Formulario 101 de Exportacion</span>
-          </a>
+
+          @php
+          $user = Auth::user();
+          $tipo = $user->name_bd;
+          @endphp
+
+          @if($tipo == 'empresas')
           <a href="{{route('admin.tipo.formularios.create',['opcion'=>'interno'])}}">
             <i class="bi bi-circle"></i><span>Formulario 101 de Transporte Interno</span>
           </a>
+          @endif
+
+          @if($tipo == 'mineros')
+          <a href="{{route('admin.tipo.formularios.create',['opcion'=>'externo'])}}">
+            <i class="bi bi-circle"></i><span>Formulario 101 de Exportacion</span>
+          </a>
+          @endif
+
+
         </li>
         @endcan
 
@@ -108,7 +121,7 @@
 
 
     <!-- Finalizar formulario 101 -->
-    @hasrole(['Super Admin','funcionario','ruim'])
+    @hasrole(['Super Admin','funcionario','ruim','rocmin'])
     <li class="nav-item">
       <a class="nav-link collapsed" data-bs-target="#components-finalizar" data-bs-toggle="collapse" href="#">
         <i class="bi bi-stop-circle"></i><span>Finalizar formulario</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -124,7 +137,7 @@
     @endhasrole
 
     <!-- Seguimiento formulario 101 -->
-    @hasrole(['Super Admin','funcionario','ruim','seguimiento'])
+    @hasrole(['Super Admin','funcionario','ruim','rocmin','seguimiento'])
     <li class="nav-item">
       <a class="nav-link collapsed" data-bs-target="#components-seguimiento" data-bs-toggle="collapse" href="#">
         <i class="bi bi-truck"></i><span>Seguimiento</span><i class="bi bi-chevron-down ms-auto"></i>

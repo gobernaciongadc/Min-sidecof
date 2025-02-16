@@ -49,297 +49,18 @@
                     <div class="row pt-2">
                         <div class="col-12 d-flex justify-content-center">
 
-                            <p class="text-center text-uppercase"><span class="titulo-gadc">Formulario 101</span> <br><span>Para el control fiscalización de la regalia minera y autorización de salida de mineral</span> </p>
+                            <p class="text-center text-uppercase"><span class="titulo-gadc">Formulario 101 de exportación</span></p>
                         </div>
                     </div>
 
-                    <!-- 1.- -->
-                    <div class="row pt-2 pb-2">
-                        <div class="col-12">
-                            <div class="form-group border p-3 ">
-                                <div class="row">
-                                    <div class="col-12 col-md-9">
-                                        <span class="titulo-gadc">1:</span>
-                                        <strong class="text-uppercase">Razon Social:</strong>
-                                        {{ $formulario->razon_social }}
-                                    </div>
-                                    <div class="col-12 col-md-3">
-                                        <strong class="text-uppercase">Nro. Formulario:</strong>
-                                        <span class=" text-danger nro_form_text">{{ $formulario->nro_formulario }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row pt-2 pb-2">
-                        <div class="col-12">
+                    <!-- Bloque nro.- de Formulario -->
+                    <div class="row justify-content-end">
+                        <div class="col-12 col-md-4">
                             <div class="form-group border p-3">
-                                <div class="row">
-                                    <!-- 2 -->
-                                    <div class="col-12 col-md-3">
-                                        <div class="form-group">
-                                            <span class="titulo-gadc">2:</span>
-                                            <strong class="text-uppercase">Nro. de NIM: </strong>
-                                            {{ $formulario->nro_nim }}
-                                        </div>
-                                    </div>
-                                    <!-- 3 -->
-                                    <div class="col-12 col-md-3">
-                                        <div class="form-group">
-                                            <span class="titulo-gadc">3:</span>
-                                            <strong class="text-uppercase">Número de nit:</strong>
-                                            {{ $formulario->nro_nit }}
-                                        </div>
-                                    </div>
-                                    <!-- 4 -->
-                                    <div class="col-12 col-md-3">
-                                        <div class="form-group">
-                                            <span class="titulo-gadc">4:</span>
-
-                                            <strong class="text-uppercase">Ruim:</strong>
-                                            {{ $formulario->ruim }}
-                                        </div>
-                                    </div>
-                                    <!-- 5 -->
-                                    <div class="col-12 col-md-3">
-                                        <div class="form-group">
-                                            <span class="titulo-gadc">5:</span>
-                                            <strong class="text-uppercase">Partida:</strong>
-                                            {{ $formulario->reg_partida }}
-                                        </div>
-                                    </div>
-                                </div>
+                                <strong class="">Nro. de Formulario:</strong>
+                                <span class=" text-danger nro_form_text">{{ $formulario->nro_formulario }}</span>
                             </div>
-                        </div>
-                    </div>
 
-
-                    <div class="row pt-2 pb-2">
-                        <div class="col-12">
-                            <div class="form-group border p-3">
-                                <div class="row">
-                                    <!-- 6 -->
-                                    <div class="col-12 col-md-9">
-                                        <div class="form-group">
-                                            <span class="titulo-gadc">6:</span>
-                                            <strong>MINERAL METÁLICO (Onza Troy-DM-%):</strong>
-                                            <span class="text-uppercase titulo-gadc"><br><span>TIPO:</span></span>
-                                            {{ $formulario->tipo_min_metalico }}
-                                        </div>
-                                    </div>
-                                    <!-- 7 -->
-                                    <div class="col-12 col-md-3">
-                                        <div class="form-group">
-                                            <span class="titulo-gadc">7:</span>
-                                            <strong class="text-uppercase">Nro. Lote:</strong>
-                                            {{ $formulario->nro_lote }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row pt-2 pb-2">
-                        <div class="col-12">
-                            <div class="form-group border p-3">
-                                <div class="row">
-                                    <!-- 8 -->
-                                    <div class="col-12 col-md-9">
-                                        <div class="form-group">
-                                            <span class="titulo-gadc">8:</span>
-                                            <strong>MINERAL NO METÁLICO (%):</strong>
-                                            <span class="text-uppercase titulo-gadc"><br><span>TIPO:</span></span>
-                                            {{ $formulario->tipo_min_nometalico }}
-
-                                        </div>
-                                    </div>
-                                    <!-- 9 -->
-                                    <div class="col-12 col-md-3">
-                                        <div class="form-group">
-                                            <span class="titulo-gadc">9:</span>
-                                            <strong class="text-uppercase">Cert. a. Químico:</strong>
-                                            {{ $formulario->cert_analisis_quimico }}
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                    <!-- BLOQUE -->
-                    <div class="row pt-2 pb-2">
-                        <div class="col-12">
-                            <div class="form-group border p-3">
-                                <div class="row">
-                                    <!-- 10 -->
-                                    <div class="col-12 col-md-3">
-                                        <div class="form-group">
-                                            <span class="titulo-gadc">10:</span>
-                                            <strong class="text-uppercase">PESO BRUTO <span style="text-transform: capitalize;">{{ $formulario->unidad }}</span> :</strong>
-                                            {{ $formulario->peso_bruto_kg}}
-
-                                        </div>
-                                    </div>
-                                    <!-- 11 -->
-                                    <div class="col-12 col-md-3">
-                                        <div class="form-group">
-                                            <span class="titulo-gadc">11:</span>
-                                            <strong class="text-uppercase">PESO NETO EN <span style="text-transform: capitalize;">{{ $formulario->unidad }}</span> :</strong>
-                                            {{ $formulario->peso_neto_kg}}
-                                        </div>
-                                    </div>
-                                    <!-- 12 -->
-                                    <div class="col-12 col-md-3">
-                                        <div class="form-group">
-                                            <span class="titulo-gadc">12:</span>
-                                            <strong class="text-uppercase">TARA <span style="text-transform: capitalize;">{{ $formulario->unidad }}</span> :</strong>
-                                            {{ $formulario->tara_kg}}
-                                        </div>
-                                    </div>
-                                    <!-- 13 -->
-                                    <div class="col-12 col-md-3">
-                                        <div class="form-group">
-                                            <span class="titulo-gadc">13:</span>
-                                            <strong class="text-uppercase">HUM. MERMA(%) ENV. (<span style="text-transform: capitalize;">{{ $formulario->unidad }}</span>) :</strong>
-                                            {{ $formulario->hum_merma}}
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- BLOQUE MUNICIPIO-->
-                    <div class="row pt-2 pb-2">
-                        <div class="col-12">
-                            <div class="form-group border p-3">
-                                <div class="row">
-                                    <!-- 14 -->
-                                    <div class="col-12 col-md-1">
-                                        <div class="form-group">
-                                            <span class="titulo-gadc">14:</span>
-                                            <strong class="text-uppercase">Codigo:</strong>
-                                            <p class="mb-0">{{ $formulario->codigo}}</p>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="col-12 col-md-2">
-                                        <div class="form-group">
-                                            <strong class="text-uppercase">Municipio productor:</strong>
-                                            <p class="mb-0">{{ $formulario->municipio}}</p>
-                                        </div>
-                                    </div>
-
-
-
-                                    <!-- 15 -->
-                                    <div class="col-12 col-md-2">
-                                        <div class="form-group">
-                                            <span class="titulo-gadc">15:</span>
-                                            <strong class="text-uppercase">Origen:</strong>
-                                            <p class="mb-0">{{ $formulario->origen}}</p>
-
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-2">
-                                        <div class="form-group">
-                                            <strong class="text-uppercase">Destino:</strong>
-                                            <p class="mb-0">{{ $formulario->destino}}</p>
-
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-3">
-                                        <div class="form-group">
-                                            <strong class="text-uppercase">Comercializadora
-                                                <span>
-                                                    @if($formulario->comercio=='Externo')
-                                                    /Comprador
-                                                    @endif
-                                                </span>:</strong>
-                                            <p class="mb-0">{{ $formulario->comercializadora}}</p>
-
-                                        </div>
-                                    </div>
-
-                                    <!-- 16 -->
-                                    <div class="col-12 col-md-2">
-                                        <div class="form-group">
-                                            <span class="titulo-gadc">16:</span>
-                                            <strong class="text-uppercase">Alicuota:</strong>
-                                            <p class="mb-0"> {{ $formulario->alicuota }}</p>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- BLOQUE-->
-                    <div class="row pt-2 pb-2">
-                        <div class="col-12">
-                            <div class="form-group border p-3">
-                                <div class="row">
-                                    <!-- 17 -->
-                                    <div class="col-12 col-md-4">
-                                        <div class="form-group">
-                                            <span class="titulo-gadc">17:</span>
-                                            <strong class="text-uppercase">Transporte:</strong>
-                                            @if($formulario->comercio=='Externo' && $formulario->transporte=='Via ferrea' )
-                                            Otros
-                                            @else
-                                            {{ $formulario->transporte}}
-                                            @endif
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 col-md-4">
-                                        <div class="form-group">
-                                            <strong class="text-uppercase">Chofer:</strong>
-                                            {{ $formulario->chofer}}
-
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 col-md-4">
-                                        <div class="form-group">
-                                            <strong class="text-uppercase">Placa:</strong>
-                                            {{ $formulario->placa}}
-
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- BLOQUE DECLARACION JURADA-->
-                    <div class="row pt-2 pb-2">
-                        <div class="col-12">
-                            <div class="form-group border p-3">
-                                <div class="row">
-
-                                    <!-- 18 -->
-                                    <div class="col-12 col-md-9">
-                                        <div class="form-group">
-                                            <span class="titulo-gadc">18:</span>
-                                            {{ Form::label('declarcion_jurada','DECLARACIÓN JURADA') }}
-                                            <P class="mt-3">El presente formulario constituye una Declaración Jurada y debe ser sellada en todas las trancas por el Organismo Operativo de Tránsito y puestos <br>de control que se encuentren en el fijado por el itenerario.</P>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                            </div>
                         </div>
                     </div>
 
@@ -349,18 +70,17 @@
                             <div class="form-group border p-3">
                                 <div class="row">
                                     <!-- 19 -->
-                                    <div class="col-12 col-md-3">
+                                    <div class="col-12 col-md-6">
                                         <div class="form-group">
-                                            <span class="titulo-gadc">19:</span>
                                             <strong class="text-uppercase">Fecha emisión:</strong>
                                             {{ $formulario->fecha_emision}}
                                         </div>
                                     </div>
 
                                     <!-- 19 -->
-                                    <div class="col-12 col-md-3">
+                                    <div class="col-12 col-md-6">
                                         <div class="form-group">
-                                            <strong class="text-uppercase">Validez fecha:</strong>
+                                            <strong class="text-uppercase">Validez de vencimiento:</strong>
                                             {{ $formulario->fecha_valides}}
                                         </div>
                                     </div>
@@ -369,20 +89,283 @@
                         </div>
                     </div>
 
+                    <!-- Bolque razon social -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group border p-3 text-uppercase">
+                                <strong>Razón social/Nombre Completo:</strong>
+                                <span class=" text-danger nro_form_text">{{ $formulario->razon_social }}</span>
+                            </div>
+                        </div>
+                    </div>
 
-                    <!-- BLOQUE OBSERVACIONES-->
+                    <!-- Bolque nim, nit y rocmin/ruim -->
+                    <div class="row pt-2 pb-2">
+                        <div class="col-12">
+                            <div class="form-group border p-3">
+                                <div class="row justify-content-between">
+                                    <!-- 2 -->
+                                    <div class="col-12 col-md-3">
+                                        <div class="form-group">
+                                            <strong class="text-uppercase">Nro. de NIM: </strong>
+                                            {{ $formulario->nro_nim }}
+                                        </div>
+                                    </div>
+                                    <!-- 3 -->
+                                    <div class="col-12 col-md-3">
+                                        <div class="form-group">
+                                            <strong class="text-uppercase">Número de nit:</strong>
+                                            {{ $formulario->nro_nit }}
+                                        </div>
+                                    </div>
+                                    <!-- 4 -->
+                                    <div class="col-12 col-md-3">
+                                        <div class="form-group">
+
+                                            @if($formulario->comercio=='Externo')
+                                            <strong class="text-uppercase">Rocmin:</strong>
+                                            @else
+                                            <strong class="text-uppercase">Ruim:</strong>
+                                            @endif
+
+                                            {{ $formulario->ruim }}
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-2 pb-2">
+                        <div class="col-12">
+                            <p class="text-uppercase">2. Datos del mineral y/o exportado</p>
+                        </div>
+                    </div>
+
+                    <!-- Bloque LOTE y TARA -->
                     <div class="row pt-2 pb-2">
                         <div class="col-12">
                             <div class="form-group border p-3">
                                 <div class="row">
 
-                                    <!-- 20 -->
-                                    <div class="col-12 col-md-8">
+                                    <div class="col-12 col-md-6">
                                         <div class="form-group">
-                                            <span class="titulo-gadc">20:</span>
-                                            <strong class="text-uppercase">Observaciones:</strong><span> Comercio {{ $formulario->comercio }} </span><br>
-                                            {{ $formulario->observaciones}}
+                                            <strong class="text-uppercase">Nro. Lote:</strong>
+                                            {{ $formulario->nro_lote }}
+                                        </div>
+                                    </div>
 
+
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <strong class="text-uppercase">TARA <span style="text-transform: capitalize;">({{ $formulario->unidad }})</span> :</strong>
+                                            {{ $formulario->tara_kg}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tipo de mineral y humedad -->
+                    <div class="row pt-2 pb-2">
+                        <div class="col-12">
+                            <div class="form-group border p-3">
+                                <div class="row">
+                                    <!-- 6 -->
+                                    <div class="col-12 col-md-9">
+                                        <div class="form-group">
+                                            <strong>TIPO DE MINERAL:</strong>
+                                            @if($formulario->tipo_min_metalico != null)
+                                            {{ $formulario->tipo_min_metalico }}
+                                            @endif
+                                            @if($formulario->tipo_min_nometalico != null)
+                                            {{ $formulario->tipo_min_nometalico }}
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <!-- 7 -->
+                                    <div class="col-12 col-md-3">
+                                        <div class="form-group">
+                                            <span class="titulo-gadc">7:</span>
+                                            <strong class="text-uppercase">HUMEDAD:</strong>
+                                            {{ $formulario->humedad }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bloque presentacion y  Merma -->
+                    <div class="row pt-2 pb-2">
+                        <div class="col-12">
+                            <div class="form-group border p-3">
+                                <div class="row">
+
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <strong class="text-uppercase">Presentación:</strong>
+                                            {{ $formulario->presentacion }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <strong class="text-uppercase">Merma:</strong>
+                                            {{ $formulario->merma }}
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BLOQUE ALICUOTA Y PESO NETO Y UNIDAD-->
+                    <div class="row pt-2 pb-2">
+                        <div class="col-12">
+                            <div class="form-group border p-3">
+                                <div class="row">
+
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <strong class="text-uppercase">Alicuota:</strong>
+                                            {{ $formulario->alicuota }}
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <strong class="text-uppercase">PESO NETO</strong>
+                                            {{ $formulario->peso_neto_kg}}&nbsp;&nbsp;
+                                            <strong class="text-uppercase">UNIDAD</strong>
+                                            {{ $formulario->unidad}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BLOQUE peso bruto y ley unidad-->
+                    <div class="row pt-2 pb-2">
+                        <div class="col-12">
+                            <div class="form-group border p-3">
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <strong class="text-uppercase">PESO Bruto</strong>
+                                            {{ $formulario->peso_bruto_kg}}&nbsp;&nbsp;
+                                            <strong class="text-uppercase">UNIDAD</strong>
+                                            {{ $formulario->unidad}}
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <strong class="text-uppercase">Ley:</strong>
+                                            {{ $formulario->ley }}
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row pt-2 pb-2">
+                        <div class="col-12">
+                            <p class="text-uppercase">3. Origen de mineral y/o metal</p>
+                        </div>
+                    </div>
+
+                    <!-- BLOQUE peso Municipo productor o metal-->
+                    <div class="row pt-2 pb-2">
+                        <div class="col-12">
+                            <div class="form-group border p-3">
+                                <div class="row">
+
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group text-uppercase">
+                                            <strong class="text-uppercase">Municipio productor:</strong>
+                                            {{ $formulario->municipio }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group text-uppercase">
+                                            <strong class="text-uppercase">Codigo Municipio:</strong>
+                                            {{ $formulario->codigo }}
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BLOQUE origen de la exportacion-->
+                    <div class="row pt-2 pb-2">
+                        <div class="col-12">
+                            <div class="form-group border p-3">
+                                <div class="row">
+
+                                    <div class="col-12">
+                                        <div class="form-group text-uppercase">
+                                            <strong class="text-uppercase">Origen de la exportación</strong>
+                                            {{ $formulario->origen}}
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row pt-2 pb-2">
+                        <div class="col-12">
+                            <p class="text-uppercase">4. Destino del mineral y/o metal</p>
+                        </div>
+                    </div>
+
+                    <!-- BLOQUE comprador y destino -->
+                    <div class="row pt-2 pb-2">
+                        <div class="col-12">
+                            <div class="form-group border p-3">
+                                <div class="row">
+
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group text-uppercase">
+                                            <strong class="text-uppercase">Comprador</strong>
+                                            {{ $formulario->comercializadora}}
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group text-uppercase">
+                                            <strong class="text-uppercase">Destino</strong>
+                                            {{ $formulario->destino}}
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BLOQUE aduana-->
+                    <div class="row pt-2 pb-2">
+                        <div class="col-12">
+                            <div class="form-group border p-3">
+                                <div class="row">
+
+                                    <div class="col-12">
+                                        <div class="form-group text-uppercase">
+                                            <strong class="text-uppercase">aduana</strong>
+                                            {{ $formulario->aduana}}
                                         </div>
                                     </div>
 
@@ -391,8 +374,111 @@
                             </div>
                         </div>
                     </div>
-                    <hr>
 
+                    <div class="row pt-2 pb-2">
+                        <div class="col-12">
+                            <p class="text-uppercase">5. MEDIO DE TRANSPORTE</p>
+                        </div>
+                    </div>
+
+                    <!-- BLOQUE TIPO TRANSPORTE y PLACA -->
+                    <div class="row pt-2 pb-2">
+                        <div class="col-12">
+                            <div class="form-group border p-3">
+                                <div class="row">
+
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group text-uppercase">
+                                            <strong class="text-uppercase">TIPO de transporte</strong>
+                                            @if($formulario->comercio=='Externo' && $formulario->transporte=='Via ferrea' )
+                                            Otros
+                                            @else
+                                            {{ $formulario->transporte}}
+                                            @endif
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group text-uppercase">
+                                            <strong class="text-uppercase">Placa</strong>
+                                            {{ $formulario->placa}}
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BLOQUE Conductor-->
+                    <div class="row pt-2 pb-2">
+                        <div class="col-12">
+                            <div class="form-group border p-3">
+                                <div class="row">
+
+                                    <div class="col-12">
+                                        <div class="form-group text-uppercase">
+                                            <strong class="text-uppercase">Conductor</strong>
+                                            {{ $formulario->chofer}}
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row pt-2 pb-2">
+                        <div class="col-12">
+                            <p class="text-uppercase">6. Otros</p>
+                        </div>
+                    </div>
+
+                    <!-- bloque  Número de tramite formulario m-03 senarecom -->
+                    <div class="row pt-2 pb-2">
+                        <div class="col-12">
+                            <div class="form-group border p-3">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group text-uppercase">
+                                            <strong class="text-uppercase">Número de tramite formulario m-03 senarecom </strong>
+                                            {{ $formulario->senarecom}}
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row pt-2 pb-2">
+                        <div class="col-12">
+                            <p class="text-uppercase">7. observaciones</p>
+                            <!-- bloque  Número de tramite formulario m-03 senarecom -->
+
+                            <div class="form-group border p-3">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group text-uppercase">
+                                            {{ $formulario->observaciones}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Declaracion -->
+                    <div class="row pt-2 pb-2">
+                        <div class="col-12">
+                            <P class="mt-3">1. El formulario 101 es el único documento habilitado para el transporte de minerales y/o metales, de aplicación obligatoria para los Operadores Mineros, Actores Productivos Mineros, conforme señala el articulo 7 del D.S. Nro. 2288 con caracter de declaración jurada.<br>
+                                2. El presente formulario constituye una declaración jurada, las caracteristicas y las cantidades indicadas en el formulario M-03 del SENARECOM, es de entera responsabilidad del exportador.</P>
+                        </div>
+                    </div>
+                    <hr>
                     <div class="row pt-2 pb-2">
                         <div class="col-12">
                             <div class="form-group border p-3">

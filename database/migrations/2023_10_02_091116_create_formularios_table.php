@@ -31,7 +31,10 @@ return new class extends Migration
             $table->string('peso_neto_kg')->nullable(); // 11
             $table->string('tara_kg')->nullable(); // 12
             $table->string('hum_merma')->nullable(); // 13
+
+            $table->string('humedad')->nullable(); // 13
             $table->string('merma')->nullable(); // 12
+
             $table->string('ley')->nullable(); // 12
 
             $table->string('codigo');
@@ -41,7 +44,7 @@ return new class extends Migration
             $table->string('origen');
             $table->string('destino');
             $table->string('comprador')->nullable();
-            $table->string('comercializadora');
+            $table->string('comercializadora')->nullable();
             $table->string('aduana')->nullable();
             $table->string('senarecom')->nullable();
 

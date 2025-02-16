@@ -1,3 +1,13 @@
+@if ($errors->any())
+<div class="alert alert-danger">
+    <strong>¡Error!</strong> Por favor, corrige los siguientes errores:<br><br>
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
 <div>
     <div class="card-body">
         <div class="row pt-3 pb-3">
@@ -62,171 +72,11 @@
         </script>
         <!-- FIN Al actualizar para externo -->
 
-        <!-- Comercio -->
-        @if($tipo=='create')
-        <!-- <div class="col-12 col-md-4 mb-2">
-            <div class="form-group">
-                {{ Form::label('comercio', 'SELECCIONAR UN TIPO DE COMERCIO',['class'=>'text-danger']) }}
-                <span class="text-danger">*</span>
-                {{ Form::select('comercio', ['Interno' => 'Interno', 'Externo' => 'Externo'], $formulario->comercio ?? 'Interno', ['class' => 'form-select' . ($errors->has('comercio') ? ' is-invalid' : ''), 'id' => 'comercio']) }}
-                {!! $errors->first('comercio', '<div class="invalid-feedback">:message</div>') !!}
-                <span id="error_comercio" class="invalid-feedback"></span>
-                </div>
-                </div> -->
-        {{ Form::select('comercio', ['Interno' => 'Interno', 'Externo' => 'Externo'], $formulario->comercio ?? 'Interno', ['class' => 'form-select d-none', 'id' => 'comercio']) }}
-        @else
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-
-                const comercioSelect = document.getElementById('comercio');
-                const comercializadora = document.getElementById('label-comercializadora');
-                const via_ferrea = document.getElementById('label-viaferrea');
-                const as_partida = document.getElementById('as-partida');
-                const as_lote = document.getElementById('as-lote');
-                const as_quimico = document.getElementById('as-quimico');
-                const as_bruto = document.getElementById('as-bruto');
-                const as_neto = document.getElementById('as-neto');
-                const as_tara = document.getElementById('as-tara');
-                const as_merma = document.getElementById('as-merma');
-
-                if (comercioSelect.value === 'Externo') {
-                    comercializadora.innerText = 'Comer/Comprador';
-                    via_ferrea.innerText = 'Otros';
-                    as_partida.innerText = '*';
-                    as_lote.innerText = '*';
-                    as_quimico.innerText = '*';
-                    as_bruto.innerText = '*';
-                    as_neto.innerText = '*';
-                    as_tara.innerText = '*';
-                    as_merma.innerText = '*';
-                }
-
-            });
-        </script>
-        <div class="col-12 col-md-4 mb-2">
-            <div class="form-group">
-                {{ Form::label('comercio', 'SELECCIONAR UN TIPO DE COMERCIO',['class'=>'text-danger']) }}
-                <span class="text-danger">*</span>
-                {{ Form::select('comercio', ['Interno' => 'Interno', 'Externo' => 'Externo'], $formulario->comercio ?? 'Interno', ['class' => 'form-select' . ($errors->has('comercio') ? ' is-invalid' : ''), 'id' => 'comercio','disabled' => 'disabled']) }}
-                {!! $errors->first('comercio', '<div class="invalid-feedback">:message</div>') !!}
-                <span id="error_comercio" class="invalid-feedback"></span>
-            </div>
-            {{ Form::hidden('comercio_edit', $formulario->comercio) }}
-        </div>
-        @endif
-
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-
-                const bg_comercio = document.getElementById('bg-comercio');
-                const text_formularios = document.getElementById('text-formularios');
-
-                const comercioSelect = document.getElementById('comercio');
-                const fechaValidezInput = document.getElementById('fecha_valides');
-                // Cambios en el formulario
-                const comercializadora = document.getElementById('label-comercializadora');
-                const via_ferrea = document.getElementById('label-viaferrea');
-                const fechaEmisionInput = document.getElementById('fecha_emision');
-
-
-                // Validos
-                const as_partida = document.getElementById('as-partida');
-                const as_lote = document.getElementById('as-lote');
-                const as_quimico = document.getElementById('as-quimico');
-                const as_bruto = document.getElementById('as-bruto');
-                const as_neto = document.getElementById('as-neto');
-                const as_tara = document.getElementById('as-tara');
-                const as_merma = document.getElementById('as-merma');
-
-
-                // Para el boton
-                const partida = document.getElementById('partida');
-                const nro_lote = document.getElementById('nro_lote');
-                const quimico = document.getElementById('quimico');
-                const bruto = document.getElementById('bruto');
-                const neto = document.getElementById('neto');
-                const tara = document.getElementById('tara');
-                const merma = document.getElementById('merma');
-
-                // Limpiar campos 
-                const origen = document.getElementById('origen');
-                const destino = document.getElementById('destino');
-                const alicuota = document.getElementById('alicuota');
-                const alicuota_show = document.getElementById('alicuota-show');
-                const chofer = document.getElementById('chofer');
-                const placa = document.getElementById('placa');
-                const observaciones = document.getElementById('observaciones');
-
-
-
-                // btn enviar
-                const btn_enviar = document.getElementById('enviar-button');
-
-                const p_externo = document.querySelector('.p-externo');
-
-
-                function limpiar() {
-                    partida.value = '';
-                    nro_lote.value = '';
-                    quimico.value = '';
-                    bruto.value = '';
-                    neto.value = '';
-                    tara.value = '';
-                    merma.value = '';
-                    origen.value = '';
-                    destino.value = '';
-                    alicuota.value = '';
-                    alicuota_show.value = '';
-                    chofer.value = '';
-                    placa.value = '';
-                    observaciones.value = '';
-                    // Limpia las selecciones del select múltiple con ID select2-multiselect-metalicos
-                    $("#select2-multiselect-metalicos").val([]).trigger('change');
-                    $("#select2-multiselect-nometalicos").val([]).trigger('change');
-                    // Limpia la selección de los radio buttons con name 'transporte'
-                    $('input[name="transporte"]').prop('checked', false);
-                }
-
-                comercioSelect.addEventListener('change', (event) => {
-                    // Aquí puedes agregar el código que se ejecutará cuando se seleccione una opción
-                    // Por ejemplo, puedes acceder al valor seleccionado con event.target.value
-                    console.log('Opción seleccionada:', event.target.value);
-
-                    limpiar();
-
-                    const comercio = event.target.value;
-                    fechaValidezInput.value = '';
-                    fechaEmisionInput.value = '';
-
-                    if (comercio === 'Interno') {
-                        comercializadora.innerText = 'Comercializadora';
-                        via_ferrea.innerText = 'Via ferrea';
-                        as_partida.innerText = '';
-                        as_lote.innerText = '';
-                        as_quimico.innerText = '';
-                        as_bruto.innerText = '';
-                        as_neto.innerText = '';
-                        as_tara.innerText = '';
-                        as_merma.innerText = '';
-
-                    } else {
-                        comercializadora.innerText = 'Comer/Comprador';
-                        via_ferrea.innerText = 'Otros';
-                        as_partida.innerText = '*';
-                        as_lote.innerText = '*';
-                        as_quimico.innerText = '*';
-                        as_bruto.innerText = '*';
-                        as_neto.innerText = '*';
-                        as_tara.innerText = '*';
-                        as_merma.innerText = '*';
-
-                    }
-
-                    // Puedes añadir más lógica o disparar eventos según lo que necesites hacer
-                });
-
-            });
-        </script>
+        {{ Form::hidden('comercio', $comercios, [
+            'class' => 'form-control',
+            'id' => 'comercio',
+            'placeholder' => 'Ingrese tipo de comercio',
+         ]) }}
 
         <!-- ************************MODIFICACIONES*********************** -->
         <!-- BLOQUE fECHA DE EMISION Y VALIDEZ-->
@@ -272,6 +122,7 @@
                 const comercioSelect = document.getElementById('comercio');
 
 
+
                 fechaEmisionInput.addEventListener('change', () => {
                     let fechaEmision = new Date(fechaEmisionInput.value);
 
@@ -289,8 +140,9 @@
                         fechaValidezInput.value = fechaValidezFormatted;
                         fechaValida.value = fechaValidezFormatted;
                     } else {
-                        fechaValidezInput.value = '';
-                        fechaValida.value = '';
+                        // Actualiza el valor del campo de fecha de validez
+                        fechaValidezInput.value = fechaValidezFormatted;
+                        fechaValida.value = fechaValidezFormatted;
                     }
                 });
             });
@@ -314,12 +166,12 @@
                                 <span class="text-danger">*</span>
                             </div>
                             <div class="col-12">
-                                {{ Form::text('razon_social_disabled', $formulario->razon_social ?? $empresa->nombres, ['class' => 'form-control' . ($errors->has('razon_social_disabled') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese Su Razon Social', 'id' => 'razon_social_disabled', 'disabled' => 'disabled']) }}
+                                {{ Form::text('razon_social_disabled', $formulario->razon_social ?? $minero->nombres, ['class' => 'form-control' . ($errors->has('razon_social_disabled') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese Su Razon Social', 'id' => 'razon_social_disabled', 'disabled' => 'disabled']) }}
                                 {!! $errors->first('razon_social', '<div class="invalid-feedback">:message</div>') !!}
                             </div>
                         </div>
                         <span id="error_razon_social_disabled" class="invalid-feedback"></span>
-                        {{ Form::hidden('razon_social', $formulario->razon_social ?? $empresa->nombres, ['id' => 'razon_social']) }}
+                        {{ Form::hidden('razon_social', $formulario->razon_social ?? $minero->nombres, ['id' => 'razon_social']) }}
                     </div>
                 </div>
             </div>
@@ -333,12 +185,12 @@
 
                                     {{ Form::label('nro_nim_disabled', 'NÚMERO NIM', ['class' => 'text-uppercase']) }}
                                     <span class="text-danger">*</span>
-                                    {{ Form::text('nro_nim_disabled', $formulario->nro_nim ?? $empresa->nro_nim, ['class' => 'form-control' . ($errors->has('nro_nim_disabled') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese Su Nro. de NIM','id' => 'nro_nim_disabled', 'disabled' => 'disabled']) }}
+                                    {{ Form::text('nro_nim_disabled', $formulario->nro_nim ?? $minero->nro_nim, ['class' => 'form-control' . ($errors->has('nro_nim_disabled') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese Su Nro. de NIM','id' => 'nro_nim_disabled', 'disabled' => 'disabled']) }}
                                     {!! $errors->first('nro_nim', '<div class="invalid-feedback">:message</div>') !!}
                                     <span id="error_nro_nim_disabled" class="invalid-feedback"></span>
 
 
-                                    {{ Form::hidden('nro_nim', $formulario->nro_nim ?? $empresa->nro_nim, ['id' => 'nro_nim']) }}
+                                    {{ Form::hidden('nro_nim', $formulario->nro_nim ?? $minero->nro_nim, ['id' => 'nro_nim']) }}
                                 </div>
                             </div>
                             <!-- 3 NIT -->
@@ -346,11 +198,11 @@
                                 <div class="form-group">
                                     {{ Form::label('nro_nit_disabled', 'NÚMERO NIT', ['class' => 'text-uppercase']) }}
                                     <span class="text-danger">*</span>
-                                    {{ Form::text('nro_nit_disabled', $formulario->nro_nit ?? $empresa->nro_nit, ['class' => 'form-control' . ($errors->has('nro_nit_disabled') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese Su Nro Nit','id' => 'nro_nit_disabled', 'disabled' => 'disabled']) }}
+                                    {{ Form::text('nro_nit_disabled', $formulario->nro_nit ?? $minero->nro_nit, ['class' => 'form-control' . ($errors->has('nro_nit_disabled') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese Su Nro Nit','id' => 'nro_nit_disabled', 'disabled' => 'disabled']) }}
                                     {!! $errors->first('nro_nit', '<div class="invalid-feedback">:message</div>') !!}
                                     <span id="error_nro_nit_disabled" class="invalid-feedback"></span>
 
-                                    {{ Form::hidden('nro_nit', $formulario->nro_nit ?? $empresa->nro_nit, ['id' => 'nro_nim']) }}
+                                    {{ Form::hidden('nro_nit', $formulario->nro_nit ?? $minero->nro_nit, ['id' => 'nro_nim']) }}
                                 </div>
                             </div>
                             <!-- 4 RUIM-->
@@ -358,11 +210,11 @@
                                 <div class="form-group">
                                     {{ Form::label('ruim_disabled', 'NRO. ROCMIN', ['class' => 'text-uppercase']) }}
                                     <span class="text-danger">*</span>
-                                    {{ Form::text('ruim_disabled', $formulario->ruim ?? $empresa->ruim, ['class' => 'form-control' . ($errors->has('ruim_disabled') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese Su Ruim','id' => 'ruim_disabled', 'disabled' => 'disabled']) }}
+                                    {{ Form::text('ruim_disabled', $formulario->ruim ?? $minero->rocmin, ['class' => 'form-control' . ($errors->has('ruim_disabled') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese Su Ruim','id' => 'ruim_disabled', 'disabled' => 'disabled']) }}
                                     {!! $errors->first('ruim', '<div class="invalid-feedback">:message</div>') !!}
                                     <span id="error_ruim_disabled" class="invalid-feedback"></span>
 
-                                    {{ Form::hidden('ruim', $formulario->nro_nit ?? $empresa->nro_nit, ['id' => 'ruim']) }}
+                                    {{ Form::hidden('ruim', $formulario->nro_nit ?? $minero->nro_nit, ['id' => 'ruim']) }}
                                 </div>
                             </div>
                             <!-- 5 Partida oculto para nuevo formulario-->
@@ -389,18 +241,31 @@
             </div>
 
             <div class="row">
-                <div class="col-12 col-md-6">
 
-                    <!-- Nro. de Lote -->
+                <!-- Nro. de Lote -->
+                <div class="col-12 col-md-6 mt-2">
                     <div class="form-group  border p-3">
                         {{ Form::label('nro_lote', 'NRO. LOTE', ['class' => 'text-uppercase']) }}
                         <span class="text-danger" id="as-lote"></span>
-                        {{ Form::text('nro_lote', $formulario->nro_lote, ['class' => 'form-control' . ($errors->has('nro_lote') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese un nro. de lote (opcional)','id'=>'nro_lote','style'=>'background-color: #ffffff !important']) }}
+                        {{ Form::text('nro_lote', $formulario->nro_lote, ['class' => 'form-control' . ($errors->has('nro_lote') ? ' is-invalid' : ''),'id'=>'nro_lote','style'=>'background-color: #ffffff !important']) }}
                         {!! $errors->first('nro_lote', '<div class="invalid-feedback">:message</div>') !!}
                         <span id="error_nro_lote" class="invalid-feedback"></span>
                     </div>
+                </div>
 
-                    <!-- Metalicos y no metalicos -->
+                <!-- TARA -->
+                <div class="col-12 col-md-6 mt-2">
+                    <div class="form-group border p-3">
+                        <label for="bruto">TARA <span class="unidad">{{ $formulario->unidad }}</span></label>
+                        <span class="text-danger" id="as-tara"></span>
+                        {{ Form::text('tara_kg', $formulario->tara_kg, ['class' => 'form-control' . ($errors->has('tara_kg') ? ' is-invalid' : ''), 'id'=>'tara', 'style'=>'background-color: #ffffff !important']) }}
+                        {!! $errors->first('tara_kg', '<div class="invalid-feedback">:message</div>') !!}
+                        <span id="error_tara" class="invalid-feedback"></span>
+                    </div>
+                </div>
+
+                <!-- Metalicos y no metalicos -->
+                <div class="col-12 col-md-6 mt-2">
                     <div class="border p-3 mt-3">
                         <p class="text-uppercase titulo-gadc">TIPO DE MINERAL</p>
                         <div class="form-group metalicos-input">
@@ -623,8 +488,21 @@
                             });
                         </script>
                     </div>
+                </div>
 
-                    <!-- Presentación -->
+                <!-- HUMEDAD -->
+                <div class="col-12 col-md-6 mt-2">
+                    <div class="form-group border p-3 mt-3">
+                        <label for="humedad">HUMEDAD (%)</label>
+                        <span class="text-danger" id="humedad"></span>
+                        {{ Form::text('humedad', $formulario->humedad, ['class' => 'form-control' . ($errors->has('humedad') ? ' is-invalid' : ''), 'id'=>'humedad', 'style'=>'background-color: #ffffff !important']) }}
+                        {!! $errors->first('humedad', '<div class="invalid-feedback">:message</div>') !!}
+                        <span id="error_humedad" class="invalid-feedback"></span>
+                    </div>
+                </div>
+
+                <!-- Presentación -->
+                <div class="col-12 col-md-6 mt-2">
                     <div class="form-group border p-3 mt-3">
                         <label for="presentacion" class="text-uppercase"><span id="label-presentacion">PRESENTACIÓN</span></label>
                         <span class="text-danger">*</span>
@@ -632,27 +510,62 @@
                         {!! $errors->first('presentacion', '<div class="invalid-feedback">:message</div>') !!}
                         <span id="error_presentacion" class="invalid-feedback"></span>
                     </div>
+                </div>
 
-                    <!-- Alicuota -->
+                <!-- MERMA -->
+                <div class="col-12 col-md-6 mt-2">
+                    <div class="form-group border p-3 mt-3">
+                        <label for="merma">MERMA (%)</label>
+                        <span class="text-danger" id="merma"></span>
+                        {{ Form::text('merma', $formulario->merma, ['class' => 'form-control' . ($errors->has('merma') ? ' is-invalid' : ''), 'id'=>'merma', 'style'=>'background-color: #ffffff !important']) }}
+                        {!! $errors->first('merma', '<div class="invalid-feedback">:message</div>') !!}
+                        <span id="error_merma_merma" class="invalid-feedback"></span>
+                    </div>
+                </div>
+
+                <!-- Alicuota -->
+                <div class="col-12 col-md-6 mt-2">
                     <div class="form-group border p-3 mt-3">
                         {{ Form::label('alicuota-show', 'ALÍCUOTA') }}
                         <span class="text-danger">*</span>
-                        {{ Form::text('alicuota-show', $formulario->alicuota, ['class' => 'form-control', 'placeholder' => 'Ingrese la Alicuota','id'=>'alicuota-show', 'disabled' => 'disabled', 'style'=>'background-color: #ffffff !important']) }}
+                        {{ Form::text('alicuota-show', $formulario->alicuota, ['class' => 'form-control', 'id'=>'alicuota-show', 'disabled' => 'disabled', 'style'=>'background-color: #ffffff !important']) }}
 
                         {{ Form::hidden('alicuota', $formulario->alicuota,['class' => 'form-control' . ($errors->has('alicuota') ? ' is-invalid' : ''),'id' => 'alicuota']) }}
                         {!! $errors->first('alicuota', '<div class="invalid-feedback">:message</div>') !!}
                         <span id="error_alicuota" class="text-danger"></span>
-
                     </div>
+                </div>
 
-                    <!-- Peso Bruto y Unidad -->
+                <!-- PESO NETO -->
+                <div class="col-12 col-md-6 mt-2">
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <div class="border p-3" style="display: flex; gap: 20px;">
+                                <div class="form-group">
+                                    <label for="bruto">PESO NETO <span class="unidad">{{ $formulario->unidad }}</span></label>
+                                    <span class="text-danger" id="as-neto"></span>
+                                    {{ Form::text('peso_neto_kg', $formulario->peso_neto_kg, ['class' => 'form-control' . ($errors->has('peso_neto_kg') ? ' is-invalid' : ''),'id'=>'neto', 'style'=>'background-color: #ffffff !important']) }}
+                                    {!! $errors->first('peso_neto_kg', '<div class="invalid-feedback">:message</div>') !!}
+                                    <span id="error_neto" class="invalid-feedback"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="neto_unidad">UNIDAD</label><br>
+                                    <span class="unidad">{{ $formulario->unidad }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Peso Bruto y Unidad -->
+                <div class="col-12 col-md-6 mt-2">
                     <div class="row mt-3">
                         <div class="col-12">
                             <div class="border p-3" style="display: flex; gap: 20px;">
                                 <div class="form-group">
                                     <label for="bruto">PESO BRUTO <span class="unidad">{{ $formulario->unidad }}</span></label>
                                     <span class="text-danger" id="as-bruto"></span>
-                                    {{ Form::text('peso_bruto_kg', $formulario->peso_bruto_kg, ['class' => 'form-control' . ($errors->has('peso_bruto_kg') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese el Peso Bruto','id'=>'bruto', 'style'=>'background-color: #ffffff !important']) }}
+                                    {{ Form::text('peso_bruto_kg', $formulario->peso_bruto_kg, ['class' => 'form-control' . ($errors->has('peso_bruto_kg') ? ' is-invalid' : ''),'id'=>'bruto', 'style'=>'background-color: #ffffff !important']) }}
                                     {!! $errors->first('peso_bruto_kg', '<div class="invalid-feedback">:message</div>') !!}
                                     <span id="error_bruto" class="invalid-feedback"></span>
                                 </div>
@@ -700,53 +613,10 @@
                             }
                         });
                     </script>
-
                 </div>
-                <div class="col-12 col-md-6">
-                    <!-- TARA -->
-                    <div class="form-group border p-3">
-                        <label for="bruto">TARA <span class="unidad">{{ $formulario->unidad }}</span></label>
-                        <span class="text-danger" id="as-tara"></span>
-                        {{ Form::text('tara_kg', $formulario->tara_kg, ['class' => 'form-control' . ($errors->has('tara_kg') ? ' is-invalid' : ''), 'id'=>'tara', 'style'=>'background-color: #ffffff !important']) }}
-                        {!! $errors->first('tara_kg', '<div class="invalid-feedback">:message</div>') !!}
-                        <span id="error_tara" class="invalid-feedback"></span>
-                    </div>
-                    <!-- HUMEDAD -->
-                    <div class="form-group border p-3 mt-3">
-                        <label for="humedad">HUMEDAD (%)</label>
-                        <span class="text-danger" id="as-merma"></span>
-                        {{ Form::text('hum_merma', $formulario->hum_merma, ['class' => 'form-control' . ($errors->has('hum_merma') ? ' is-invalid' : ''), 'id'=>'humedad', 'style'=>'background-color: #ffffff !important']) }}
-                        {!! $errors->first('hum_merma', '<div class="invalid-feedback">:message</div>') !!}
-                        <span id="error_merma" class="invalid-feedback"></span>
-                    </div>
-                    <!-- MERMA -->
-                    <div class="form-group border p-3 mt-3">
-                        <label for="merma">MERMA (%)</label>
-                        <span class="text-danger" id="merma"></span>
-                        {{ Form::text('merma', $formulario->merma, ['class' => 'form-control' . ($errors->has('merma') ? ' is-invalid' : ''), 'id'=>'merma', 'style'=>'background-color: #ffffff !important']) }}
-                        {!! $errors->first('merma', '<div class="invalid-feedback">:message</div>') !!}
-                        <span id="error_merma_merma" class="invalid-feedback"></span>
-                    </div>
-                    <!-- PESO NETO -->
-                    <div class="row mt-3">
-                        <div class="col-12">
-                            <div class="border p-3" style="display: flex; gap: 20px;">
-                                <div class="form-group">
-                                    <label for="bruto">PESO NETO <span class="unidad">{{ $formulario->unidad }}</span></label>
-                                    <span class="text-danger" id="as-neto"></span>
-                                    {{ Form::text('peso_neto_kg', $formulario->peso_neto_kg, ['class' => 'form-control' . ($errors->has('peso_neto_kg') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese el Peso Neto','id'=>'neto', 'style'=>'background-color: #ffffff !important']) }}
-                                    {!! $errors->first('peso_neto_kg', '<div class="invalid-feedback">:message</div>') !!}
-                                    <span id="error_neto" class="invalid-feedback"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label for="neto_unidad">UNIDAD</label><br>
-                                    <span class="unidad">{{ $formulario->unidad }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- MERMA -->
+                <!-- LEY -->
+                <div class="col-12 col-md-6 mt-2">
                     <div class="form-group border p-3 mt-3">
                         <label for="ley">LEY</label>
                         <span class="text-danger" id="ley"></span>
@@ -754,8 +624,8 @@
                         {!! $errors->first('ley', '<div class="invalid-feedback">:message</div>') !!}
                         <span id="error_ley" class="invalid-feedback"></span>
                     </div>
-
                 </div>
+
             </div>
 
             <!-- 3.- ORIGEN DEL MINERAL Y/O METAL -->
@@ -774,34 +644,39 @@
                         <select class="form-control" id="select2-dropdown" style="width: 100%;">
                             <option value="">-Seleccionar-</option>
                             @foreach($municipios as $municipio)
-                            <option value="{{$municipio->id}}" data-otro-dato="{{$municipio->codigo}}">
+                            <option value="{{ $municipio->municipio }}" data-otro-dato="{{ $municipio->codigo }}"
+                                {{ $formulario->municipio == $municipio->municipio ? 'selected' : '' }}>
                                 {{ $municipio->municipio }}
                             </option>
                             @endforeach
                         </select>
-                        {{ Form::hidden('municipio', $formulario->municipio ?? $empresa->municipio->municipio, ['id' => 'municipio']) }}
+                        {{ Form::hidden('municipio', $formulario->municipio, ['id' => 'municipio']) }}
                         @if ($errors->has('municipios_id'))
                         <div class="alert alert-danger">{{ $errors->first('municipios_id') }}</div>
                         @endif
                     </div>
                     <script>
-                        // Carga primero el HTML y luego ejecuta javascript
                         document.addEventListener('DOMContentLoaded', () => {
-                            // Municipios
-                            $('#select2-dropdown').select2(); // Inicializar
-                            // Capturar Values when change event
-                            $('#select2-dropdown').on('change', (e) => {
-                                let id = $('#select2-dropdown').select2("val"); // get id municipio
-                                let municipio = $('#select2-dropdown option:selected').text(); // get nombre municipio
-                                let codigo = $('#select2-dropdown option:selected').data('otro-dato'); // Obtener data-otro-dato
+                            // Inicializar Select2
+                            $('#select2-dropdown').select2();
 
-                                // Asignar el valor al input oculto
+                            // Obtener el municipio guardado (nombre) y establecerlo en Select2
+                            let selectedMunicipio = $('#municipio').val();
+                            if (selectedMunicipio) {
+                                $('#select2-dropdown').val(selectedMunicipio).trigger('change');
+                            }
+
+                            // Capturar el evento de cambio
+                            $('#select2-dropdown').on('change', (e) => {
+                                let municipio = $('#select2-dropdown').val(); // Obtener nombre del municipio seleccionado
+                                let codigo = $('#select2-dropdown option:selected').data('otro-dato'); // Obtener código
+
+                                // Asignar los valores a los inputs ocultos
                                 $('#codigo').val(codigo);
                                 $('#codigo-municipio_disabled').val(codigo);
-                                $('#municipio').val(municipio);
-                            }); // Fin municipios
-
-                        })
+                                $('#municipio').val(municipio); // Guarda el nombre seleccionado
+                            });
+                        });
                     </script>
 
 
@@ -819,10 +694,10 @@
                     <div class="form-group border p-3">
                         {{ Form::label('codigo_disabled', 'CODIGO MUNICIPIO') }}
                         <span class="text-danger">*</span>
-                        {{ Form::text('codigo_disabled', $formulario->codigo ?? $empresa->municipio->codigo, ['class' => 'form-control' . ($errors->has('codigo_disabled') ? ' is-invalid' : ''), 'id' => 'codigo-municipio_disabled','placeholder' => 'Codigo', 'disabled' => 'disabled']) }}
+                        {{ Form::text('codigo_disabled', $formulario->codigo, ['class' => 'form-control' . ($errors->has('codigo_disabled') ? ' is-invalid' : ''), 'id' => 'codigo-municipio_disabled','placeholder' => 'Codigo', 'disabled' => 'disabled']) }}
                         {!! $errors->first('codigo_disabled', '<div class="invalid-feedback">:message</div>') !!}
 
-                        {{ Form::hidden('codigo', $formulario->codigo ?? $empresa->municipio->codigo, ['id' => 'codigo']) }}
+                        {{ Form::hidden('codigo', $formulario->codigo, ['id' => 'codigo']) }}
                     </div>
 
 
@@ -889,7 +764,7 @@
 
                             <div class="col-12 col-md-6">
                                 <!-- TIPO DE TRANSPORTE -->
-                                <div class="form-group">
+                                <div class="form-group bg-white">
                                     {{ Form::label('transporte', 'TIPO DE TRANSPORTE') }}
                                     <span class="text-danger">*</span>
                                     <div class="minerales mt-3">

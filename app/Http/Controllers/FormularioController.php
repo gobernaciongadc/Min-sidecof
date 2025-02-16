@@ -122,10 +122,10 @@ class FormularioController extends Controller
     public function createTipos($opcion)
     {
 
-
         $mensaje = null;
-
         $alta = null;
+        $empresa = null;
+        $minero = null;
 
         if ($opcion == 'interno') {
             $comercios = 'Interno';
@@ -138,24 +138,37 @@ class FormularioController extends Controller
         $metales = Metalico::all();
         $nometales = Nometalico::all();
         $municipios = Municipio::all();
-
         $user = Auth::user(); // Accede al usuario autenticado
-
         $alta = $user->estado;
-
         // Mensaje de caducidad a 5 dias del reistro del NIM
         $user = User::find($user->id);
         if ($user->name_bd == 'empresas') {
             $empresa = Empresa::find($user->id_login);
             $fechaCaducidad = $empresa->fecha_caducidad;
-
             $fechaActual = new DateTime();
-
             $fechaInicio = Carbon::parse($fechaActual);
             $fechaFin = Carbon::parse($fechaCaducidad);
-
             $diasRestantes = ceil($fechaInicio->diffInHours($fechaFin) / 24);
+            // Si la fecha de caducidad es anterior a la fecha actual, la diferencia será negativa
+            if ($fechaFin < $fechaInicio) {
+                $diasRestantes = -$diasRestantes;
+            }
+            if ($diasRestantes > 0 && $diasRestantes <= 5) {
+                // Mensaje para advertir que está a punto de vencer
+                $mensaje = "Su registro NIM ya esta a punto de vencer en: " . $diasRestantes . ' Dia(s), Regularice su registro a la brevedad posible.';
+            } elseif ($diasRestantes < 0) {
+                // Mensaje para indicar que ya venció
+                $mensaje = "Su registro NIM ya vencio, Regularice su registro a la brevedad posible.";
+            }
+        }
 
+        if ($user->name_bd == 'mineros') {
+            $minero = Minero::find($user->id_login);
+            $fechaCaducidad = $minero->fecha_caducidad;
+            $fechaActual = new DateTime();
+            $fechaInicio = Carbon::parse($fechaActual);
+            $fechaFin = Carbon::parse($fechaCaducidad);
+            $diasRestantes = ceil($fechaInicio->diffInHours($fechaFin) / 24);
             // Si la fecha de caducidad es anterior a la fecha actual, la diferencia será negativa
             if ($fechaFin < $fechaInicio) {
                 $diasRestantes = -$diasRestantes;
@@ -177,25 +190,29 @@ class FormularioController extends Controller
         $stagingArray = $staging->toArray();
         $cantStaging = count($stagingArray);
         $tipo = 'create';
-
+        // Carga datos al formulario solo si es RUIM / empresa/cooperativa
         if ($user->name_bd == 'empresas') {
             $empresa = Empresa::where('id', $user->id_login)
                 ->first(); // Devuelve un objeto
-        } else {
-            // Carga datos al formulario solo si es RUIM / empresa/cooperativa
-            $empresa = json_decode(json_encode([
-                'nombres' => '',
-                'ruim' => '',
-                'nro_nit' => '',
-                'nro_nim' => '',
-                'municipio' => json_decode(json_encode([
-                    'codigo' => '',
-                    'municipio' => ''
-                ]))
-            ]));
         }
-
-        return view('dashboard/formulario.create', compact('formulario', 'metales', 'nometales', 'municipios', 'cantStaging', 'tipo', 'empresa', 'mensaje', 'alta', 'comercios', 'opcion'));
+        // Carga datos al formulario solo si es RUIM / empresa/cooperativa
+        if ($user->name_bd == 'mineros') {
+            $minero = Minero::where('id', $user->id_login)
+                ->first(); // Devuelve un objeto
+        }
+        // else {
+        //     $empresa = json_decode(json_encode([
+        //         'nombres' => '',
+        //         'ruim' => '',
+        //         'nro_nit' => '',
+        //         'nro_nim' => '',
+        //         'municipio' => json_decode(json_encode([
+        //             'codigo' => '',
+        //             'municipio' => ''
+        //         ]))
+        //     ]));
+        // }
+        return view('dashboard/formulario.create', compact('formulario', 'metales', 'nometales', 'municipios', 'cantStaging', 'tipo', 'empresa', 'mensaje', 'alta', 'comercios', 'opcion', 'minero'));
     }
 
 
@@ -208,17 +225,18 @@ class FormularioController extends Controller
     public function store(Request $request)
     {
 
-        dd($request->all());
 
         // 1.-Recoger los usuarios por post
         $params = (object) $request->all(); // Devuelve un obejto
         $paramsArray = $request->all(); // Devuelve un Array
+
 
         // Comercio es para la validació de camposya
         if ($params->comercio == 'Interno') {
             // Comercio externo
             request()->validate(Formulario::$rules);
         } else {
+
             request()->validate(Formulario::$rules_externo);
         }
 
@@ -254,10 +272,15 @@ class FormularioController extends Controller
      */
     public function edit($id)
     {
+
         $mensaje = null;
         $alta = null;
 
         $formulario = Formulario::find($id);
+
+        $opcion = $formulario->comercio;
+        $comercios = $formulario->comercio;
+
         $metales = Metalico::all();
         $nometales = Nometalico::all();
         $municipios = Municipio::all();
@@ -293,8 +316,9 @@ class FormularioController extends Controller
             }
         }
 
-        return view('dashboard/formulario.edit', compact('formulario', 'metales', 'nometales', 'municipios', 'cantStaging', 'tipo', 'mensaje', 'alta'));
+        return view('dashboard/formulario.edit', compact('formulario', 'metales', 'nometales', 'municipios', 'cantStaging', 'tipo', 'mensaje', 'alta', 'opcion', 'comercios'));
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -303,24 +327,32 @@ class FormularioController extends Controller
      * @param  Formulario $formulario
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Formulario $formulario)
+    public function update(Request $request, Formulario $formulario, $id)
     {
+        $params = (object) $request->all(); // Devuelve un objeto
+        $paramsArray = $request->all(); // Devuelve un array
+        $formData = Formulario::find($id);
 
-        // 1.-Recoger los usuarios por post
-        $params = (object) $request->all(); // Devulve un obejto
-        $paramsArray = $request->all(); // Devulve un Array
+        try {
+            if ($params->comercio == 'Interno') {
+                // Validar para comercio interno
+                request()->validate(Formulario::$rules_create);
+            } else {
+                // Validar para comercio externo
+                request()->validate(Formulario::$rules_externo);
+            }
 
-        if ($params->comercio_edit == 'Interno') {
-            // Comercio externo
-            request()->validate(Formulario::$rules_create);
-        } else {
-            request()->validate(Formulario::$rules_edit);
+            $formData->update($paramsArray);
+            return redirect()->route('admin.staging')
+                ->with('success', 'El formulario 101 se modificó correctamente');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Aquí puedes manejar los errores si necesitas hacer algo adicional
+            return redirect()->back()
+                ->withErrors($e->validator)  // Pasar los errores de validación
+                ->withInput();  // Para mantener los datos enviados
         }
-
-        $formulario->update($paramsArray);
-        return redirect()->route('admin.staging')
-            ->with('success', 'El formulario 101 se modificó correctamente');
     }
+
 
     /**
      * @param int $id

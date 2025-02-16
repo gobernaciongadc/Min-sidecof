@@ -25,6 +25,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property $tara_kg
  * @property $hum_merma
  * @property $merma
+ * @property $humedad
  * @property $municipio
  * @property $origen_destino_comercializadora
  * @property $alicuota
@@ -37,6 +38,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property $observaciones
  * @property $senarecom
  * @property $comercio
+ * @property $ley
  * @property $estado
  * @property $users_id
  * @property $created_at
@@ -106,13 +108,13 @@ class Formulario extends Model
 
 
 		// comercio externo
-		'reg_partida' => 'required|max:15',
+		// 'reg_partida' => 'required|max:15',
 		'nro_lote' => 'required|max:15',
-		'cert_analisis_quimico' => 'required|max:15',
+		// 'cert_analisis_quimico' => 'required|max:15',
 		'peso_bruto_kg' => 'required|max:10',
 		'peso_neto_kg' => 'required|max:10',
 		'tara_kg' => 'required|max:10',
-		'hum_merma' => 'required|max:10',
+		// 'hum_merma' => 'required|max:10',
 		// FIN comercio externo
 
 		'codigo' => 'required',
@@ -122,7 +124,7 @@ class Formulario extends Model
 		'origen' => 'required|max:13',
 		'destino' => 'required|max:13',
 
-		'comercializadora' => 'required|max:16',
+		// 'comercializadora' => 'required|max:16',
 
 		'alicuota' => 'required|max:30',
 		'transporte' => 'required',
@@ -151,13 +153,13 @@ class Formulario extends Model
 
 
 		// comercio externo
-		'reg_partida' => 'required|max:15',
+		// 'reg_partida' => 'required|max:15',
 		'nro_lote' => 'required|max:15',
-		'cert_analisis_quimico' => 'required|max:15',
+		// 'cert_analisis_quimico' => 'required|max:15',
 		'peso_bruto_kg' => 'required|max:10',
 		'peso_neto_kg' => 'required|max:10',
 		'tara_kg' => 'required|max:10',
-		'hum_merma' => 'required|max:10',
+		// 'hum_merma' => 'required|max:10',
 		// FIN comercio externo
 
 		'codigo' => 'required',
@@ -167,7 +169,7 @@ class Formulario extends Model
 		'origen' => 'required|max:13',
 		'destino' => 'required|max:13',
 
-		'comercializadora' => 'required|max:16',
+		// 'comercializadora' => 'required|max:16',
 
 		'alicuota' => 'required|max:30',
 		'transporte' => 'required',
@@ -252,6 +254,7 @@ class Formulario extends Model
 		'peso_neto_kg',
 		'tara_kg',
 		'hum_merma',
+		'humedad',
 		'merma',
 		'codigo',
 		'municipio',
@@ -270,9 +273,9 @@ class Formulario extends Model
 		'observaciones',
 		'senarecom',
 		'comercio',
+		'ley',
 		'estado',
-		'staging',
-		'users_id'
+		'staging'
 	];
 
 
