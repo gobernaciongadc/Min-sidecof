@@ -13,6 +13,8 @@
   <meta content="" name="description">
   <meta content="" name="keywords">
 
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
   <!-- Favicons -->
   <link href="{{asset('dashboard/img/escudo.png')}}" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
