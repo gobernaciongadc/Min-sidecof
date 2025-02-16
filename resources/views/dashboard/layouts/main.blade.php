@@ -42,10 +42,6 @@
   <!-- Toastify -->
   <link href="{{asset('dashboard/css/toastify.css') }}" rel="stylesheet">
 
-
-
-
-
   @vite([
   'resources/sass/app.scss',
   'resources/css/app.css',
