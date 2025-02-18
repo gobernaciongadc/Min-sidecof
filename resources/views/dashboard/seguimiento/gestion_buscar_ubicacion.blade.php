@@ -5,7 +5,7 @@ Puesto en ecena
 @endsection
 
 @section('migajas')
-<li class="breadcrumb-item"><a href="">Home</a></li>
+<li class="breadcrumb-item"><a href="">Inicio</a></li>
 <li class="breadcrumb-item">Seguimiento</li>
 <li class="breadcrumb-item active">Seguimiento de actividad de formulario</li>
 @endsection

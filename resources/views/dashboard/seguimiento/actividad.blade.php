@@ -5,7 +5,7 @@ Puesto en escena
 @endsection
 
 @section('migajas')
-<li class="breadcrumb-item"><a href="">Home</a></li>
+<li class="breadcrumb-item"><a href="">Inicio</a></li>
 <li class="breadcrumb-item">Seguimiento</li>
 <li class="breadcrumb-item active">Registro de actividad</li>
 @endsection
@@ -45,11 +45,11 @@ Puesto en escena
                                         <span id="error_lugar" class="invalid-feedback"></span>
                                     </div>
                                 </div>
+                                <p class="text-success" id="message-success"></p>
 
                                 <!-- El boton esta ocupando todo el ancho -->
-                                <div class="col-12 mt-4 d-flex justify-content-between">
+                                <div class="col-12 mt-2">
                                     <button class="btn btn-primary text-uppercase ps-4 pe-4" id="btn_gestion_actividad">Registrar</button>
-                                    <p class="text-success" id="message-success"></p>
                                 </div>
                             </div>
                         </div>

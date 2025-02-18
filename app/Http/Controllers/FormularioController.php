@@ -654,10 +654,9 @@ class FormularioController extends Controller
                 }
                 return response()->json($data, $data['code']);
                 break;
-            case 'empresas':
+            case 'funcionarios':
                 try {
                     $gestionBuscar = Formulario::where('nro_formulario', $params->gestion_buscar)
-                        ->Where('users_id', $user->id)
                         ->get();
                     $data = array(
                         'code' => 200,
