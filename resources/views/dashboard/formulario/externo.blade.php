@@ -159,6 +159,48 @@
             </div>
             <div class="row pt-2 pb-2">
                 <div class="col-12">
+                    @if($nameBd === 'funcionarios')
+                    <div class="form-group border p-3">
+                        {{ Form::label('razon_social_disabled', 'RAZON SOCIAL/NOMBRE COMPLETO') }}
+                        <span class="text-danger">*</span>
+                        <select class="form-control" id="select2-dropdown-min" style="width: 100%;">
+                            <option value="">-Seleccionar-</option>
+                            @foreach($listMineros as $mineros)
+                            <option value="{{ $mineros->nombres }}" data-otro-dato="{{ $mineros->rocmin }}"
+                                {{ $formulario->razon_social == $mineros->nombres ? 'selected' : '' }}>
+                                {{ $mineros->nombres }}
+                            </option>
+                            @endforeach
+                        </select>
+                        {{ Form::hidden('municipio', $formulario->razon_social, ['id' => 'municipio']) }}
+                        @if ($errors->has('municipios_id'))
+                        <div class="alert alert-danger">{{ $errors->first('municipios_id') }}</div>
+                        @endif
+                    </div>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', () => {
+                            // Inicializar Select2
+                            $('#select2-dropdown-min').select2();
+
+                            // Obtener el municipio guardado (nombre) y establecerlo en Select2
+                            let selectedMunicipio = $('#municipio').val();
+                            if (selectedMunicipio) {
+                                $('#select2-dropdown-min').val(selectedMunicipio).trigger('change');
+                            }
+
+                            // Capturar el evento de cambio
+                            $('#select2-dropdown-min').on('change', (e) => {
+                                let municipio = $('#select2-dropdown-min').val(); // Obtener nombre del municipio seleccionado
+                                let codigo = $('#select2-dropdown-min option:selected').data('otro-dato'); // Obtener código
+
+                                // Asignar los valores a los inputs ocultos
+                                $('#codigo').val(codigo);
+                                $('#codigo-municipio_disabled').val(codigo);
+                                $('#municipio').val(municipio); // Guarda el nombre seleccionado
+                            });
+                        });
+                    </script>
+                    @else
                     <div class="form-group border p-3">
                         <div class="row mt-2">
                             <div class="col-12">
@@ -173,6 +215,7 @@
                         <span id="error_razon_social_disabled" class="invalid-feedback"></span>
                         {{ Form::hidden('razon_social', $formulario->razon_social ?? $minero->nombres, ['id' => 'razon_social']) }}
                     </div>
+                    @endif
                 </div>
             </div>
             <div class="row pt-2 pb-2">
@@ -181,6 +224,19 @@
                         <div class="row justify-content-between">
                             <!-- 2 NIM-->
                             <div class="col-12 col-md-3">
+                                @if($nameBd === 'funcionarios')
+                                <div class="form-group">
+
+                                    {{ Form::label('nro_nim_disabled', 'NÚMERO NIM', ['class' => 'text-uppercase']) }}
+                                    <span class="text-danger">*</span>
+                                    {{ Form::text('nro_nim_disabled', $formulario->nro_nim, ['class' => 'form-control' . ($errors->has('nro_nim_disabled') ? ' is-invalid' : ''), 'id' => 'nro_nim_disabled','style'=>'background-color: #ffffff !important']) }}
+                                    {!! $errors->first('nro_nim', '<div class="invalid-feedback">:message</div>') !!}
+                                    <span id="error_nro_nim_disabled" class="invalid-feedback"></span>
+
+
+                                    {{ Form::hidden('nro_nim', $formulario->nro_nim,  ['id' => 'nro_nim']) }}
+                                </div>
+                                @else
                                 <div class="form-group">
 
                                     {{ Form::label('nro_nim_disabled', 'NÚMERO NIM', ['class' => 'text-uppercase']) }}
@@ -192,9 +248,21 @@
 
                                     {{ Form::hidden('nro_nim', $formulario->nro_nim ?? $minero->nro_nim, ['id' => 'nro_nim']) }}
                                 </div>
+                                @endif
                             </div>
                             <!-- 3 NIT -->
                             <div class="col-12 col-md-3">
+                                @if($nameBd === 'funcionarios')
+                                <div class="form-group">
+                                    {{ Form::label('nro_nit_disabled', 'NÚMERO NIT', ['class' => 'text-uppercase']) }}
+                                    <span class="text-danger">*</span>
+                                    {{ Form::text('nro_nit_disabled', $formulario->nro_nit, ['class' => 'form-control' . ($errors->has('nro_nit_disabled') ? ' is-invalid' : ''), 'id' => 'nro_nit_disabled','style'=>'background-color: #ffffff !important']) }}
+                                    {!! $errors->first('nro_nit', '<div class="invalid-feedback">:message</div>') !!}
+                                    <span id="error_nro_nit_disabled" class="invalid-feedback"></span>
+
+                                    {{ Form::hidden('nro_nit', $formulario->nro_nit, ['id' => 'nro_nim']) }}
+                                </div>
+                                @else
                                 <div class="form-group">
                                     {{ Form::label('nro_nit_disabled', 'NÚMERO NIT', ['class' => 'text-uppercase']) }}
                                     <span class="text-danger">*</span>
@@ -204,9 +272,21 @@
 
                                     {{ Form::hidden('nro_nit', $formulario->nro_nit ?? $minero->nro_nit, ['id' => 'nro_nim']) }}
                                 </div>
+                                @endif
                             </div>
                             <!-- 4 RUIM-->
                             <div class="col-12 col-md-3">
+                                @if($nameBd === 'funcionarios')
+                                <div class="form-group">
+                                    {{ Form::label('ruim_disabled', 'NRO. ROCMIN', ['class' => 'text-uppercase']) }}
+                                    <span class="text-danger">*</span>
+                                    {{ Form::text('ruim_disabled', $formulario->ruim, ['class' => 'form-control' . ($errors->has('ruim_disabled') ? ' is-invalid' : ''), 'id' => 'ruim_disabled','style'=>'background-color: #ffffff !important']) }}
+                                    {!! $errors->first('ruim', '<div class="invalid-feedback">:message</div>') !!}
+                                    <span id="error_ruim_disabled" class="invalid-feedback"></span>
+
+                                    {{ Form::hidden('ruim', $formulario->nro_nit, ['id' => 'ruim']) }}
+                                </div>
+                                @else
                                 <div class="form-group">
                                     {{ Form::label('ruim_disabled', 'NRO. ROCMIN', ['class' => 'text-uppercase']) }}
                                     <span class="text-danger">*</span>
@@ -216,6 +296,7 @@
 
                                     {{ Form::hidden('ruim', $formulario->nro_nit ?? $minero->nro_nit, ['id' => 'ruim']) }}
                                 </div>
+                                @endif
                             </div>
                             <!-- 5 Partida oculto para nuevo formulario-->
                             <!-- <div class="col-12 col-md-3">

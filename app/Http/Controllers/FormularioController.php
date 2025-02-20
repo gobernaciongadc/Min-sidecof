@@ -138,7 +138,11 @@ class FormularioController extends Controller
         $metales = Metalico::all();
         $nometales = Nometalico::all();
         $municipios = Municipio::all();
+
+        $listMineros = Minero::where('user_active', 1)->get();
+
         $user = Auth::user(); // Accede al usuario autenticado
+        $nameBd = $user->name_bd;
         $alta = $user->estado;
         // Mensaje de caducidad a 5 dias del reistro del NIM
         $user = User::find($user->id);
@@ -212,7 +216,7 @@ class FormularioController extends Controller
         //         ]))
         //     ]));
         // }
-        return view('dashboard/formulario.create', compact('formulario', 'metales', 'nometales', 'municipios', 'cantStaging', 'tipo', 'empresa', 'mensaje', 'alta', 'comercios', 'opcion', 'minero'));
+        return view('dashboard/formulario.create', compact('formulario', 'metales', 'nometales', 'municipios', 'cantStaging', 'tipo', 'empresa', 'mensaje', 'alta', 'comercios', 'opcion', 'minero', 'nameBd', 'listMineros'));
     }
 
 

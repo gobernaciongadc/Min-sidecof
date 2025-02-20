@@ -258,7 +258,7 @@ Reporte cantidad de formularios por empresas
                             <div class="row mt-3">
 
                                 <!-- REPORTE UNO -->
-                                <div class="col-md-4" id="miTabla">
+                                <div class="col-md-10" id="miTabla">
                                     <div class="table-responsive" style="clear: both;">
                                         <table class="table table-hover">
                                             <thead>
