@@ -216,6 +216,7 @@ class FormularioController extends Controller
         //         ]))
         //     ]));
         // }
+        // dd($listMineros);
         return view('dashboard/formulario.create', compact('formulario', 'metales', 'nometales', 'municipios', 'cantStaging', 'tipo', 'empresa', 'mensaje', 'alta', 'comercios', 'opcion', 'minero', 'nameBd', 'listMineros'));
     }
 
