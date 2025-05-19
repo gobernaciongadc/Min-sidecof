@@ -61,7 +61,7 @@ Route::group(['middleware' => ['auth']], function () {
     /*************RUTAS MINEROS********/
     Route::resource('dashboard/minero', MineroController::class)->names('admin.mineros');
     Route::post('verdocumentopdfminero', [MineroController::class, 'verDocumentoPdfMinero'])->name('admin.verdocumentopdfminero');
-
+    Route::get('dashboard/minero/getdata/{id}', [MineroController::class, 'showGetData'])->name('admin.showgetdata');
     /*************RUTAS FORMULARIOS********/
     Route::resource('dashboard/formulario', FormularioController::class)->names('admin.formularios');
 

@@ -53,7 +53,7 @@ class Formulario extends Model
 {
 	static $rules = [
 		'nro_formulario' => 'nullable|regex:/^[0-9]+$/|unique:formularios,nro_formulario',
-		'razon_social' => 'required|max:50',
+		'razon_social' => 'required|max:100',
 		'nro_nim' => 'required|max:15',
 		'nro_nit' => 'required|max:15',
 		'ruim' => 'required|max:15',
@@ -76,15 +76,15 @@ class Formulario extends Model
 
 		'municipio' => 'required',
 
-		'origen' => 'required|max:13',
-		'destino' => 'required|max:13',
+		'origen' => 'required|max:200',
+		'destino' => 'required|max:200',
 
 		// 'comercializadora' => 'required|max:16',
-		'comprador' => 'required|max:35',
+		'comprador' => 'required|max:200',
 
 		'alicuota' => 'required|max:30',
 		'transporte' => 'required',
-		'chofer' => 'required|max:20',
+		'chofer' => 'required|max:200',
 		'placa' => 'required|max:15',
 		// 'declarcion_jurada' => 'required',
 		'fecha_emision' => 'required',
@@ -98,7 +98,7 @@ class Formulario extends Model
 
 	static $rules_externo = [
 		'nro_formulario' => 'nullable|regex:/^[0-9]+$/|unique:formularios,nro_formulario',
-		'razon_social' => 'required|max:50',
+		'razon_social' => 'required|max:100',
 		'nro_nim' => 'required|max:15',
 		'nro_nit' => 'required|max:15',
 		'ruim' => 'required|max:15',
@@ -122,14 +122,14 @@ class Formulario extends Model
 
 		'municipio' => 'required',
 
-		'origen' => 'required|max:13',
-		'destino' => 'required|max:13',
+		'origen' => 'required|max:200',
+		'destino' => 'required|max:200',
 
 		// 'comercializadora' => 'required|max:16',
 
 		'alicuota' => 'required|max:30',
 		'transporte' => 'required',
-		'chofer' => 'required|max:20',
+		'chofer' => 'required|max:200',
 		'placa' => 'required|max:15',
 		// 'declarcion_jurada' => 'required',
 		'fecha_emision' => 'required',
@@ -143,7 +143,7 @@ class Formulario extends Model
 
 	static $rules_edit = [
 		'nro_formulario' => 'nullable|regex:/^[0-9]+$/|unique:formularios,nro_formulario',
-		'razon_social' => 'required|max:50',
+		'razon_social' => 'required|max:100',
 		'nro_nim' => 'required|max:15',
 		'nro_nit' => 'required|max:15',
 		'ruim' => 'required|max:15',
@@ -167,14 +167,14 @@ class Formulario extends Model
 
 		'municipio' => 'required',
 
-		'origen' => 'required|max:13',
-		'destino' => 'required|max:13',
+		'origen' => 'required|max:200',
+		'destino' => 'required|max:200',
 
 		// 'comercializadora' => 'required|max:16',
 
 		'alicuota' => 'required|max:30',
 		'transporte' => 'required',
-		'chofer' => 'required|max:20',
+		'chofer' => 'required|max:200',
 		'placa' => 'required|max:15',
 		// 'declarcion_jurada' => 'required',
 		'fecha_emision' => 'required',
@@ -218,7 +218,7 @@ class Formulario extends Model
 
 		'alicuota' => 'required|max:30',
 		'transporte' => 'required',
-		'chofer' => 'required|max:20',
+		'chofer' => 'required|max:200',
 		'placa' => 'required|max:15',
 		// 'declarcion_jurada' => 'required',
 		'fecha_emision' => 'required',

@@ -53,15 +53,15 @@ Puesto en ecena
                 @endif
                 <div class="d-flex justify-content-between mt-3">
                     <p class="mt-3 ms-3 text-primary text-uppercase">Lista de 5 registros puestos en escena para ser emitidos</p>
-                    <div class="float-right me-4">
+                    <!-- <div class="float-right me-4">
                         <a href="{{ route('admin.formularios.create') }}" class="btn btn-primary text-uppercase float-right" data-placement="left">
                             {{ __('Crear formulario 101') }}
                         </a>
-                    </div>
+                    </div> -->
                 </div>
                 @if($alta == 'Habilitado')
                 <div class="card-body">
-                    <div class="table-responsive--custom">
+                    <div class="table-responsive">
                         <table class="table table-striped" id="pescena_1">
                             <thead class="thead border">
 

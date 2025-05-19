@@ -677,6 +677,7 @@
                                             {{ Form::radio('transporte', 'Camión', $formulario->transporte == 'Camión', ['class' => 'form-check-input']) }}
                                             {{ Form::label('camion', 'Camión', ['class' => 'form-check-label']) }}
                                         </div>
+
                                     </div>
                                     <!-- Agrega mensajes de error según sea necesario -->
                                     <div class="error">{{ $errors->first('transporte') }}</div>

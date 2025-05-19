@@ -41,33 +41,30 @@
         <script>
             document.addEventListener('DOMContentLoaded', () => {
                 const comercioSelect = document.getElementById('comercio');
-                const comercializadora = document.getElementById('label-comercializadora');
+                // const comercializadora = document.getElementById('label-comercializadora');
                 const via_ferrea = document.getElementById('label-viaferrea');
-                const as_partida = document.getElementById('as-partida');
+                // const as_partida = document.getElementById('as-partida');
                 const as_lote = document.getElementById('as-lote');
-                const as_quimico = document.getElementById('as-quimico');
+                // const as_quimico = document.getElementById('as-quimico');
                 const as_bruto = document.getElementById('as-bruto');
                 const as_neto = document.getElementById('as-neto');
                 const as_tara = document.getElementById('as-tara');
-                const as_merma = document.getElementById('as-merma');
+                // const as_merma = document.getElementById('as-merma');
 
                 const unidad = document.getElementById('unidad');
-                console.log(unidad.value);
+                // console.log(unidad.value);
 
                 if (comercioSelect.value === 'Externo') {
-                    comercializadora.innerText = 'Comer/Comprador';
+                    // comercializadora.innerText = 'Comer/Comprador';
                     via_ferrea.innerText = 'Otros';
-                    as_partida.innerText = '*';
+                    // as_partida.innerText = '*';
                     as_lote.innerText = '*';
-                    as_quimico.innerText = '*';
+                    // as_quimico.innerText = '*';
                     as_bruto.innerText = '*';
                     as_neto.innerText = '*';
                     as_tara.innerText = '*';
-                    as_merma.innerText = '*';
+                    // as_merma.innerText = '*';
                 }
-
-
-
             });
         </script>
         <!-- FIN Al actualizar para externo -->
@@ -159,24 +156,27 @@
             </div>
             <div class="row pt-2 pb-2">
                 <div class="col-12">
+
                     @if($nameBd === 'funcionarios')
+
                     <div class="form-group border p-3">
-                        {{ Form::label('razon_social_disabled', 'RAZON SOCIAL/NOMBRE COMPLETO') }}
+                        {{ Form::label('razon_social_disabled', 'RAZON SOCIAL/NOMBRE COMPLETOoo') }}
                         <span class="text-danger">*</span>
                         <select class="form-control" id="select2-dropdown-min" style="width: 100%;">
                             <option value="">-Seleccionar-</option>
                             @foreach($listMineros as $mineros)
-                            <option value="{{ $mineros->nombres }}" data-otro-dato="{{ $mineros->rocmin }}"
+                            <option value="{{ $mineros->nombres }}" data-otro-dato="{{ $mineros->id }}"
                                 {{ $formulario->razon_social == $mineros->nombres ? 'selected' : '' }}>
                                 {{ $mineros->nombres }}
                             </option>
                             @endforeach
                         </select>
-                        {{ Form::hidden('municipio', $formulario->razon_social, ['id' => 'municipio']) }}
+                        {{ Form::hidden('nameRazonSocial', $formulario->razon_social, ['id' => 'municipio']) }}
                         @if ($errors->has('municipios_id'))
                         <div class="alert alert-danger">{{ $errors->first('municipios_id') }}</div>
                         @endif
                     </div>
+                    <!-- Scrip para llenar datos de Razón Social -->
                     <script>
                         document.addEventListener('DOMContentLoaded', () => {
                             // Inicializar Select2
@@ -184,19 +184,56 @@
 
                             // Obtener el municipio guardado (nombre) y establecerlo en Select2
                             let selectedMunicipio = $('#municipio').val();
+
                             if (selectedMunicipio) {
                                 $('#select2-dropdown-min').val(selectedMunicipio).trigger('change');
                             }
 
                             // Capturar el evento de cambio
                             $('#select2-dropdown-min').on('change', (e) => {
-                                let municipio = $('#select2-dropdown-min').val(); // Obtener nombre del municipio seleccionado
-                                let codigo = $('#select2-dropdown-min option:selected').data('otro-dato'); // Obtener código
+                                let razonSocial = $('#select2-dropdown-min').val(); // Obtener nombre del municipio seleccionado
+                                let idRocmin = $('#select2-dropdown-min option:selected').data('otro-dato'); // Obtener código
 
-                                // Asignar los valores a los inputs ocultos
-                                $('#codigo').val(codigo);
-                                $('#codigo-municipio_disabled').val(codigo);
-                                $('#municipio').val(municipio); // Guarda el nombre seleccionado
+                                // console.log(razonSocial);
+                                // console.log(idRocmin);
+                                $('#nameRazonSocial').val(razonSocial); // Guarda el nombre seleccionado
+
+                                // Ajax
+                                $.ajax({
+                                    type: 'GET',
+                                    url: '/dashboard/minero/getdata/' + idRocmin, // Concatenar el 'idRocmin' a la URL
+                                    data: {
+                                        _token: '{{ csrf_token() }}'
+                                    },
+                                    beforeSend: function() {
+                                        // console.log('Esta buscando los datos de la empresa');
+                                    },
+                                    success: function(response) {
+                                        // console.log(response);
+                                        // Actualizar el campo con datos selecionados
+                                        // $('#nameRazonSocial').val(razonSocial); // Guarda el nombre seleccionado
+                                        const {
+                                            nro_nim,
+                                            nro_nit,
+                                            rocmin
+                                        } = response;
+
+                                        $('#nro_nim_disabled').val(nro_nim); // Guarda el nombre seleccionado
+                                        $('#nro_nim').val(nro_nim); // Guarda el nombre seleccionado
+                                        $('#nro_nim_disabled').prop('disabled', true);
+
+                                        $('#nro_nit_disabled').val(nro_nit); // Guarda el nombre seleccionado
+                                        $('#nro_nit').val(nro_nit); // Guarda el nombre seleccionado
+                                        $('#nro_nit_disabled').prop('disabled', true);
+
+                                        $('#ruim_disabled').val(rocmin); // Guarda el nombre seleccionado
+                                        $('#ruim').val(rocmin); // Guarda el nombre seleccionado
+                                        $('#ruim_disabled').prop('disabled', true);
+
+                                    }
+                                });
+
+
                             });
                         });
                     </script>
@@ -860,6 +897,10 @@
                                         <div class="form-check">
                                             {{ Form::radio('transporte', 'Camión', $formulario->transporte == 'Camión', ['class' => 'form-check-input']) }}
                                             {{ Form::label('camion', 'Camión', ['class' => 'form-check-label']) }}
+                                        </div>
+                                        <div class="form-check">
+                                            {{ Form::radio('transporte', 'Otros', $formulario->transporte == 'Otros', ['class' => 'form-check-input']) }}
+                                            {{ Form::label('otros', 'Otros', ['class' => 'form-check-label']) }}
                                         </div>
                                     </div>
                                     <!-- Agrega mensajes de error según sea necesario -->

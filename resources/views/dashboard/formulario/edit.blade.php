@@ -23,6 +23,7 @@
                 </div>
                 <div class="card-body">
 
+
                     @if($alta == 'Habilitado')
                     <form method="POST" action="{{ route('admin.formularios.update', $formulario->id) }}" role="form" enctype="multipart/form-data">
                         {{ method_field('PATCH') }}

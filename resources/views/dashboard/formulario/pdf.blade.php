@@ -238,7 +238,7 @@
      <table>
          <tr>
              <td class="borde" style="width: 150px;">Comprador</td>
-             <td class="borde" style="width: 193px;">{{ $formulario->comercializadora }}</td>
+             <td class="borde" style="width: 193px;">{{ $formulario->comprador }}</td>
              <td style="width: 14px;"></td>
              <td class="borde" style="width: 150px;">Destino</td>
              <td class="borde">{{ $formulario->destino }}</td>
@@ -267,6 +267,10 @@
 
                  @if($formulario->transporte == "Via ferrea")
                  <span style="margin-left: 25px;" class="transportes">Vía ferrea</span>
+                 @endif
+
+                 @if($formulario->transporte == "Otros")
+                 <span style="margin-left: 25px;" class="transportes">Otros</span>
                  @endif
              </td>
              <td style="width: 14px;"></td>

@@ -79,19 +79,20 @@
           </a>
           @endif
 
-          @if($tipo != 'empresas' && $tipo != 'mineros')
+          <!-- @if($tipo != 'empresas' && $tipo != 'mineros')
           <a href="{{route('admin.tipo.formularios.create',['opcion'=>'interno'])}}">
             <i class="bi bi-circle"></i><span>Formulario 101 de Transporte Interno</span>
           </a>
           <a href="{{route('admin.tipo.formularios.create',['opcion'=>'externo'])}}">
             <i class="bi bi-circle"></i><span>Formulario 101 de Exportacion</span>
           </a>
-          @endif
+          @endif -->
 
 
         </li>
         @endcan
 
+        @if($tipo != 'funcionarios')
         @can('admin.staging')
         <li>
           <a href="{{route('admin.staging')}}">
@@ -115,6 +116,7 @@
           </a>
         </li>
         @endcan
+        @endif
 
 
         @can('admin.gestionbuscar')

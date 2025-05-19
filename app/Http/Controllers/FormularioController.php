@@ -281,6 +281,8 @@ class FormularioController extends Controller
     public function edit($id)
     {
 
+        // dd($id);
+
         $mensaje = null;
         $alta = null;
 
@@ -299,6 +301,7 @@ class FormularioController extends Controller
 
         $user = Auth::user(); // Accede al usuario autenticado
         $alta = $user->estado;
+        $nameBd = $user->name_bd;
 
         // Mensaje de caducidad a 5 dias del reistro del NIM
         $user = User::find($user->id);
@@ -326,7 +329,7 @@ class FormularioController extends Controller
             }
         }
 
-        return view('dashboard/formulario.edit', compact('formulario', 'metales', 'nometales', 'municipios', 'cantStaging', 'tipo', 'mensaje', 'alta', 'opcion', 'comercios'));
+        return view('dashboard/formulario.edit', compact('formulario', 'metales', 'nometales', 'municipios', 'cantStaging', 'tipo', 'mensaje', 'alta', 'opcion', 'comercios', 'nameBd'));
     }
 
 

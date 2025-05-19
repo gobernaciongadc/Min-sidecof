@@ -339,7 +339,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="form-group text-uppercase">
                                             <strong class="text-uppercase">Comprador</strong>
-                                            {{ $formulario->comercializadora}}
+                                            {{ $formulario->comprador}}
 
                                         </div>
                                     </div>

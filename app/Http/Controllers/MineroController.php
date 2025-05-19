@@ -96,6 +96,12 @@ class MineroController extends Controller
         return view('dashboard/minero.show', compact('minero'));
     }
 
+    function showGetData($id)
+    {
+        $minero = Minero::find($id);
+        return response()->json($minero);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
