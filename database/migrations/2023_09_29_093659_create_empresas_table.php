@@ -28,8 +28,16 @@ return new class extends Migration
             $table->string('img_mapa')->nullable();
             $table->string('archivo_pdf')->nullable();
 
+            $table->string('representante_legal');
+            $table->string('carnet');
+            $table->string('celular');
+            $table->string('patente');
+
             $table->dateTime('fecha_inscripcion');
-            $table->foreignId('municipios_id')->constrained('municipios')->onUpdate('cascade')->onDelete('restrict');
+            // Modificado para aceptar N municipios
+            // $table->foreignId('municipios_id')->constrained('municipios')->onUpdate('cascade')->onDelete('restrict');
+            $table->string('n_municipios', 800);
+
             $table->string('estado')->default('Habilitado');
             $table->integer('user_active')->default(0);
             $table->foreignId('users_id')->constrained('users')->onUpdate('cascade')->onDelete('restrict');

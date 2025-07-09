@@ -104,6 +104,41 @@
                         {{ Form::select('estado', ['Habilitado' => 'Habilitado', 'No habilitado' => 'No habilitado'], $minero->estado, ['class' => 'form-select' . ($errors->has('estado') ? ' is-invalid' : '')]) }}
                         {!! $errors->first('estado', '<div class="invalid-feedback">:message</div>') !!}
                     </div>
+
+                    <!-- REPRESENTANTE LEGAL -->
+
+                    <div class="col-12 mt-3">
+                        <div class="card">
+
+                            <div class="card-body">
+                                <label for="">REPRESENTANTE LEGAL</label>
+                                <div class="row">
+                                    <div class="col-12  mt-3">
+                                        {{ Form::label('Representante','Representante') }}
+                                        <span class="text-danger">*</span>
+                                        {{ Form::text('representante_legal', $minero->representante_legal, ['class' => 'form-control' . ($errors->has('representante_legal') ? ' is-invalid' : ''), 'placeholder' => 'Representante legal','id'=>'representante_legal']) }}
+                                        {!! $errors->first('representante_legal', '<div class="invalid-feedback">:message</div>') !!}
+                                    </div>
+                                    <div class="col-12  mt-3">
+                                        {{ Form::label('carnet','Carnet') }}
+                                        <span class="text-danger">*</span>
+                                        {{ Form::text('carnet', $minero->carnet, ['class' => 'form-control' . ($errors->has('carnet') ? ' is-invalid' : ''), 'placeholder' => 'Carnet','id'=>'carnet']) }}
+                                        {!! $errors->first('carnet', '<div class="invalid-feedback">:message</div>') !!}
+                                    </div>
+                                    <div class="col-12  mt-3">
+                                        {{ Form::label('celular','Celular') }}
+                                        <span class="text-danger">*</span>
+                                        {{ Form::text('celular', $minero->celular, ['class' => 'form-control' . ($errors->has('celular') ? ' is-invalid' : ''), 'placeholder' => 'Celular','id'=>'celular']) }}
+                                        {!! $errors->first('celular', '<div class="invalid-feedback">:message</div>') !!}
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
             <div class="col-12 col-md-7">
@@ -212,6 +247,7 @@
                         {{ Form::text('latitud', $minero->latitud, ['class' => 'form-control' . ($errors->has('latitud') ? ' is-invalid' : ''), 'placeholder' => 'Latitud','id'=>'latitud']) }}
                         {!! $errors->first('latitud', '<div class="invalid-feedback">:message</div>') !!}
                     </div>
+
                 </div>
             </div>
         </div>

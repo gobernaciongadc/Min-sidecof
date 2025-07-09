@@ -19,11 +19,19 @@ use Illuminate\Database\Eloquent\Model;
  * @property $longitud
  * @property $latitud
   
- * @property $municipios_id
+ * @property $n_municipios
  * @property $fecha_inscripcion
  * @property $archivo_pdf
  * @property $estado
  * @property $users_id
+ * 
+ * @property $representante_legar
+ * @property $carnet
+ * @property $celular
+ * @property $patente
+ * 
+ * 
+ * 
  * @property $created_at
  * @property $updated_at
  *
@@ -46,7 +54,12 @@ class Empresa extends Model
     'longitud' => 'required',
     'latitud' => 'required',
 
-    'municipios_id' => 'required',
+    'representante_legal' => 'required',
+    'carnet' => 'required',
+    'celular' => 'required',
+    'patente' => 'required',
+
+    'n_municipios' => 'required',
     'fecha_inscripcion' => 'required',
     'archivo_pdf' => 'nullable|mimes:pdf', // PDF y tamaño máximo de 30 MB 
     'estado' => 'required',
@@ -59,7 +72,7 @@ class Empresa extends Model
    *
    * @var array
    */
-  protected $fillable = ['tipo_metalico', 'tipo_no_metalico', 'nombres', 'ruim', 'mineral', 'municipios_id', 'fecha_inscripcion', 'estado', 'users_id', 'user_active', 'nro_nit', 'nro_nim', 'fecha_caducidad', 'longitud', 'latitud', 'archivo_pdf'];
+  protected $fillable = ['tipo_metalico', 'tipo_no_metalico', 'nombres', 'ruim', 'mineral', 'n_municipios', 'fecha_inscripcion', 'estado', 'users_id', 'user_active', 'nro_nit', 'nro_nim', 'fecha_caducidad', 'longitud', 'latitud', 'archivo_pdf', 'representante_legal', 'carnet', 'celular', 'patente'];
 
   /**
    * @return \Illuminate\Database\Eloquent\Relations\HasOne
@@ -67,10 +80,5 @@ class Empresa extends Model
   public function user()
   {
     return $this->hasOne('App\Models\User', 'id', 'users_id'); // Recibe a usuarios
-  }
-
-  public function municipio()
-  {
-    return $this->hasOne('App\Models\Municipio', 'id', 'municipios_id'); // Recibe a municipios
   }
 }

@@ -176,9 +176,10 @@
      <div class="section-title">2. Datos del Mineral y/o Metal Exportado</div>
      <table>
          <tr>
-             <td class="borde">N° de Lote</td>
+             <td style="width: 100px;" class="borde">N° de Lote</td>
              <td class="borde">{{ $formulario->nro_lote }}</td>
-             <td class="borde">Tara (Kg.)</td>
+             <td></td>
+             <td style="width: 100px;" class="borde">Tara (Kg.)</td>
              <td class="borde">
                  @if(is_null($formulario->tara_kg) || $formulario->tara_kg == '')
                  <span class="subs-respuesta subs-respuesta--text " style="color: white;">.</span>
@@ -189,7 +190,7 @@
          </tr>
 
          <tr>
-             <td class="borde">Tipo de Mineral</td>
+             <td style="width: 100px;" class="borde">Tipo de Mineral</td>
              <td class="borde">
                  @if($formulario->tipo_min_metalico != null)
                  <span class="subs-respuesta subs-respuesta--text">{{ $formulario->tipo_min_metalico }}</span>
@@ -198,22 +199,38 @@
                  <span class="subs-respuesta subs-respuesta--text">{{ $formulario->tipo_min_nometalico }}</span>
                  @endif
              </td>
-             <td class="borde">Humedad (%)</td>
+             <td></td>
+             <td style="width: 100px;" class="borde">Humedad (%)</td>
              <td class="borde">{{ $formulario->humedad }}</td>
          </tr>
 
          <tr>
-             <td class="borde">Presentación</td>
+             <td style="width: 100px;" class="borde">Presentación</td>
              <td class="borde">{{ $formulario->presentacion }}</td>
-             <td class="borde">Merma (%)</td>
+             <td></td>
+             <td style="width: 100px;" class="borde">Merma (%)</td>
              <td class="borde">{{ $formulario->merma }}</td>
+
+
          </tr>
 
          <tr>
-             <td class="borde">Alicuota</td>
+             <td style="width: 100px;" class="borde">Alicuota</td>
              <td class="borde">{{ $formulario->alicuota }}</td>
-             <td class="borde">Peso Neto</td>
+             <td></td>
+             <td style="width: 100px;" class="borde">Peso Neto</td>
              <td class="borde">{{ $formulario->peso_neto_kg }}</td>
+         </tr>
+     </table>
+     <table>
+         <tr>
+             <td style="width: 75px" class="borde">PESO BRUTO</td>
+             <td class="borde">{{ $formulario->peso_bruto_kg }}</td>
+             <td style="width: 75px;" class="borde">UNIDAD</td>
+             <td class="borde">{{ $formulario->unidad }}</td>
+             <td></td>
+             <td style="width: 75px;" class="borde">LEY</td>
+             <td class="borde">{{ $formulario->ley }}</td>
          </tr>
      </table>
      <div class="section-title">3. Origen del Mineral y/o Metal</div>
@@ -234,6 +251,7 @@
              <td></td>
          </tr>
      </table>
+
      <div class="section-title">4. Destino del Mineral y/o Metal</div>
      <table>
          <tr>
@@ -340,7 +358,7 @@
                      </div>
                  </td>
                  <td style="width: 400px;border: none;border-bottom: 1px solid rgb(193, 193, 194);">
-                     <p class="titulo-cabecera">Gobierno autónomo departamental de cochabamba <br>secretaria departamental de mineria e hidrocarburos</p>
+                     <p class="titulo-cabecera">Gobierno autónomo departamental de cochabamba <br>secretaria departamental de mineria, hidrocarburos y energias</p>
                  </td>
                  <td style="width: 145px;border: none;border-bottom: 1px solid rgb(193, 193, 194);">
                      <div class="logo">
@@ -389,7 +407,7 @@
              <td class="borde">{{ $formulario->nro_nit }}</td>
              <td></td>
              <td class="borde" style="width: 2px;">4</td>
-             <td class="borde">N° de ROCMIN</td>
+             <td class="borde">N° de RUIM</td>
              <td class="borde">{{ $formulario->ruim }}</td>
 
          </tr>
@@ -468,8 +486,8 @@
      <table>
          <tr>
              <td class="borde" style="width: 2px;">15</td>
-             <td class="borde">Peso Neto({{ $formulario->codigo }})</td>
-             <td class="borde">{{ $formulario->peso_neto_kg }}</td>
+             <td class="borde">Codigo Municipio</td>
+             <td class="borde">{{ $formulario->codigo }}</td>
              <td></td>
              <td class="borde" style="width: 2px;">16</td>
              <td class="borde">Comercializadora y/o<br>Agente de retención</td>
@@ -511,7 +529,7 @@
              <td class="borde">Placa</td>
              <td class="borde">{{ $formulario->placa }}</td>
              <td></td>
-             <td class="borde" style="width: 2px;">20</td>
+             <td class="borde" style="width: 2px;">21</td>
              <td class="borde">Chofer</td>
              <td class="borde">{{ $formulario->chofer }}</td>
          </tr>

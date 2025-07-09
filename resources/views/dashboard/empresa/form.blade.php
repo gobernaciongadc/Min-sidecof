@@ -123,6 +123,8 @@
 
 
 
+
+
                     <div class="col-12 mt-3">
                         <label for="nombres">Empresa y/o Cooperativa:</label>
                         <span class="text-danger">*</span>
@@ -162,41 +164,41 @@
 
                     </div>
 
-
-                    <!-- Campo municipios -->
+                    <!-- Para municipio -->
                     <div class="col-12 mt-3">
                         <div class="form-group">
-                            {{ Form::label('municipios_id', 'Seleccione un municipio') }}
+                            {{ Form::label('mineral', 'Seleccionar municipio') }}
                             <span class="text-danger">*</span>
-                            <select class="form-control" id="select2-dropdown" style="width: 100%;">
-                                <option value="">-Seleccionar-</option>
+                            <select class="form-control" id="select2-multiselect-municipio" multiple style="width: 100%;">
                                 @foreach($municipios as $municipio)
-                                <option value="{{$municipio->id}}" data-otro-dato="{{$municipio->codigo}}" @if($municipio->id == $empresa->municipios_id) selected @endif>
+                                <option value="{{$municipio->id}}" data-otro-dato="{{$municipio->codigo}}" @if(in_array($municipio->id, explode(',', $empresa->n_municipios))) selected @endif>
                                     {{ $municipio->municipio }}
                                 </option>
                                 @endforeach
                             </select>
-                            {{ Form::hidden('municipios_id', $empresa->municipios_id, ['id' => 'hidden-municipio-id']) }}
-                            @if ($errors->has('municipios_id'))
-                            <div class="alert alert-danger">{{ $errors->first('municipios_id') }}</div>
+                            {{ Form::hidden('n_municipios', $empresa->municipios_id, ['id' => 'hidden-municipio-id']) }}
+                            @if ($errors->has('n_municipios'))
+                            <div class="alert alert-danger">{{ $errors->first('n_municipios') }}</div>
                             @endif
                         </div>
                         <script>
-                            // Carga primero el HTML y luego ejecuta javascript
+                            // Carga primero el HTML y luego ejecuta JavaScript
                             document.addEventListener('DOMContentLoaded', () => {
-                                // Municipios
-                                $('#select2-dropdown').select2(); // Inicializar
-                                // Capturar Values when change event
-                                $('#select2-dropdown').on('change', (e) => {
-                                    let id = $('#select2-dropdown').select2("val"); // get id municipio
-                                    let municipio = $('#select2-dropdown option:selected').text(); // get nombre municipio
-                                    let codigo = $('#select2-dropdown option:selected').data('otro-dato'); // Obtener data-otro-dato
-
-                                    // Asignar el valor al input oculto
-                                    $('#hidden-municipio-id').val(id);
-                                }); // Fin municipios
-
-                            })
+                                // Minerales (Multiselect)
+                                $('#select2-multiselect-municipio').select2(); // Inicializar como multiselect
+                                // Capturar valores en el evento change
+                                $('#select2-multiselect-municipio').on('change', (e) => {
+                                    updateHiddenField();
+                                });
+                                // Función para actualizar el campo oculto
+                                function updateHiddenField() {
+                                    let selectedValues = $('#select2-multiselect-municipio').val(); // Obtener valores seleccionados como un array
+                                    // Asignar los valores al input oculto como una cadena separada por comas
+                                    $('#hidden-municipio-id').val(selectedValues.join(','));
+                                }
+                                // Actualizar el campo oculto al inicio
+                                updateHiddenField();
+                            });
                         </script>
                     </div>
 
@@ -387,6 +389,48 @@
                         {{ Form::text('latitud', $empresa->latitud, ['class' => 'form-control' . ($errors->has('latitud') ? ' is-invalid' : ''), 'placeholder' => 'Latitud','id'=>'latitud']) }}
                         {!! $errors->first('latitud', '<div class="invalid-feedback">:message</div>') !!}
                     </div>
+
+                    <!-- REPRESENTANTE LEGAL -->
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <div class="card">
+
+                                <div class="card-body">
+                                    <label for="">REPRESENTANTE LEGAL</label>
+                                    <div class="row">
+                                        <div class="col-12 col-md-6 mt-3">
+                                            {{ Form::label('Representante','Representante') }}
+                                            <span class="text-danger">*</span>
+                                            {{ Form::text('representante_legal', $empresa->representante_legal, ['class' => 'form-control' . ($errors->has('representante_legal') ? ' is-invalid' : ''), 'placeholder' => 'Representante legal','id'=>'representante_legal']) }}
+                                            {!! $errors->first('representante_legal', '<div class="invalid-feedback">:message</div>') !!}
+                                        </div>
+                                        <div class="col-12 col-md-6 mt-3">
+                                            {{ Form::label('carnet','Carnet') }}
+                                            <span class="text-danger">*</span>
+                                            {{ Form::text('carnet', $empresa->carnet, ['class' => 'form-control' . ($errors->has('carnet') ? ' is-invalid' : ''), 'placeholder' => 'Carnet','id'=>'carnet']) }}
+                                            {!! $errors->first('carnet', '<div class="invalid-feedback">:message</div>') !!}
+                                        </div>
+                                        <div class="col-12 col-md-6 mt-3">
+                                            {{ Form::label('celular','Celular') }}
+                                            <span class="text-danger">*</span>
+                                            {{ Form::text('celular', $empresa->celular, ['class' => 'form-control' . ($errors->has('celular') ? ' is-invalid' : ''), 'placeholder' => 'Celular','id'=>'celular']) }}
+                                            {!! $errors->first('celular', '<div class="invalid-feedback">:message</div>') !!}
+                                        </div>
+                                        <div class="col-12 col-md-6 mt-3">
+                                            {{ Form::label('patente','Patente') }}
+                                            <span class="text-danger">*</span>
+                                            {{ Form::text('patente', $empresa->patente, ['class' => 'form-control' . ($errors->has('patente') ? ' is-invalid' : ''), 'placeholder' => 'Patente','id'=>'patente']) }}
+                                            {!! $errors->first('latitud', '<div class="invalid-feedback">:message</div>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
                 </div>
             </div>
 

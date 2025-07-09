@@ -83,7 +83,7 @@ Puesto en ecena
         const spinner = document.getElementById('spinner'); // Obtén el elemento del spinner
 
         const btn_gestion_buscar = document.getElementById('btn_gestion_buscar');
-        btn_gestion_buscar.disabled = true;
+        btn_gestion_buscar.disabled = false;
 
         // Evento click button
         $('#btn_gestion_buscar').click(function(e) {
@@ -94,6 +94,9 @@ Puesto en ecena
         function realizarBusqueda() {
             // Mostrar el spinner antes de la solicitud AJAX
             spinner.style.display = 'inline-block';
+
+            console.log(gestion_buscar.value);
+
 
             $.ajax({
                 type: 'POST',
@@ -199,7 +202,7 @@ Puesto en ecena
                         const finalizar = document.getElementById('finalizar-formulario');
                         const nro_formulario = finalizar.getAttribute('data-otro-dato');
 
-                        console.log(nro_formulario);
+                        // console.log(nro_formulario);
 
                         $.ajax({
                             type: 'POST',
@@ -217,7 +220,8 @@ Puesto en ecena
                                     datos_gestion_buscar
                                 } = response;
 
-                                console.log(datos_gestion_buscar);
+                                // console.log(datos_gestion_buscar);
+
 
                                 Toastify({
                                     text: 'SISTEMA DE REGALIAS MINERAS, EL FORMULARIO SE FINALIZO CORRECTAMENTE',
@@ -239,26 +243,26 @@ Puesto en ecena
                                 $('#gestion_buscar_1 tbody').empty();
 
                                 // Itera a través de los datos en la respuesta y agrega filas a la tabla
-                                for (let i = 0; i < datos_gestion_buscar.length; i++) {
-                                    let rowData = datos_gestion_buscar[i];
-                                    let newRow = '<tr>' +
-                                        '<td>' + (rowData.nro_formulario !== null ? rowData.nro_formulario : '<span class="text-danger">SIN EMISIÓN</span>') + '</td>' +
-                                        '<td>' + rowData.razon_social + '</td>' +
-                                        '<td>' + (rowData.tipo_min_metalico !== null ? rowData.tipo_min_metalico : rowData.tipo_min_nometalico) + '</td>' + // Operador ternario
-                                        '<td>' + rowData.alicuota + '</td>' +
-                                        '<td>' + rowData.fecha_emision + '</td>' +
-                                        '<td>' + rowData.fecha_valides + '</td>' +
-                                        '<td>' + rowData.comercio + '</td>' +
-                                        '<td>' + (rowData.estado_entrega === 0 ? '<span class="text-danger">No finalizado</span>' : '<span class="text-success">Finalizado</span>') + '</td>' + // Operador ternario
-                                        `<td>
+
+                                let rowData = datos_gestion_buscar;
+                                let newRow = '<tr>' +
+                                    '<td>' + (rowData.nro_formulario !== null ? rowData.nro_formulario : '<span class="text-danger">SIN EMISIÓN</span>') + '</td>' +
+                                    '<td>' + rowData.razon_social + '</td>' +
+                                    '<td>' + (rowData.tipo_min_metalico !== null ? rowData.tipo_min_metalico : rowData.tipo_min_nometalico) + '</td>' + // Operador ternario
+                                    '<td>' + rowData.alicuota + '</td>' +
+                                    '<td>' + rowData.fecha_emision + '</td>' +
+                                    '<td>' + rowData.fecha_valides + '</td>' +
+                                    '<td>' + rowData.comercio + '</td>' +
+                                    '<td>' + (parseInt(rowData.estado_entrega) === 0 ? '<span class="text-danger">No finalizado</span>' : '<span class="text-success">Finalizado</span>') + '</td>' + // Operador ternario
+                                    `<td>
                                             <div class="">
                                                 <a class="btn btn-success" id="finalizado" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Finalizar formulario">FINALIZADO</a>
                                             </div>
                                         </td>
                                         ` +
-                                        '</tr>';
-                                    $('#gestion_buscar_1 tbody').append(newRow);
-                                }
+                                    '</tr>';
+                                $('#gestion_buscar_1 tbody').append(newRow);
+
 
                                 $('#finalizado').on('click', () => {
                                     Toastify({

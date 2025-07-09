@@ -85,7 +85,7 @@ Buscar Formulario
         const spinner = document.getElementById('spinner'); // Obtén el elemento del spinner
 
         const btn_gestion_buscar = document.getElementById('btn_gestion_buscar');
-        btn_gestion_buscar.disabled = true;
+        btn_gestion_buscar.disabled = false;
 
         // Evento click button
         $('#btn_gestion_buscar').click(function(e) {
@@ -112,6 +112,8 @@ Buscar Formulario
                     const {
                         datos_gestion_buscar
                     } = response;
+
+                    // console.log(datos_gestion_buscar);
 
                     // Validacion de el array esta vacio
                     if (datos_gestion_buscar.length === 0) {

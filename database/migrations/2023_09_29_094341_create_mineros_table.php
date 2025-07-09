@@ -25,6 +25,10 @@ return new class extends Migration
             $table->string('telefono');
             $table->string('estado')->default('Habilitado');
 
+            $table->string('representante_legal');
+            $table->string('carnet');
+            $table->string('celular');
+
             $table->string('longitud');
             $table->string('latitud');
             $table->string('archivo_pdf')->nullable();

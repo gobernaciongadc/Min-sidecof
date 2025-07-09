@@ -20,6 +20,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property $nro_nim
  * @property $fecha_caducidad
  * @property $users_id
+ * @property $representante_legar
+ * @property $carnet
+ * @property $celular
  * @property $longitud
  * @property $latitud
  * @property $created_at
@@ -42,6 +45,9 @@ class Minero extends Model
     'nro_nit' => 'required',
     'nro_nim' => 'required',
     'fecha_caducidad' => 'required',
+    'representante_legal' => 'required',
+    'carnet' => 'required',
+    'celular' => 'required',
     'longitud' => 'required',
     'latitud' => 'required',
     'archivo_pdf' => 'nullable|mimes:pdf', // PDF y tamaño máximo de 30 MB 
@@ -68,7 +74,10 @@ class Minero extends Model
     'user_active',
     'longitud',
     'latitud',
-    'archivo_pdf'
+    'archivo_pdf',
+    'representante_legal',
+    'carnet',
+    'celular'
   ];
 
 

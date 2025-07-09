@@ -15,7 +15,7 @@
                 <img style="width: 150px;" src="{{asset('dashboard/img/logo-gadc.jpg')}}" alt="logo-gobernacion">
             </div>
             <div class="col-12 col-md-6 titulo-formulario text-uppercase d-flex flex-column justify-content-center">
-                <p class="text-center head-titulo">Gobierno autónomo departamental de cochabamba <br>secretaria departamental de mineria e hidrocarburos</p>
+                <p class="text-center head-titulo">Gobierno autónomo departamental de cochabamba <br>secretaria departamental de mineria, hidrocarburos y energias</p>
             </div>
             <div class="col-12 col-md-3 text-end">
                 <img style="width: 150px;" src="{{asset('dashboard/img/logo-gadc.png')}}" alt="logo-gobernacion">
@@ -522,7 +522,7 @@
                                     <span style="color: black;">10.</span>
                                     {{ Form::label('alicuota-show', 'ALÍCUOTA') }}
                                     <span class="text-danger">*</span>
-                                    {{ Form::text('alicuota-show', $formulario->alicuota, ['class' => 'form-control', 'id'=>'alicuota-show', 'disabled' => 'disabled', 'style'=>'background-color: #ffffff !important']) }}
+                                    {{ Form::text('alicuota-show', $formulario->alicuota, ['class' => 'form-control', 'id'=>'alicuota-show',  'style'=>'background-color: #ffffff !important']) }}
 
                                     {{ Form::hidden('alicuota', $formulario->alicuota,['class' => 'form-control' . ($errors->has('alicuota') ? ' is-invalid' : ''),'id' => 'alicuota']) }}
                                     {!! $errors->first('alicuota', '<div class="invalid-feedback">:message</div>') !!}
@@ -614,17 +614,45 @@
                             <!-- 14.- MUNICIPIO PRODUCTOR -->
                             <div class="col-12 col-md-7 mt-3">
                                 <div class="form-group">
-                                    <span style="color: black;">14.</span>
-                                    {{ Form::label('municipio_disabled', 'MUNICIPIO PRODUCTOR') }}
+                                    {{ Form::label('municipio', 'Seleccione un municipio') }}
                                     <span class="text-danger">*</span>
-
-                                    {{ Form::text('municipio_disabled', $formulario->municipio ?? $empresa->municipio->municipio, ['class' => 'form-control' . ($errors->has('municipio_disabled') ? ' is-invalid' : ''),'placeholder' => 'Municipio', 'disabled' => 'disabled']) }}
-
-                                    {!! $errors->first('municipio_disabled', '<div class="invalid-feedback">:message</div>') !!}
-
-                                    {{ Form::hidden('municipio', $formulario->municipio ?? $empresa->municipio->municipio, ['id' => 'municipio']) }}
+                                    <select class="form-control" id="select2-dropdown" style="width: 100%;">
+                                        <option value="" disabled selected>-Seleccionar-</option>
+                                        @foreach($municipiosCoincidentes as $municipio)
+                                        <option value="{{ $municipio->municipio }}"
+                                            data-otro-dato="{{ $municipio->codigo }}"
+                                            @if($municipio->codigo == $formulario->codigo) selected @endif>
+                                            {{ $municipio->municipio }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                    {{ Form::hidden('municipio', $empresa->municipios_id, ['id' => 'hidden-municipio']) }}
+                                    @if ($errors->has('municipio'))
+                                    <div class="alert alert-danger">{{ $errors->first('municipio') }}</div>
+                                    @endif
                                 </div>
+
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', () => {
+                                        $('#select2-dropdown').select2(); // Activar Select2
+
+                                        $('#select2-dropdown').on('change', () => {
+
+                                            let selectedOption = $('#select2-dropdown option:selected');
+                                            let codigo = selectedOption.data('otro-dato'); // ← AQUÍ ESTÁ
+                                            let municipio = selectedOption.val();
+
+                                            // console.log('El municipio seleccionado es: ' + municipio);
+
+                                            $('#codigo-municipio_disabled').val(codigo); // para mostrar en el campo disabled
+                                            $('#codigo').val(codigo); // para enviar al backend en el campo hidden
+                                            $('#hidden-municipio').val(municipio); // para enviar al backend en el campo hidden
+
+                                        });
+                                    });
+                                </script>
                             </div>
+
 
                             <!-- 15.- CODIGO MUNICIPIO -->
                             <div class="col-12 col-md-4 mt-3">
@@ -632,10 +660,16 @@
                                     <span style="color: black;">15.</span>
                                     {{ Form::label('codigo_disabled', 'CODIGO MUNICIPIO') }}
                                     <span class="text-danger">*</span>
-                                    {{ Form::text('codigo_disabled', $formulario->codigo ?? $empresa->municipio->codigo, ['class' => 'form-control' . ($errors->has('codigo_disabled') ? ' is-invalid' : ''), 'id' => 'codigo-municipio_disabled','placeholder' => 'Codigo', 'disabled' => 'disabled']) }}
+                                    {{ Form::text('codigo_disabled', $formulario->codigo, [
+                                        'class' => 'form-control' . ($errors->has('codigo_disabled') ? ' is-invalid' : ''),
+                                        'id' => 'codigo-municipio_disabled',
+                                        'placeholder' => 'Código',
+                                        'disabled' => 'disabled'
+                                    ]) }}
+
                                     {!! $errors->first('codigo_disabled', '<div class="invalid-feedback">:message</div>') !!}
 
-                                    {{ Form::hidden('codigo', $formulario->codigo ?? $empresa->municipio->codigo, ['id' => 'codigo']) }}
+                                    {{ Form::hidden('codigo', $formulario->codigo, ['id' => 'codigo']) }}
                                 </div>
                             </div>
 

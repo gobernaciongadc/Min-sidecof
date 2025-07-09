@@ -266,7 +266,7 @@
                     </div>
                 </td>
                 <td style="width: 430px;">
-                    <p class="titulo-cabecera">Gobierno autónomo departamental de cochabamba <br>secretaria departamental de mineria e hidrocarburos</p>
+                    <p class="titulo-cabecera">Gobierno autónomo departamental de cochabamba <br>secretaria departamental de mineria, hidrocarburos y energias</p>
                 </td>
                 <td style="width: 145px;">
                     <div class="logo">
@@ -373,7 +373,7 @@
                 <td>
                     <div class="" style="font-size: 14px; margin-bottom: 5px;">
                         <strong>Municipio:</strong>
-                        {{ $empresa->municipio->municipio }}
+                        {{ $municipiosCoincidentes }}
                     </div>
 
                     <div class="" style="font-size: 14px; margin-bottom: 5px;">
@@ -409,6 +409,42 @@
     <br>
 
     <!-- Bloque datos-->
+    <div class="" style="font-size: 14px; text-transform: uppercase; margin-bottom: 10px; color: #273c75;">
+        <strong>Representante Legal</strong>
+    </div>
+    <table>
+        <tbody>
+            <tr>
+                <td style="width: 450px;">
+
+                    <div class="" style="font-size: 14px; margin-bottom: 5px;">
+                        <strong>Representante:</strong>
+                        {{ $empresa->representante_legal }}
+                    </div>
+
+                    <div class="" style="font-size: 14px; margin-bottom: 5px;">
+                        <strong>Carnet:</strong>
+                        {{ $empresa->carnet }}
+                    </div>
+
+                    <div class="" style="font-size: 14px; margin-bottom: 5px;">
+                        <strong>Celular:</strong>
+                        {{ $empresa->celular }}
+                    </div>
+
+                    <div class="" style="font-size: 14px; margin-bottom: 5px;">
+                        <strong>Patente:</strong>
+                        {{ $empresa->patente }}
+                    </div>
+
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+    <br>
+
+    <!-- Bloque datos-->
     <div class="" style="font-size: 14px; text-transform: uppercase;  color: #273c75;">
         <strong>Lugar de operación</strong>
     </div>
@@ -419,8 +455,8 @@
     <table>
         <tbody>
             <tr>
-                <td style="width: 710px;">
-                    <img class="img-logo" style="width: 700px;" src="storage/mapa_captura/{{$empresa->img_mapa}}" alt="Escudo gobernación">
+                <td style="width: 410px;">
+                    <img class="img-logo" style="width: 400px;" src="storage/mapa_captura/{{$empresa->img_mapa}}" alt="lugar de operación">
                 </td>
             </tr>
         </tbody>
@@ -471,5 +507,5 @@
         </table>
     </div>
     <!-- FIN Bloque 11 pie de Pagina -->
-    <!-- FIN Bloque 11 pie de Pagina -->
+
 </div>

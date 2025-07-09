@@ -87,7 +87,7 @@ Reporte cantidad de formularios por empresas
 
                                             } = response;
 
-                                            console.log(listaEmpresas);
+                                            // console.log(listaEmpresas);
 
                                             if (status === 'success' && listaEmpresas.length != 0) {
                                                 $('#primer-reporte').removeClass('d-none');
@@ -108,7 +108,7 @@ Reporte cantidad de formularios por empresas
                                                     onClick: function() {} // Callback after click
                                                 }).showToast();
 
-                                                console.log(municipio.municipio);
+                                                // console.log(municipio.municipio);
                                                 municipioInput.innerText = municipio.municipio;
 
                                                 // Obtener la fecha y hora actual

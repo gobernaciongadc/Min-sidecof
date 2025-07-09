@@ -78,6 +78,26 @@
                                 <strong>Estado:</strong>
                                 {{ $minero->estado }}
                             </div>
+
+                            <div class="card">
+
+                                <div class="card-body">
+                                    <div class="form-group mt-2">
+                                        <strong>Representante Legal:</strong>
+                                        {{ $minero->representante_legal }}
+                                    </div>
+                                    <div class="form-group mt-2">
+                                        <strong>Carnet:</strong>
+                                        {{ $minero->carnet }}
+                                    </div>
+                                    <div class="form-group mt-2">
+                                        <strong>Celular:</strong>
+                                        {{ $minero->celular }}
+                                    </div>
+                                </div>
+
+                            </div>
+
                             <div class="form-group mt-2">
                                 <strong>Usuario a cargo del registro:</strong>
                                 {{ $minero->user->name }}

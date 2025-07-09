@@ -138,7 +138,7 @@ Puesto en ecena
         const spinner = document.getElementById('spinner'); // Obtén el elemento del spinner
 
         const btn_gestion_buscar = document.getElementById('btn_gestion_buscar');
-        btn_gestion_buscar.disabled = true;
+        btn_gestion_buscar.disabled = false;
 
         // Datos de seguimiento a formulario
         const seg_nroform = document.getElementById('seg-nroformulario')
@@ -245,7 +245,7 @@ Puesto en ecena
                                 '<td>' + (rowData.fecha_valides !== null ? rowData.fecha_valides : '---') + '</td>' +
                                 '<td>' + (rowData.tipo_min_metalico !== null ? rowData.tipo_min_metalico : rowData.tipo_min_nometalico) + '</td>' + // Operador ternario
                                 '<td>' + rowData.placa + '</td>' +
-                                '<td>' + rowData.comercializadora + '</td>' +
+                                '<td>' + rowData.comprador + '</td>' +
                                 '</tr>';
                             $('#gestion_buscar_1 tbody').append(newRow);
                         }
@@ -271,7 +271,7 @@ Puesto en ecena
 
                             let newRow = '<tr>' +
                                 '<td>' + 'Fin actividad' + '</td>' +
-                                '<td>' + (rowData.estado_entrega === 0 ? '<span class="text-success">Formulario no finalizado</span>' : '<span class="text-danger">Formulario finalizado</span>') + '</td>' + // Operador ternario
+                                '<td>' + (rowData.estado_entrega === 0 ? '<span class="text-danger">Formulario no finalizado</span>' : '<span class="text-success">Formulario finalizado</span>') + '</td>' + // Operador ternario
                                 '<td>' + (rowData.estado_entrega === 0 ? '---' : fechaFormateada) + '</td>' + // Operador ternario
                                 '<td>' + (rowData.estado_entrega === 0 ? '---' : rowData.user.name) + '</td>' + // Operador ternario
                                 '</tr>';

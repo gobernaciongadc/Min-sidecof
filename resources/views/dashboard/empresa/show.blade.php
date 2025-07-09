@@ -74,7 +74,15 @@
 
                             <div class="form-group mt-2">
                                 <strong>Municipio:</strong>
-                                {{ $empresa->municipio->municipio }}
+                                @php
+                                $municipiosSeleccionados = explode(',', $empresa->n_municipios);
+                                @endphp
+
+                                @foreach ($municipios as $municipio)
+                                @if (in_array($municipio->id, $municipiosSeleccionados))
+                                {{ $municipio->municipio }}<br>
+                                @endif
+                                @endforeach
                             </div>
 
                             <div class="form-group mt-2">
@@ -99,11 +107,33 @@
                                 <input type="hidden" id="lat" value="{{ $empresa->latitud }}">
                             </div>
 
+                            <div class="card">
+
+                                <div class="card-body">
+                                    <div class="form-group mt-2">
+                                        <strong>Representante Legal:</strong>
+                                        {{ $empresa->representante_legal }}
+                                    </div>
+                                    <div class="form-group mt-2">
+                                        <strong>Carnet:</strong>
+                                        {{ $empresa->carnet }}
+                                    </div>
+                                    <div class="form-group mt-2">
+                                        <strong>Celular:</strong>
+                                        {{ $empresa->celular }}
+                                    </div>
+                                    <div class="form-group mt-2">
+                                        <strong>Patente:</strong>
+                                        {{ $empresa->patente }}
+                                    </div>
+                                </div>
+
+                            </div>
+
                             <div class="form-group mt-2">
                                 <strong>Usuario a cargo del registro:</strong>
                                 {{ $empresa->user->name }}
                             </div>
-
                             <div class="form-group mt-2">
                                 <strong>Documentos:</strong><br>
                                 <a class="btn btn-outline-info" id="documentos" value="{{ $empresa->archivo_pdf }}">Ver documentos</a>

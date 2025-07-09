@@ -329,11 +329,9 @@ class ReportesController extends Controller
 
             $municipio = Municipio::find($params->municipioId);
 
-            // Obtener la lista de empresas
-            $listaEmpresas = Empresa::where('municipios_id', $params->municipioId)
+            $listaEmpresas = Empresa::whereRaw("? = ANY(string_to_array(n_municipios, ','))", [$params->municipioId])
                 ->get();
 
-            // Obtener la cantidad de empresas
             $cantidadEmpresas = $listaEmpresas->count();
 
             try {

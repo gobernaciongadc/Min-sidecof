@@ -16,7 +16,7 @@
                 <img style="width: 150px;" src="{{asset('dashboard/img/logo-gadc.jpg')}}" alt="logo-gobernacion">
             </div>
             <div class="col-12 col-md-6 titulo-formulario text-uppercase d-flex flex-column justify-content-center">
-                <p class="text-center head-titulo">Gobierno autónomo departamental de cochabamba <br>secretaria departamental de mineria e hidrocarburos</p>
+                <p class="text-center head-titulo">Gobierno autónomo departamental de cochabamba <br>secretaria departamental de mineria, hidrocarburos y energias</p>
             </div>
             <div class="col-12 col-md-3 text-end">
                 <img style="width: 150px;" src="{{asset('dashboard/img/logo-gadc.png')}}" alt="logo-gobernacion">
@@ -407,6 +407,10 @@
 
                                 let datosAlicuotaMetalico = [];
                                 let datosAlicuotaNometalico = [];
+                                let alicuota = '';
+                                let alicuotaDos = '';
+                                let nuevaCadenaMetalico = '';
+                                let nuevaCadenaNometalico = '';
 
                                 // -------------SECTOR METALICO----------------
 
@@ -422,9 +426,9 @@
                                     const currentSelection = $('#select2-multiselect-nometalicos').val();
 
                                     // Limpiar selecciones en el multiselect-nometalicos solo si no está vacío
-                                    if (currentSelection && currentSelection.length > 0) {
-                                        $('#select2-multiselect-nometalicos').val([]).trigger('change');
-                                    }
+                                    // if (currentSelection && currentSelection.length > 0) {
+                                    //     $('#select2-multiselect-nometalicos').val([]).trigger('change');
+                                    // }
                                 })
                                 // Capturar valores en el evento change
                                 $('#select2-multiselect-metalicos').on('change', async (e) => {
@@ -450,18 +454,30 @@
                                     // Asignar los valores al input oculto como una cadena separada por comas
                                     $('#hidden-metalicos-ids').val(selectedValues.join(','));
 
-                                    let alicuota = '';
+                                    alicuota = '';
                                     selectedDataNew.forEach(element => {
                                         alicuota = alicuota + ',' + element.alicuota;
                                     });
 
-                                    let nuevaCadenaMetalico = alicuota.substring(1);
+                                    nuevaCadenaMetalico = alicuota.substring(1);
 
                                     // Mostrar la nueva cadena en el campo alicuota
                                     let alicuotaInput_show = document.getElementById('alicuota-show');
                                     let alicuotaInput = document.getElementById('alicuota');
-                                    alicuotaInput_show.value = nuevaCadenaMetalico;
-                                    alicuotaInput.value = nuevaCadenaMetalico;
+
+                                    if (nuevaCadenaNometalico === '') {
+                                        alicuotaInput_show.value = nuevaCadenaMetalico;
+                                        alicuotaInput.value = nuevaCadenaMetalico;
+                                    } else {
+                                        alicuotaInput_show.value = nuevaCadenaMetalico + ',' + nuevaCadenaNometalico;
+                                        alicuotaInput.value = nuevaCadenaMetalico + ',' + nuevaCadenaNometalico;
+                                    }
+
+                                    if (nuevaCadenaMetalico === '') {
+                                        alicuotaInput_show.value = nuevaCadenaNometalico;
+                                        alicuotaInput.value = nuevaCadenaNometalico;
+                                    }
+
                                 }
                                 // Ejemplo de función para obtener datos adicionales del mineral
                                 function findMineralDataMetalico(value) {
@@ -500,9 +516,9 @@
                                     const currentSelection = $('#select2-multiselect-metalicos').val();
 
                                     // Limpiar selecciones en el multiselect-metalicos solo si no está vacío
-                                    if (currentSelection && currentSelection.length > 0) {
-                                        $('#select2-multiselect-metalicos').val([]).trigger('change');
-                                    }
+                                    // if (currentSelection && currentSelection.length > 0) {
+                                    //     $('#select2-multiselect-metalicos').val([]).trigger('change');
+                                    // }
                                 })
 
                                 // Capturar valores en el evento change
@@ -531,16 +547,27 @@
                                     // Asignar los valores al input oculto como una cadena separada por comas
                                     $('#hidden-nometalicos-ids').val(selectedValues.join(','));
 
-                                    let alicuota = '';
+                                    alicuotaDos = '';
                                     selectedDataNew.forEach(element => {
-                                        alicuota = alicuota + ',' + element.alicuota;
+                                        alicuotaDos = alicuotaDos + ',' + element.alicuota;
                                     });
-                                    let nuevaCadenaNometalico = alicuota.substring(1);
+                                    nuevaCadenaNometalico = alicuotaDos.substring(1);
 
                                     let alicuotaInput_show = document.getElementById('alicuota-show');
                                     let alicuotaInput = document.getElementById('alicuota');
-                                    alicuotaInput_show.value = nuevaCadenaNometalico;
-                                    alicuotaInput.value = nuevaCadenaNometalico;
+
+
+                                    if (nuevaCadenaMetalico === '') {
+                                        alicuotaInput_show.value = nuevaCadenaNometalico;
+                                        alicuotaInput.value = nuevaCadenaNometalico;
+                                    } else {
+                                        alicuotaInput_show.value = nuevaCadenaMetalico + ',' + nuevaCadenaNometalico;
+                                        alicuotaInput.value = nuevaCadenaMetalico + ',' + nuevaCadenaNometalico;
+                                    }
+                                    if (nuevaCadenaNometalico === '') {
+                                        alicuotaInput_show.value = nuevaCadenaMetalico;
+                                        alicuotaInput.value = nuevaCadenaMetalico;
+                                    }
 
                                 }
                                 // Ejemplo de función para obtener datos adicionales del mineral
@@ -646,7 +673,7 @@
                     <div class="form-group border p-3 mt-3">
                         {{ Form::label('alicuota-show', 'ALÍCUOTA') }}
                         <span class="text-danger">*</span>
-                        {{ Form::text('alicuota-show', $formulario->alicuota, ['class' => 'form-control', 'id'=>'alicuota-show', 'disabled' => 'disabled', 'style'=>'background-color: #ffffff !important']) }}
+                        {{ Form::text('alicuota-show', $formulario->alicuota, ['class' => 'form-control', 'id'=>'alicuota-show', 'style'=>'background-color: #ffffff !important']) }}
 
                         {{ Form::hidden('alicuota', $formulario->alicuota,['class' => 'form-control' . ($errors->has('alicuota') ? ' is-invalid' : ''),'id' => 'alicuota']) }}
                         {!! $errors->first('alicuota', '<div class="invalid-feedback">:message</div>') !!}
@@ -892,7 +919,7 @@
                                         </div>
                                         <div class="form-check">
                                             {{ Form::radio('transporte', 'Via ferrea', $formulario->transporte == 'Via ferrea', ['class' => 'form-check-input']) }}
-                                            <label for="" class="form-check-label"><span id="label-viaferrea">Via ferrea</span></label>
+                                            {{ Form::label('viaFerrea', 'Via Ferrea', ['class' => 'form-check-label']) }}
                                         </div>
                                         <div class="form-check">
                                             {{ Form::radio('transporte', 'Camión', $formulario->transporte == 'Camión', ['class' => 'form-check-input']) }}
@@ -1125,11 +1152,11 @@
 
         loteInput.addEventListener("input", function() {
             const inputLoteValue = loteInput.value;
-            if (inputLoteValue.length > 15) {
+            if (inputLoteValue.length > 20) {
                 errorLote.textContent = "El campo Nro. Lote no debe contener más de 15 caracteres.";
                 loteInput.classList.add("is-invalid");
 
-            } else if (inputLoteValue.length <= 15) {
+            } else if (inputLoteValue.length <= 20) {
                 errorLote.textContent = "";
                 loteInput.classList.remove("is-invalid");
 
@@ -1137,24 +1164,6 @@
 
         });
         // FIN Validar Nro Lote
-
-        // 1.- Validar Reg. Cert. quimico
-        const quimicoInput = document.getElementById("quimico");
-        const errorQuimico = document.getElementById("error_quimico");
-
-        quimicoInput.addEventListener("input", function() {
-            const inputQuimicoValue = quimicoInput.value;
-            if (inputQuimicoValue.length > 15) {
-                errorQuimico.textContent = "El campo Nro. Lote no debe contener más de 15 caracteres.";
-                quimicoInput.classList.add("is-invalid");
-
-            } else if (inputQuimicoValue.length <= 15) {
-                errorQuimico.textContent = "";
-                quimicoInput.classList.remove("is-invalid");
-            }
-        });
-        // FIN Validar Cert. quimico
-
 
         // 1.- Validar campo Peso Bruto
         const brutoInput = document.getElementById("bruto");
@@ -1241,11 +1250,11 @@
 
         origenInput.addEventListener("input", function() {
             const inputOrigenValue = origenInput.value;
-            if (inputOrigenValue.length > 13) {
+            if (inputOrigenValue.length > 50) {
                 errorOrigen.textContent = "El campo Origen no debe contener más de 13 caracteres.";
                 origenInput.classList.add("is-invalid");
 
-            } else if (inputOrigenValue.length <= 13) {
+            } else if (inputOrigenValue.length <= 50) {
                 errorOrigen.textContent = "";
                 origenInput.classList.remove("is-invalid");
 
@@ -1275,11 +1284,11 @@
 
         destinoInput.addEventListener("input", function() {
             const inputDestinoValue = destinoInput.value;
-            if (inputDestinoValue.length > 13) {
+            if (inputDestinoValue.length > 50) {
                 errorDestino.textContent = "El campo Destino no debe contener más de 13 caracteres.";
                 destinoInput.classList.add("is-invalid");
 
-            } else if (inputDestinoValue.length <= 13) {
+            } else if (inputDestinoValue.length <= 50) {
                 errorDestino.textContent = "";
                 destinoInput.classList.remove("is-invalid");
 
@@ -1302,50 +1311,17 @@
         });
         // FIN Validar destino
 
-        // 1.- Validar campo comprador
-        const comercializadoraInput = document.getElementById("comercializadora");
-        const errorComercializadora = document.getElementById("error_comercializadora");
-
-        comercializadoraInput.addEventListener("input", function() {
-            const inputComercializadoraValue = comercializadoraInput.value;
-            if (inputComercializadoraValue.length > 16) {
-                errorComercializadora.textContent = "El campo Comercializadora no debe contener más de 16 caracteres.";
-                comercializadoraInput.classList.add("is-invalid");
-
-            } else if (inputComercializadoraValue.length <= 16) {
-                errorComercializadora.textContent = "";
-                comercializadoraInput.classList.remove("is-invalid");
-
-            }
-            // Verifica que el campo sea vacio
-            if (inputComercializadoraValue.trim() === '') {
-
-                errorComercializadora.textContent = "Este campo es requerido";
-                comercializadoraInput.classList.add("is-invalid");
-            }
-
-        });
-
-        comercializadoraInput.addEventListener("blur", function() {
-            const inputComercializadoraValue = comercializadoraInput.value;
-            if (inputComercializadoraValue.trim() === '') {
-                errorComercializadora.textContent = "Este campo es requerido";
-                comercializadoraInput.classList.add("is-invalid");
-            }
-        });
-        // FIN Validar Alicuota
-
         // 1.- Validar campo comercializadora
         const alicuotaInput = document.getElementById("alicuota");
         const errorAlicuota = document.getElementById("error_alicuota");
 
         alicuotaInput.addEventListener("input", function() {
             const inputAlicuotaValue = alicuotaInput.value;
-            if (inputAlicuotaValue.length > 10) {
+            if (inputAlicuotaValue.length > 50) {
                 errorAlicuota.textContent = "El campo Alicuota no debe contener más de 10 caracteres.";
                 alicuotaInput.classList.add("is-invalid");
 
-            } else if (inputAlicuotaValue.length <= 10) {
+            } else if (inputAlicuotaValue.length <= 50) {
                 errorAlicuota.textContent = "";
                 alicuotaInput.classList.remove("is-invalid");
 
@@ -1374,11 +1350,11 @@
 
         choferInput.addEventListener("input", function() {
             const inputChoferValue = choferInput.value;
-            if (inputChoferValue.length > 20) {
+            if (inputChoferValue.length > 50) {
                 errorChofer.textContent = "El campo Chofer no debe contener más de 20 caracteres.";
                 choferInput.classList.add("is-invalid");
 
-            } else if (inputChoferValue.length <= 20) {
+            } else if (inputChoferValue.length <= 50) {
                 errorChofer.textContent = "";
                 choferInput.classList.remove("is-invalid");
 

@@ -90,7 +90,17 @@ Empresa
 
                                     <td>{{ $empresa->ruim }}</td>
                                     <td>{{ $empresa->mineral }}</td>
-                                    <td>{{ $empresa->municipio->municipio }}</td>
+                                    <td>
+                                        @php
+                                        $municipiosSeleccionados = explode(',', $empresa->n_municipios);
+                                        @endphp
+
+                                        @foreach ($municipios as $municipio)
+                                        @if (in_array($municipio->id, $municipiosSeleccionados))
+                                        {{ $municipio->municipio }}<br>
+                                        @endif
+                                        @endforeach
+                                    </td>
                                     <td>{{ $empresa->fecha_inscripcion }}</td>
 
                                     <td class="{{ $empresa->estado === 'Habilitado' ? 'text-success' : 'text-danger' }}">

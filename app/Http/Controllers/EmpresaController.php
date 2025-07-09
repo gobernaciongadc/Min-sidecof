@@ -29,7 +29,8 @@ class EmpresaController extends Controller
     public function index()
     {
         $empresas = Empresa::paginate();
-        return view('dashboard/empresa.index', compact('empresas'))
+        $municipios = Municipio::all();
+        return view('dashboard/empresa.index', compact('empresas', 'municipios'))
             ->with('i', (request()->input('page', 1) - 1) * $empresas->perPage());
     }
 
@@ -45,6 +46,9 @@ class EmpresaController extends Controller
         $metalicos = Metalico::all();
         $nometalicos = Nometalico::all();
         $opcion = 'create';
+
+        // dd($municipios);
+
         return view('dashboard/empresa.create', compact('empresa', 'municipios', 'metalicos', 'nometalicos', 'opcion'));
     }
 
@@ -121,8 +125,8 @@ class EmpresaController extends Controller
     public function show($id)
     {
         $empresa = Empresa::find($id);
-
-        return view('dashboard/empresa.show', compact('empresa'));
+        $municipios = Municipio::all();
+        return view('dashboard/empresa.show', compact('empresa', 'municipios'));
     }
 
     /**
@@ -165,7 +169,13 @@ class EmpresaController extends Controller
      */
     public function update(Request $request, Empresa $empresa)
     {
+        $bandera = false;
         $paramsArray = $request->all();
+
+        if ($empresa->longitud == $paramsArray['longitud'] && $empresa->latitud == $paramsArray['latitud']) {
+            $bandera = true;
+        }
+
 
         // Validaciones
         // request()->validate(Empresa::$rules);
@@ -173,23 +183,25 @@ class EmpresaController extends Controller
             unset($paramsArray['ruim']);
         }
 
+        if ($bandera == false) {
+            if ($request->has('mapa_captura')) {
+                $dataUrl = $request->input('mapa_captura');
 
-        if ($request->has('mapa_captura')) {
-            $dataUrl = $request->input('mapa_captura');
+                // Decodificar la cadena base64 y obtener los datos binarios del archivo
+                $fileData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $dataUrl));
 
-            // Decodificar la cadena base64 y obtener los datos binarios del archivo
-            $fileData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $dataUrl));
+                // Generar un nombre único usando la fecha y hora actual
+                $nombreArchivo = 'mapa_captura_' . time() . '.png';
 
-            // Generar un nombre único usando la fecha y hora actual
-            $nombreArchivo = 'mapa_captura_' . time() . '.png';
+                // Guardar el archivo en una carpeta específica
+                Storage::disk('public')->put('mapa_captura/' . $nombreArchivo, $fileData);
 
-            // Guardar el archivo en una carpeta específica
-            Storage::disk('public')->put('mapa_captura/' . $nombreArchivo, $fileData);
-
-            // Actualizar el campo de la base de datos con el nombre del archivo único
-            $empresa->img_mapa = $nombreArchivo;
-            $empresa->save();
+                // Actualizar el campo de la base de datos con el nombre del archivo único
+                $empresa->img_mapa = $nombreArchivo;
+                $empresa->save();
+            }
         }
+
 
         $empresa->update($paramsArray);
 
@@ -329,9 +341,22 @@ class EmpresaController extends Controller
 
             // Obtener la lista de empresas
             $empresa = Empresa::find($id);
+            $municipios = Municipio::all();
+            $idsEmpresa = explode(',', $empresa->n_municipios);
+            $municipiosCoincidentes = '';
+
+            foreach ($municipios as $municipio) {
+                if (in_array($municipio['id'], $idsEmpresa)) {
+                    if ($municipiosCoincidentes == '') {
+                        $municipiosCoincidentes = $municipiosCoincidentes . $municipio['municipio'];
+                    } else {
+                        $municipiosCoincidentes = $municipiosCoincidentes . ', ' . $municipio['municipio'];
+                    }
+                }
+            }
 
             // Carga la vista en el objeto PDF
-            $pdf = PDF::loadView('dashboard.empresa.pdf_empresa', compact('fechaHoraFormateada', 'empresa'));
+            $pdf = PDF::loadView('dashboard.empresa.pdf_empresa', compact('fechaHoraFormateada', 'empresa', 'municipiosCoincidentes'));
 
             // Establece el tamaño del papel
             $pdf->setPaper('letter');

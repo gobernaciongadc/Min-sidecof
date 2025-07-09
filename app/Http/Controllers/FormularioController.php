@@ -65,6 +65,7 @@ class FormularioController extends Controller
         // Mensaje de caducidad a 5 dias del reistro del NIM
         $user = User::find($user->id);
         if ($user->name_bd == 'empresas') {
+
             $empresa = Empresa::find($user->id_login);
             $fechaCaducidad = $empresa->fecha_caducidad;
 
@@ -126,6 +127,7 @@ class FormularioController extends Controller
         $alta = null;
         $empresa = null;
         $minero = null;
+        $municipiosCoincidentes = null;
 
         if ($opcion == 'interno') {
             $comercios = 'Interno';
@@ -198,6 +200,15 @@ class FormularioController extends Controller
         if ($user->name_bd == 'empresas') {
             $empresa = Empresa::where('id', $user->id_login)
                 ->first(); // Devuelve un objeto
+
+            $idsEmpresa = explode(',', $empresa->n_municipios); // Resultado: ['1', '2', '6']
+            $municipiosCoincidentes = [];
+
+            foreach ($municipios as $municipio) {
+                if (in_array($municipio['id'], $idsEmpresa)) {
+                    $municipiosCoincidentes[] = $municipio;
+                }
+            }
         }
         // Carga datos al formulario solo si es RUIM / empresa/cooperativa
         if ($user->name_bd == 'mineros') {
@@ -217,7 +228,7 @@ class FormularioController extends Controller
         //     ]));
         // }
         // dd($listMineros);
-        return view('dashboard/formulario.create', compact('formulario', 'metales', 'nometales', 'municipios', 'cantStaging', 'tipo', 'empresa', 'mensaje', 'alta', 'comercios', 'opcion', 'minero', 'nameBd', 'listMineros'));
+        return view('dashboard/formulario.create', compact('formulario', 'metales', 'nometales', 'municipios', 'cantStaging', 'tipo', 'empresa', 'mensaje', 'alta', 'comercios', 'opcion', 'minero', 'nameBd', 'listMineros', 'municipiosCoincidentes'));
     }
 
 
@@ -231,6 +242,8 @@ class FormularioController extends Controller
     {
         // 1.- Recoger los datos del request
         $paramsArray = $request->all();
+
+        // dd($paramsArray);
 
         // 2.- Validación de comercio
         if ($request->comercio == 'Interno') {
@@ -285,7 +298,8 @@ class FormularioController extends Controller
 
         $mensaje = null;
         $alta = null;
-
+        $municipiosCoincidentes = null;
+        $empresa = null;
         $formulario = Formulario::find($id);
 
         $opcion = $formulario->comercio;
@@ -306,7 +320,20 @@ class FormularioController extends Controller
         // Mensaje de caducidad a 5 dias del reistro del NIM
         $user = User::find($user->id);
         if ($user->name_bd == 'empresas') {
+
             $empresa = Empresa::find($user->id_login);
+
+            $idsEmpresa = explode(',', $empresa->n_municipios); // Resultado: ['1', '2', '6']
+            $municipiosCoincidentes = [];
+
+            foreach ($municipios as $municipio) {
+                if (in_array($municipio['id'], $idsEmpresa)) {
+                    $municipiosCoincidentes[] = $municipio;
+                }
+            }
+
+            // dd($formulario);
+
             $fechaCaducidad = $empresa->fecha_caducidad;
 
             $fechaActual = new DateTime();
@@ -329,7 +356,7 @@ class FormularioController extends Controller
             }
         }
 
-        return view('dashboard/formulario.edit', compact('formulario', 'metales', 'nometales', 'municipios', 'cantStaging', 'tipo', 'mensaje', 'alta', 'opcion', 'comercios', 'nameBd'));
+        return view('dashboard/formulario.edit', compact('formulario', 'metales', 'nometales', 'municipios', 'cantStaging', 'tipo', 'mensaje', 'alta', 'opcion', 'comercios', 'nameBd', 'municipiosCoincidentes', 'empresa'));
     }
 
 
@@ -637,7 +664,7 @@ class FormularioController extends Controller
     function datosGestionBuscarFinalizar(Request $request)
     {
         // 1.-Recoger los usuarios por post
-        $params = (object) $request->all(); // Devulve un obejto
+        $params = (object) $request->all(); // Devulve un obejto     
         $paramsArray = $request->all(); // Devulve un Array
 
         $user = Auth::user(); // Accede al usuario autenticado
@@ -651,7 +678,8 @@ class FormularioController extends Controller
                     $data = array(
                         'code' => 200,
                         'status' => 'success',
-                        'datos_gestion_buscar' => $gestionBuscar
+                        'datos_gestion_buscar' => $gestionBuscar,
+                        'name' => $user->name_bd
                     );
                 } catch (Exception $e) {
                     $data = array(
@@ -669,7 +697,8 @@ class FormularioController extends Controller
                     $data = array(
                         'code' => 200,
                         'status' => 'success',
-                        'datos_gestion_buscar' => $gestionBuscar
+                        'datos_gestion_buscar' => $gestionBuscar,
+                        'name' => $user->name_bd
                     );
                 } catch (Exception $e) {
                     $data = array(
@@ -685,11 +714,13 @@ class FormularioController extends Controller
 
                 try {
                     $gestionBuscar = Formulario::where('nro_formulario', $params->gestion_buscar)
+                        ->Where('users_id', $user->id)
                         ->get();
                     $data = array(
                         'code' => 200,
                         'status' => 'success',
-                        'datos_gestion_buscar' => $gestionBuscar
+                        'datos_gestion_buscar' => $gestionBuscar,
+                        'name' => $user->name_bd
                     );
                 } catch (Exception $e) {
                     $data = array(
@@ -710,33 +741,36 @@ class FormularioController extends Controller
     // Finalizar formulario
     function finalizarFormulario(Request $request)
     {
-        // 1.-Recoger los usuarios por post
-        $params = (object) $request->all(); // Devuelve un objeto
-        $paramsArray = $request->all(); // Devuelve un Array
+        $params = (object) $request->all();
 
         try {
+            $finalizar = Formulario::where('nro_formulario', $params->nro_formulario)->first();
+            if (!$finalizar) {
+                return response()->json([
+                    'code' => 404,
+                    'status' => 'error',
+                    'message' => 'Formulario no encontrado'
+                ], 404);
+            }
 
-            $finalizar = Formulario::find($params->nro_formulario);
-            $finalizar->estado_entrega = 1; // Corregido: Cambiado "estado_entreda" a "estado_entrega"
-            $finalizar->save(); // Corregido: Agregado paréntesis para llamar al método save()
+            $finalizar->estado_entrega = 1;
+            $finalizar->save();
 
-            $user = Auth::user(); // Accede al usuario autenticado
+            // Consultar nuevamente para asegurar que refleje el cambio
+            // $gestionBuscar = Formulario::where('nro_formulario', $params->nro_formulario)->get();
 
-            $gestionBuscar = Formulario::where('nro_formulario', $params->nro_formulario)
-                ->get();
-
-            $data = array(
+            return response()->json([
                 'code' => 200,
                 'status' => 'success',
-                'datos_gestion_buscar' => $gestionBuscar
-            );
+                'datos_gestion_buscar' => $finalizar,
+                'numero' => $params->nro_formulario
+            ], 200);
         } catch (Exception $e) {
-            $data = array(
+            return response()->json([
                 'code' => 400,
                 'status' => 'error',
-                'error' => $e->getMessage(),
-            );
+                'error' => $e->getMessage()
+            ], 400);
         }
-        return response()->json($data, $data['code']);
     }
 }

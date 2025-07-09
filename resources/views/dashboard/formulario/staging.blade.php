@@ -106,11 +106,7 @@ Puesto en ecena
                                     <td>{{ $enescena->origen }}</td>
                                     <td>{{ $enescena->destino }}</td>
                                     <td>{{ $enescena->alicuota }}</td>
-                                    @if($enescena->comercio == 'Externo')
-                                    <td>Otros</td>
-                                    @else
                                     <td>{{ $enescena->transporte }}</td>
-                                    @endif
                                     <td>{{ $enescena->chofer }}</td>
                                     <td>{{ $enescena->placa }}</td>
                                     <td>{{ $enescena->fecha_emision }}</td>

@@ -95,11 +95,7 @@ Puesto en ecena
                                     <td>{{ $emitido->origen }}</td>
                                     <td>{{ $emitido->destino }}</td>
                                     <td>{{ $emitido->alicuota }}</td>
-                                    @if($emitido->comercio == 'Externo')
-                                    <td>Otros</td>
-                                    @else
                                     <td>{{ $emitido->transporte }}</td>
-                                    @endif
                                     <td>{{ $emitido->chofer }}</td>
                                     <td>{{ $emitido->placa }}</td>
                                     <td>{{ $emitido->fecha_emision }}</td>

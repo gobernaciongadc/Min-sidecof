@@ -37,7 +37,7 @@
                             <img style="width: 150px;" src="{{asset('dashboard/img/logo-gadc.jpg')}}" alt="logo-gobernacion">
                         </div>
                         <div class="col-12 col-lg-6 titulo-formulario text-uppercase">
-                            <p class="text-center head-titulo">Gobierno autónomo departamental de cochabamba <br>secretaria departamental de mineria e hidrocarburos</p>
+                            <p class="text-center head-titulo">Gobierno autónomo departamental de cochabamba <br>secretaria departamental de mineria, hidrocarburos y energias</p>
                         </div>
                         <div class="col-12 col-lg-3 text-end d-none d-lg-block">
                             <img style="width: 150px;" src="{{asset('dashboard/img/logo-gadc.png')}}" alt="logo-gobernacion">
@@ -547,7 +547,7 @@
                             <img style="width: 150px;" src="{{asset('dashboard/img/logo-gadc.jpg')}}" alt="logo-gobernacion">
                         </div>
                         <div class="col-12 col-lg-6 titulo-formulario text-uppercase">
-                            <p class="text-center head-titulo">Gobierno autónomo departamental de cochabamba <br>secretaria departamental de mineria e hidrocarburos</p>
+                            <p class="text-center head-titulo">Gobierno autónomo departamental de cochabamba <br>secretaria departamental de mineria, hidrocarburos y energias</p>
                         </div>
                         <div class="col-12 col-lg-3 text-end d-none d-lg-block">
                             <img style="width: 150px;" src="{{asset('dashboard/img/logo-gadc.png')}}" alt="logo-gobernacion">
@@ -748,7 +748,7 @@
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         <div class="form-group">
-                                            <strong class="text-uppercase">13.PESO NETO</strong>
+                                            <strong class="text-uppercase">13. PESO NETO</strong>
                                             {{ $formulario->peso_neto_kg}}&nbsp;&nbsp;
                                             <strong class="text-uppercase">UNIDAD</strong>
                                             {{ $formulario->unidad}}
@@ -777,18 +777,20 @@
 
                                     <div class="col-12 col-md-6">
                                         <div class="form-group text-uppercase">
-                                            <strong class="text-uppercase">16. comercializadora y/o agente de retencion:</strong>
-                                            {{ $formulario->comercializadora}}
+                                            <strong class="text-uppercase">15. Codigo Municipio:</strong>
+                                            {{ $formulario->codigo }}
+
                                         </div>
                                     </div>
 
                                     <div class="col-12 col-md-6">
                                         <div class="form-group text-uppercase">
-                                            <strong class="text-uppercase">16. Codigo Municipio:</strong>
-                                            {{ $formulario->codigo }}
-
+                                            <strong class="text-uppercase">16. comercializadora y/o agente de retencion:</strong>
+                                            {{ $formulario->comprador}}
                                         </div>
                                     </div>
+
+
                                 </div>
                             </div>
                         </div>
@@ -804,7 +806,7 @@
 
                                     <div class="col-12 col-md-6">
                                         <div class="form-group text-uppercase">
-                                            <strong class="text-uppercase">17. Origen de la exportación</strong>
+                                            <strong class="text-uppercase">17. Origen</strong>
                                             {{ $formulario->origen}}
 
                                         </div>
