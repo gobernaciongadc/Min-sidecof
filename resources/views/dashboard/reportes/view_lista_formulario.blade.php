@@ -29,23 +29,19 @@ $nometalicoArray = $nometalico->toArray();
 $metalicoNometalico = collect(array_merge($metalicoArray, $nometalicoArray));
 
 // Para cooperativas
-$mineros = Minero::all()->map(function ($item) {
-return [
-'id' => $item->id,
-'nombres' => $item->nombres,
-'tipo' => 'Minero'
-];
-});
+$mineros = Minero::all()->map(fn ($item) => ['nombres' => $item->nombres]);
+$empresas = Empresa::all()->map(fn ($item) => ['nombres' => $item->nombres]);
 
-$empresas = Empresa::all()->map(function ($item) {
-return [
-'id' => $item->id,
-'nombres' => $item->nombres,
-'tipo' => 'Empresa'
-];
-});
+$cooperativas = collect([]);
 
-$cooperativas = $mineros->merge($empresas);
+// Solo merge si hay elementos
+if ($mineros->isNotEmpty()) {
+$cooperativas = $cooperativas->merge($mineros);
+}
+
+if ($empresas->isNotEmpty()) {
+$cooperativas = $cooperativas->merge($empresas);
+}
 @endphp
 
 @section('content')
@@ -62,7 +58,7 @@ $cooperativas = $mineros->merge($empresas);
                 </div>
 
                 <div class="card-body">
-                    <h5 class="text-uppercase text-center mt-2">Filtrar y buscar por diferentes campos</h5>
+                    <h5 class="text-uppercase text-center mt-2">Filtrar y buscar formularios emitidos por diferentes campos</h5>
 
                     <!-- Formulario de busqueda -->
                     <form class="row" method="GET" id="form-filtro" action="{{ route('admin.dataformulariolista') }}">
