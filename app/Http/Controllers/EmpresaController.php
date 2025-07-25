@@ -63,6 +63,7 @@ class EmpresaController extends Controller
         // 1. Recoger los datos del formulario
         $paramsArray = $request->all();
 
+        // dd($paramsArray);
 
         // 2. Validar los datos del formulario
         request()->validate(Empresa::$rules);
@@ -176,35 +177,41 @@ class EmpresaController extends Controller
             $bandera = true;
         }
 
-
-        // Validaciones
-        // request()->validate(Empresa::$rules);
+        // Validación condicional (puedes activar la validación si lo deseas)
         if ($empresa['ruim'] == $paramsArray['ruim']) {
             unset($paramsArray['ruim']);
         }
 
-        if ($bandera == false) {
-            if ($request->has('mapa_captura')) {
-                $dataUrl = $request->input('mapa_captura');
+        // 1. Maneja la actualización del archivo PDF
+        if ($request->hasFile('nuevo_archivo_pdf')) {
+            $archivoPdf = $request->file('nuevo_archivo_pdf');
+            $nombreOriginal = $archivoPdf->getClientOriginalName();
+            $nombreArchivo = pathinfo($nombreOriginal, PATHINFO_FILENAME) . '_' . time() . '.' . $archivoPdf->getClientOriginalExtension();
 
-                // Decodificar la cadena base64 y obtener los datos binarios del archivo
-                $fileData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $dataUrl));
+            // Guardar en carpeta
+            $archivoPdf->storeAs('archivos_pdf', $nombreArchivo, 'public');
 
-                // Generar un nombre único usando la fecha y hora actual
-                $nombreArchivo = 'mapa_captura_' . time() . '.png';
-
-                // Guardar el archivo en una carpeta específica
-                Storage::disk('public')->put('mapa_captura/' . $nombreArchivo, $fileData);
-
-                // Actualizar el campo de la base de datos con el nombre del archivo único
-                $empresa->img_mapa = $nombreArchivo;
-                $empresa->save();
-            }
+            // Actualizar en la BD
+            $empresa->archivo_pdf = $nombreArchivo;
+            $empresa->save();
         }
 
+        // 2. Manejo del mapa solo si cambió ubicación
+        if (!$bandera && $request->has('mapa_captura')) {
+            $dataUrl = $request->input('mapa_captura');
+            $fileData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $dataUrl));
+            $nombreArchivo = 'mapa_captura_' . time() . '.png';
 
+            Storage::disk('public')->put('mapa_captura/' . $nombreArchivo, $fileData);
+
+            $empresa->img_mapa = $nombreArchivo;
+            $empresa->save();
+        }
+
+        // 3. Actualizar otros datos
         $empresa->update($paramsArray);
 
+        // 4. Actualizar el estado en la tabla User si aplica
         User::where('id_login', $empresa->id)
             ->where('name_bd', 'empresas')
             ->update(['estado' => 'Habilitado']);
@@ -246,12 +253,16 @@ class EmpresaController extends Controller
         $params = (object) $request->all(); // Devulve un obejto
         $paramsArray = $request->all(); // Devulve un Array
 
+
+
         try {
 
             switch ($params->metal) {
                 case 'Ambos':
-                    $metalicos = Metalico::all();
-                    $nometalicos = Nometalico::all();
+                    $metalicos = Metalico::where('estado', 'Habilitado')
+                        ->where('tipo_mercado', 'Interno')->get();
+                    $nometalicos = Nometalico::where('estado', 'Habilitado')
+                        ->where('tipo_mercado', 'Interno')->get();
                     $minerales = $metalicos->concat($nometalicos);
 
                     $data = array(
@@ -263,7 +274,8 @@ class EmpresaController extends Controller
                     return response()->json($data);
                     break;
                 case 'Metalico':
-                    $metalicos = Metalico::all();
+                    $metalicos = Metalico::where('estado', 'Habilitado')
+                        ->where('tipo_mercado', 'Interno')->get();
                     $data = array(
                         'code' => 200,
                         'status' => 'success',
@@ -273,7 +285,8 @@ class EmpresaController extends Controller
                     return response()->json($data);
                     break;
                 case 'No metalico':
-                    $nometalicos = Nometalico::all();
+                    $nometalicos = Nometalico::where('estado', 'Habilitado')
+                        ->where('tipo_mercado', 'Interno')->get();
                     $data = array(
                         'code' => 200,
                         'status' => 'success',

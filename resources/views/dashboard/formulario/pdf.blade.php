@@ -192,12 +192,9 @@
          <tr>
              <td style="width: 100px;" class="borde">Tipo de Mineral</td>
              <td class="borde">
-                 @if($formulario->tipo_min_metalico != null)
-                 <span class="subs-respuesta subs-respuesta--text">{{ $formulario->tipo_min_metalico }}</span>
-                 @endif
-                 @if($formulario->tipo_min_nometalico != null)
-                 <span class="subs-respuesta subs-respuesta--text">{{ $formulario->tipo_min_nometalico }}</span>
-                 @endif
+                 <span class="subs-respuesta subs-respuesta--text">
+                     {{ implode(', ', array_filter([$formulario->tipo_min_metalico, $formulario->tipo_min_nometalico])) }}
+                 </span>
              </td>
              <td></td>
              <td style="width: 100px;" class="borde">Humedad (%)</td>
@@ -414,48 +411,47 @@
          <tr>
              <td colspan="11"></td>
          </tr>
+
          <tr>
              <td class="borde" style="width: 2px;">5</td>
+             <td class="borde">Tipo de mineral</td>
+             <td class="borde">
+                 <span class="subs-respuesta subs-respuesta--text">
+                     {{ implode(', ', array_filter([$formulario->tipo_min_metalico, $formulario->tipo_min_nometalico])) }}
+                 </span>
+             </td>
+             <td></td>
+             <td class="borde" style="width: 2px;">6</td>
+             <td class="borde">Presentación</td>
+             <td colspan="5" class="borde">{{ $formulario->presentacion }}</td>
+         </tr>
+         <tr>
+             <td colspan="11"></td>
+         </tr>
+         <tr>
+             <td class="borde" style="width: 2px;">7</td>
              <td class="borde">Nro. de Lote</td>
              <td class="borde">{{ $formulario->nro_lote }}</td>
              <td></td>
-             <td class="borde" style="width: 2px;">6</td>
+             <td class="borde" style="width: 2px;">8</td>
              <td class="borde">Ley</td>
              <td class="borde">{{ $formulario->ley }}</td>
              <td></td>
-             <td class="borde" style="width: 2px;">7</td>
+             <td class="borde" style="width: 2px;">9</td>
              <td class="borde">Hum-merma(%)</td>
              <td class="borde">{{ $formulario->hum_merma }}</td>
 
          </tr>
      </table>
 
-     <!-- bloque  tipo mineral y presentación -->
-     <table>
-         <tr>
-             <td class="borde" style="width: 2px;">8</td>
-             <td class="borde">Tipo de mineral</td>
-             <td class="borde">
-                 @if($formulario->tipo_min_metalico != null)
-                 <span class="subs-respuesta subs-respuesta--text">{{ $formulario->tipo_min_metalico }}</span>
-                 @endif
-                 @if($formulario->tipo_min_nometalico != null)
-                 <span class="subs-respuesta subs-respuesta--text">{{ $formulario->tipo_min_nometalico }}</span>
-                 @endif
-             </td>
-             <td></td>
-             <td class="borde" style="width: 2px;">9</td>
-             <td class="borde">Presentación</td>
-             <td class="borde">{{ $formulario->presentacion }}</td>
-         </tr>
-     </table>
+
 
      <!-- Bloque alicuota peso bruto y tara -->
      <table>
          <tr>
              <td class="borde" style="width: 2px;">10</td>
              <td class="borde">Alicuota</td>
-             <td class="borde">{{ $formulario->nro_lote }}</td>
+             <td class="borde">{{ $formulario->alicuota }}</td>
              <td></td>
              <td class="borde" style="width: 2px;">11</td>
              <td class="borde">Peso Bruto({{ $formulario->unidad }})</td>

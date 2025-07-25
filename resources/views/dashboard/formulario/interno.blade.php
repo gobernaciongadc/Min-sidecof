@@ -150,8 +150,6 @@
 
                 const comercioSelect = document.getElementById('comercio');
 
-                console.log(comercio);
-
 
                 fechaEmisionInput.addEventListener('change', () => {
                     let fechaEmision = new Date(fechaEmisionInput.value);
@@ -246,45 +244,12 @@
                                     {{ Form::hidden('ruim', $formulario->nro_nit ?? $empresa->nro_nit, ['id' => 'ruim']) }}
                                 </div>
                             </div>
-                            <!-- 5. NRO DE LOTE -->
-                            <div class="col-12 col-md-4 mt-3">
-                                <div class="form-group">
-                                    <span style="color: black;">4.</span>
-                                    {{ Form::label('nro_lote', 'NRO. LOTE', ['class' => 'text-uppercase']) }}
-                                    <span class="text-danger" id="as-lote"></span>
-                                    {{ Form::text('nro_lote', $formulario->nro_lote, ['class' => 'form-control' . ($errors->has('nro_lote') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese un nro. de lote (opcional)','id'=>'nro_lote','style'=>'background-color: #ffffff !important']) }}
-                                    {!! $errors->first('nro_lote', '<div class="invalid-feedback">:message</div>') !!}
-                                    <span id="error_nro_lote" class="invalid-feedback"></span>
-                                </div>
-                            </div>
 
-                            <!-- 6. LEY -->
-                            <div class="col-12 col-md-4 mt-3">
-                                <div class="form-group">
-                                    <label for="ley"><span style="color: black;">5.</span> LEY</label>
-                                    <span class="text-danger" id="ley"></span>
-                                    {{ Form::text('ley', $formulario->ley, ['class' => 'form-control' . ($errors->has('ley') ? ' is-invalid' : ''), 'id'=>'ley', 'style'=>'background-color: #ffffff !important']) }}
-                                    {!! $errors->first('ley', '<div class="invalid-feedback">:message</div>') !!}
-                                    <span id="error_ley" class="invalid-feedback"></span>
-                                </div>
-                            </div>
-
-                            <!-- 7. HUM-MERMA -->
-                            <div class="col-12 col-md-4 mt-3">
-                                <div class="form-group">
-                                    <label for="humedad"><span style="color: black;">7.</span> HUM-MERMA(%)</label>
-                                    <span class="text-danger" id="as-merma"></span>
-                                    {{ Form::text('hum_merma', $formulario->hum_merma, ['class' => 'form-control' . ($errors->has('hum_merma') ? ' is-invalid' : ''), 'id'=>'humedad', 'style'=>'background-color: #ffffff !important']) }}
-                                    {!! $errors->first('hum_merma', '<div class="invalid-feedback">:message</div>') !!}
-                                    <span id="error_merma" class="invalid-feedback"></span>
-                                </div>
-                            </div>
-
-                            <!-- 8. TIPO DE MINERAL -->
+                            <!-- 5. TIPO DE MINERAL -->
                             <div class="col-12 col-md-6 mt-3">
-                                <p class="">8. TIPO DE MINERAL</p>
+                                <p class="">5. TIPO DE MINERAL</p>
                                 <div class="form-group metalicos-input">
-                                    {{ Form::label('tipo_min_metalico', 'MINERAL METÁLICO',) }}
+                                    {{ Form::label('tipo_min_metalico', 'MINERAL METÁLICO (Onza Troy-DM-%)',) }}
                                     <span class="text-danger">*</span>
                                     <select class="form-control" id="select2-multiselect-metalicos" multiple style="width: 100%;">
                                         @foreach($metales as $metalico)
@@ -304,6 +269,10 @@
 
                                         let datosAlicuotaMetalico = [];
                                         let datosAlicuotaNometalico = [];
+                                        let alicuota = '';
+                                        let alicuotaDos = '';
+                                        let nuevaCadenaMetalico = '';
+                                        let nuevaCadenaNometalico = '';
 
                                         // -------------SECTOR METALICO----------------
 
@@ -319,9 +288,9 @@
                                             const currentSelection = $('#select2-multiselect-nometalicos').val();
 
                                             // Limpiar selecciones en el multiselect-nometalicos solo si no está vacío
-                                            if (currentSelection && currentSelection.length > 0) {
-                                                $('#select2-multiselect-nometalicos').val([]).trigger('change');
-                                            }
+                                            // if (currentSelection && currentSelection.length > 0) {
+                                            //     $('#select2-multiselect-nometalicos').val([]).trigger('change');
+                                            // }
                                         })
                                         // Capturar valores en el evento change
                                         $('#select2-multiselect-metalicos').on('change', async (e) => {
@@ -347,18 +316,30 @@
                                             // Asignar los valores al input oculto como una cadena separada por comas
                                             $('#hidden-metalicos-ids').val(selectedValues.join(','));
 
-                                            let alicuota = '';
+                                            alicuota = '';
                                             selectedDataNew.forEach(element => {
                                                 alicuota = alicuota + ',' + element.alicuota;
                                             });
 
-                                            let nuevaCadenaMetalico = alicuota.substring(1);
+                                            nuevaCadenaMetalico = alicuota.substring(1);
 
                                             // Mostrar la nueva cadena en el campo alicuota
                                             let alicuotaInput_show = document.getElementById('alicuota-show');
                                             let alicuotaInput = document.getElementById('alicuota');
-                                            alicuotaInput_show.value = nuevaCadenaMetalico;
-                                            alicuotaInput.value = nuevaCadenaMetalico;
+
+                                            if (nuevaCadenaNometalico === '') {
+                                                alicuotaInput_show.value = nuevaCadenaMetalico;
+                                                alicuotaInput.value = nuevaCadenaMetalico;
+                                            } else {
+                                                alicuotaInput_show.value = nuevaCadenaMetalico + ',' + nuevaCadenaNometalico;
+                                                alicuotaInput.value = nuevaCadenaMetalico + ',' + nuevaCadenaNometalico;
+                                            }
+
+                                            if (nuevaCadenaMetalico === '') {
+                                                alicuotaInput_show.value = nuevaCadenaNometalico;
+                                                alicuotaInput.value = nuevaCadenaNometalico;
+                                            }
+
                                         }
                                         // Ejemplo de función para obtener datos adicionales del mineral
                                         function findMineralDataMetalico(value) {
@@ -368,7 +349,8 @@
                                                     url: '{{ route("admin.buscaralicuotametalico") }}',
                                                     data: {
                                                         _token: '{{ csrf_token() }}',
-                                                        simbolo: value
+                                                        simbolo: value,
+                                                        comercio: "interno"
                                                     },
                                                     beforeSend: function() {
                                                         // console.log('Está buscando');
@@ -397,9 +379,9 @@
                                             const currentSelection = $('#select2-multiselect-metalicos').val();
 
                                             // Limpiar selecciones en el multiselect-metalicos solo si no está vacío
-                                            if (currentSelection && currentSelection.length > 0) {
-                                                $('#select2-multiselect-metalicos').val([]).trigger('change');
-                                            }
+                                            // if (currentSelection && currentSelection.length > 0) {
+                                            //     $('#select2-multiselect-metalicos').val([]).trigger('change');
+                                            // }
                                         })
 
                                         // Capturar valores en el evento change
@@ -428,16 +410,27 @@
                                             // Asignar los valores al input oculto como una cadena separada por comas
                                             $('#hidden-nometalicos-ids').val(selectedValues.join(','));
 
-                                            let alicuota = '';
+                                            alicuotaDos = '';
                                             selectedDataNew.forEach(element => {
-                                                alicuota = alicuota + ',' + element.alicuota;
+                                                alicuotaDos = alicuotaDos + ',' + element.alicuota;
                                             });
-                                            let nuevaCadenaNometalico = alicuota.substring(1);
+                                            nuevaCadenaNometalico = alicuotaDos.substring(1);
 
                                             let alicuotaInput_show = document.getElementById('alicuota-show');
                                             let alicuotaInput = document.getElementById('alicuota');
-                                            alicuotaInput_show.value = nuevaCadenaNometalico;
-                                            alicuotaInput.value = nuevaCadenaNometalico;
+
+
+                                            if (nuevaCadenaMetalico === '') {
+                                                alicuotaInput_show.value = nuevaCadenaNometalico;
+                                                alicuotaInput.value = nuevaCadenaNometalico;
+                                            } else {
+                                                alicuotaInput_show.value = nuevaCadenaMetalico + ',' + nuevaCadenaNometalico;
+                                                alicuotaInput.value = nuevaCadenaMetalico + ',' + nuevaCadenaNometalico;
+                                            }
+                                            if (nuevaCadenaNometalico === '') {
+                                                alicuotaInput_show.value = nuevaCadenaMetalico;
+                                                alicuotaInput.value = nuevaCadenaMetalico;
+                                            }
 
                                         }
                                         // Ejemplo de función para obtener datos adicionales del mineral
@@ -448,7 +441,8 @@
                                                     url: '{{ route("admin.buscaralicuotanometalico") }}',
                                                     data: {
                                                         _token: '{{ csrf_token() }}',
-                                                        simbolo: value
+                                                        simbolo: value,
+                                                        comercio: "interno"
                                                     },
                                                     beforeSend: function() {
                                                         // console.log('Está buscando');
@@ -471,7 +465,7 @@
                                 </script>
                                 <!-- NO METALICO -->
                                 <div class="form-group nometalicos-input mt-2">
-                                    {{ Form::label('tipo_min_metalico', 'MINERAL NO METÁLICO',) }}
+                                    {{ Form::label('tipo_min_metalico', 'MINERAL NO METÁLICO (%)',) }}
                                     <span class="text-danger">*</span>
                                     <select class="form-control" id="select2-multiselect-nometalicos" multiple style="width: 100%;">
                                         @foreach($nometales as $nometalico)
@@ -505,16 +499,52 @@
 
                             </div>
 
-                            <!-- 9.-PRESENTACIÓN -->
+                            <!-- 6.-PRESENTACIÓN -->
                             <div class="col-12 col-md-6 mt-3">
                                 <div class="form-group">
-                                    <label for="presentacion" class="text-uppercase"><span id="label-presentacion">9. PRESENTACIÓN</span></label>
+                                    <label for="presentacion" class="text-uppercase"><span id="label-presentacion">6. PRESENTACIÓN</span></label>
                                     <span class="text-danger">*</span>
                                     {{ Form::text('presentacion', $formulario->presentacion, ['class' => 'form-control' . ($errors->has('presentacion') ? ' is-invalid' : ''),'id'=>'presentacion','style'=>'background-color: #ffffff !important']) }}
                                     {!! $errors->first('presentacion', '<div class="invalid-feedback">:message</div>') !!}
                                     <span id="error_presentacion" class="invalid-feedback"></span>
                                 </div>
                             </div>
+
+                            <!-- 7. NRO DE LOTE -->
+                            <div class="col-12 col-md-4 mt-3">
+                                <div class="form-group">
+                                    <span style="color: black;">7.</span>
+                                    {{ Form::label('nro_lote', 'NRO. LOTE', ['class' => 'text-uppercase']) }}
+                                    <span class="text-danger" id="as-lote"></span>
+                                    {{ Form::text('nro_lote', $formulario->nro_lote, ['class' => 'form-control' . ($errors->has('nro_lote') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese un nro. de lote (opcional)','id'=>'nro_lote','style'=>'background-color: #ffffff !important']) }}
+                                    {!! $errors->first('nro_lote', '<div class="invalid-feedback">:message</div>') !!}
+                                    <span id="error_nro_lote" class="invalid-feedback"></span>
+                                </div>
+                            </div>
+
+                            <!-- 8. LEY -->
+                            <div class="col-12 col-md-4 mt-3">
+                                <div class="form-group">
+                                    <label for="ley"><span style="color: black;">8.</span> LEY</label>
+                                    <span class="text-danger" id="ley"></span>
+                                    {{ Form::text('ley', $formulario->ley, ['class' => 'form-control' . ($errors->has('ley') ? ' is-invalid' : ''), 'id'=>'ley', 'style'=>'background-color: #ffffff !important']) }}
+                                    {!! $errors->first('ley', '<div class="invalid-feedback">:message</div>') !!}
+                                    <span id="error_ley" class="invalid-feedback"></span>
+                                </div>
+                            </div>
+
+                            <!-- 9. HUM-MERMA -->
+                            <div class="col-12 col-md-4 mt-3">
+                                <div class="form-group">
+                                    <label for="humedad"><span style="color: black;">9.</span> HUM-MERMA(%)</label>
+                                    <span class="text-danger" id="as-merma"></span>
+                                    {{ Form::text('hum_merma', $formulario->hum_merma, ['class' => 'form-control' . ($errors->has('hum_merma') ? ' is-invalid' : ''), 'id'=>'humedad', 'style'=>'background-color: #ffffff !important']) }}
+                                    {!! $errors->first('hum_merma', '<div class="invalid-feedback">:message</div>') !!}
+                                    <span id="error_merma" class="invalid-feedback"></span>
+                                </div>
+                            </div>
+
+
 
                             <!-- 10.-ALICUOTA -->
                             <div class="col-12 col-md-4 mt-3">
@@ -523,7 +553,6 @@
                                     {{ Form::label('alicuota-show', 'ALÍCUOTA') }}
                                     <span class="text-danger">*</span>
                                     {{ Form::text('alicuota-show', $formulario->alicuota, ['class' => 'form-control', 'id'=>'alicuota-show',  'style'=>'background-color: #ffffff !important']) }}
-
                                     {{ Form::hidden('alicuota', $formulario->alicuota,['class' => 'form-control' . ($errors->has('alicuota') ? ' is-invalid' : ''),'id' => 'alicuota']) }}
                                     {!! $errors->first('alicuota', '<div class="invalid-feedback">:message</div>') !!}
                                     <span id="error_alicuota" class="text-danger"></span>
@@ -612,16 +641,19 @@
                             </div>
 
                             <!-- 14.- MUNICIPIO PRODUCTOR -->
+                            @php
+                            // Convertir los códigos del formulario en array
+                            $codigosSeleccionados = explode(',', $formulario->codigo ?? '');
+                            @endphp
                             <div class="col-12 col-md-7 mt-3">
                                 <div class="form-group">
-                                    {{ Form::label('municipio', 'Seleccione un municipio') }}
+                                    <label for="bruto"><span style="color: black;">14.</span> SELECCIONAR MUNICIPIO </label>
                                     <span class="text-danger">*</span>
-                                    <select class="form-control" id="select2-dropdown" style="width: 100%;">
-                                        <option value="" disabled selected>-Seleccionar-</option>
+                                    <select class="form-control" id="select2-multilect-municipio" multiple style="width: 100%;">
                                         @foreach($municipiosCoincidentes as $municipio)
                                         <option value="{{ $municipio->municipio }}"
                                             data-otro-dato="{{ $municipio->codigo }}"
-                                            @if($municipio->codigo == $formulario->codigo) selected @endif>
+                                            @if(in_array($municipio->codigo, $codigosSeleccionados)) selected @endif>
                                             {{ $municipio->municipio }}
                                         </option>
                                         @endforeach
@@ -631,26 +663,35 @@
                                     <div class="alert alert-danger">{{ $errors->first('municipio') }}</div>
                                     @endif
                                 </div>
-
                                 <script>
                                     document.addEventListener('DOMContentLoaded', () => {
-                                        $('#select2-dropdown').select2(); // Activar Select2
+                                        $('#select2-multilect-municipio').select2();
 
-                                        $('#select2-dropdown').on('change', () => {
+                                        function actualizarCamposMunicipio() {
+                                            let selectedOptions = $('#select2-multilect-municipio option:selected');
 
-                                            let selectedOption = $('#select2-dropdown option:selected');
-                                            let codigo = selectedOption.data('otro-dato'); // ← AQUÍ ESTÁ
-                                            let municipio = selectedOption.val();
+                                            let municipios = [];
+                                            let codigos = [];
 
-                                            // console.log('El municipio seleccionado es: ' + municipio);
+                                            selectedOptions.each(function() {
+                                                municipios.push($(this).val());
+                                                codigos.push($(this).data('otro-dato'));
+                                            });
 
-                                            $('#codigo-municipio_disabled').val(codigo); // para mostrar en el campo disabled
-                                            $('#codigo').val(codigo); // para enviar al backend en el campo hidden
-                                            $('#hidden-municipio').val(municipio); // para enviar al backend en el campo hidden
+                                            let municipiosString = municipios.join(', ');
+                                            let codigosString = codigos.join(', ');
 
-                                        });
+                                            $('#hidden-municipio').val(municipiosString);
+                                            $('#codigo-municipio_disabled').val(codigosString);
+                                            $('#codigo').val(codigosString);
+                                        }
+
+                                        actualizarCamposMunicipio(); // <-- clave para que cargue al editar
+                                        $('#select2-multilect-municipio').on('change', actualizarCamposMunicipio);
                                     });
                                 </script>
+
+
                             </div>
 
 
@@ -929,22 +970,7 @@
         });
         // FIN Validar Nro Lote
 
-        // 1.- Validar Reg. Cert. quimico
-        const quimicoInput = document.getElementById("quimico");
-        const errorQuimico = document.getElementById("error_quimico");
 
-        quimicoInput.addEventListener("input", function() {
-            const inputQuimicoValue = quimicoInput.value;
-            if (inputQuimicoValue.length > 15) {
-                errorQuimico.textContent = "El campo Nro. Lote no debe contener más de 15 caracteres.";
-                quimicoInput.classList.add("is-invalid");
-
-            } else if (inputQuimicoValue.length <= 15) {
-                errorQuimico.textContent = "";
-                quimicoInput.classList.remove("is-invalid");
-            }
-        });
-        // FIN Validar Cert. quimico
 
 
         // 1.- Validar campo Peso Bruto
@@ -1008,22 +1034,6 @@
 
         // FIN Validar Tara
 
-        // 1.- Validar  merma hum
-        const mermaInput = document.getElementById("merma");
-        const mermaQuimico = document.getElementById("error_merma");
-
-        mermaInput.addEventListener("input", function() {
-            const inputMermaValue = mermaInput.value;
-            if (inputMermaValue.length > 10) {
-                mermaQuimico.textContent = "El campo Hum. Merma no debe contener más de 10 caracteres.";
-                mermaInput.classList.add("is-invalid");
-
-            } else if (inputMermaValue.length <= 10) {
-                mermaQuimico.textContent = "";
-                mermaInput.classList.remove("is-invalid");
-            }
-        });
-        // FIN Validar merma hum
 
 
         // 1.- Validar campo Origen
@@ -1093,38 +1103,7 @@
         });
         // FIN Validar destino
 
-        // 1.- Validar campo comprador
-        const comercializadoraInput = document.getElementById("comercializadora");
-        const errorComercializadora = document.getElementById("error_comercializadora");
 
-        comercializadoraInput.addEventListener("input", function() {
-            const inputComercializadoraValue = comercializadoraInput.value;
-            if (inputComercializadoraValue.length > 16) {
-                errorComercializadora.textContent = "El campo Comercializadora no debe contener más de 16 caracteres.";
-                comercializadoraInput.classList.add("is-invalid");
-
-            } else if (inputComercializadoraValue.length <= 16) {
-                errorComercializadora.textContent = "";
-                comercializadoraInput.classList.remove("is-invalid");
-
-            }
-            // Verifica que el campo sea vacio
-            if (inputComercializadoraValue.trim() === '') {
-
-                errorComercializadora.textContent = "Este campo es requerido";
-                comercializadoraInput.classList.add("is-invalid");
-            }
-
-        });
-
-        comercializadoraInput.addEventListener("blur", function() {
-            const inputComercializadoraValue = comercializadoraInput.value;
-            if (inputComercializadoraValue.trim() === '') {
-                errorComercializadora.textContent = "Este campo es requerido";
-                comercializadoraInput.classList.add("is-invalid");
-            }
-        });
-        // FIN Validar Alicuota
 
         // 1.- Validar campo comercializadora
         const alicuotaInput = document.getElementById("alicuota");

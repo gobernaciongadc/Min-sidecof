@@ -46,6 +46,7 @@ Nometalico
                                     <th style="width: 30%;">Nombre</th>
                                     <th style="width: 15%;">Simbolo</th>
                                     <th style="width: 15%;">Alicuota</th>
+                                    <th style="width: 15%;">Tipo Mercado</th>
                                     <th style="width: 15%;">Estado</th>
                                     <th style="width: 15%;">Acciones</th>
                                 </tr>
@@ -58,6 +59,7 @@ Nometalico
                                     <td>{{ $nometalico->nombre }}</td>
                                     <td>{{ $nometalico->simbolo }}</td>
                                     <td>{{ $nometalico->alicuota }}</td>
+                                    <td>{{ $nometalico->tipo_mercado }}</td>
                                     <td class="{{ $nometalico->estado === 'Habilitado' ? 'text-success' : 'text-danger' }}">
                                         {{ $nometalico->estado }}
                                     </td>

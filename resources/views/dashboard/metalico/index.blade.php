@@ -48,6 +48,7 @@ Metalico
                                     <th style="width: 30%;">Nombre</th>
                                     <th style="width: 15%;">Simbolo</th>
                                     <th style="width: 15%;">Alicuota</th>
+                                    <th style="width: 15%;">Tipo Mercado</th>
                                     <th style="width: 15%;">Estado</th>
                                     <th style="width: 10%;">Acciones</th>
                                 </tr>
@@ -60,6 +61,7 @@ Metalico
                                     <td>{{ $metalico->nombre }}</td>
                                     <td>{{ $metalico->simbolo }}</td>
                                     <td>{{ $metalico->alicuota }}</td>
+                                    <td>{{ $metalico->tipo_mercado }}</td>
                                     <td class="{{ $metalico->estado === 'Habilitado' ? 'text-success' : 'text-danger' }}">
                                         {{ $metalico->estado }}
                                     </td>

@@ -176,12 +176,7 @@
                                     <div class="col-12 col-md-9">
                                         <div class="form-group">
                                             <strong>TIPO DE MINERAL:</strong>
-                                            @if($formulario->tipo_min_metalico != null)
-                                            {{ $formulario->tipo_min_metalico }}
-                                            @endif
-                                            @if($formulario->tipo_min_nometalico != null)
-                                            {{ $formulario->tipo_min_nometalico }}
-                                            @endif
+                                            {{ implode(', ', array_filter([$formulario->tipo_min_metalico, $formulario->tipo_min_nometalico])) }}
                                         </div>
                                     </div>
                                     <!-- 7 -->
@@ -646,36 +641,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Bloque LOTE, LEY U HUM-MERMA -->
-                    <div class="row pt-2 pb-2">
-                        <div class="col-12">
-                            <div class="form-group border p-3">
-                                <div class="row">
-
-                                    <div class="col-12 col-md-4">
-                                        <div class="form-group">
-                                            <strong class="text-uppercase">5. Nro. Lote:</strong>
-                                            {{ $formulario->nro_lote }}
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 col-md-4">
-                                        <div class="form-group">
-                                            <strong class="text-uppercase">6. Ley:</strong>
-                                            {{ $formulario->ley }}
-
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-4">
-                                        <div class="form-group">
-                                            <strong class="text-uppercase">7. Hum-Merma(%):</strong>
-                                            {{ $formulario->hum_merma }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                     <!-- Bloque tipo mineral y presentacion -->
                     <div class="row pt-2 pb-2">
@@ -684,20 +649,15 @@
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         <div class="form-group">
-                                            <strong>8. TIPO DE MINERAL:</strong>
-                                            @if($formulario->tipo_min_metalico != null)
-                                            {{ $formulario->tipo_min_metalico }}
-                                            @endif
-                                            @if($formulario->tipo_min_nometalico != null)
-                                            {{ $formulario->tipo_min_nometalico }}
-                                            @endif
+                                            <strong>5. TIPO DE MINERAL:</strong>
+                                            {{ implode(', ', array_filter([$formulario->tipo_min_metalico, $formulario->tipo_min_nometalico])) }}
                                         </div>
                                     </div>
 
 
                                     <div class="col-12 col-md-6">
                                         <div class="form-group text-uppercase">
-                                            <strong class="text-uppercase">9. Presentación: </strong>
+                                            <strong class="text-uppercase">6. Presentación: </strong>
                                             {{ $formulario->presentacion}}
                                         </div>
                                     </div>
@@ -705,6 +665,39 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Bloque LOTE, LEY U HUM-MERMA -->
+                    <div class="row pt-2 pb-2">
+                        <div class="col-12">
+                            <div class="form-group border p-3">
+                                <div class="row">
+
+                                    <div class="col-12 col-md-4">
+                                        <div class="form-group">
+                                            <strong class="text-uppercase">7. Nro. Lote:</strong>
+                                            {{ $formulario->nro_lote }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-4">
+                                        <div class="form-group">
+                                            <strong class="text-uppercase">8. Ley:</strong>
+                                            {{ $formulario->ley }}
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="form-group">
+                                            <strong class="text-uppercase">9. Hum-Merma(%):</strong>
+                                            {{ $formulario->hum_merma }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
 
                     <!-- Tipo alicuota, peso bruto y tara -->
                     <div class="row pt-2 pb-2">

@@ -24,16 +24,19 @@
             </div>
 
             <div class="col-md-4">
+                {{ Form::label('tipo_mercado', 'Tipo Mercado') }}
+                <span class="text-danger">*</span>
+                {{ Form::select('tipo_mercado', ['Interno' => 'Interno', 'Externo' => 'Externo'], $metalico->tipo_mercado, ['class' => 'form-select' . ($errors->has('tipo_mercado') ? ' is-invalid' : '')]) }}
+                {!! $errors->first('tipo_mercado', '<div class="invalid-feedback">:message</div>') !!}
+            </div>
+
+            <div class="col-md-4">
                 {{ Form::label('estado', 'Estado') }}
                 <span class="text-danger">*</span>
                 {{ Form::select('estado', ['Habilitado' => 'Habilitado', 'No habilitado' => 'No habilitado'], $metalico->estado, ['class' => 'form-select' . ($errors->has('estado') ? ' is-invalid' : '')]) }}
                 {!! $errors->first('estado', '<div class="invalid-feedback">:message</div>') !!}
             </div>
-            <!-- <div class="form-group">
-                {{ Form::label('users_id') }}
-                {{ Form::text('users_id', $metalico->users_id, ['class' => 'form-control' . ($errors->has('users_id') ? ' is-invalid' : ''), 'placeholder' => 'Users Id']) }}
-                {!! $errors->first('users_id', '<div class="invalid-feedback">:message</div>') !!}
-            </div> -->
+
         </div>
 
     </div>

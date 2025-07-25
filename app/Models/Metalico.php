@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property $nombre
  * @property $simbolo
  * @property $alicuota
+ * @property $tipo_mercado
  * @property $users_id
  * @property $created_at
  * @property $updated_at
@@ -23,9 +24,10 @@ class Metalico extends Model
 {
 
   static $rules = [
-    'nombre' => 'required|unique:metalicos,nombre|max:15',
+    'nombre' => 'required|max:15',
     'simbolo' => 'required|max:5',
     'alicuota' => 'required',
+    'tipo_mercado' => 'required',
     'estado' => 'required',
   ];
 
@@ -36,7 +38,7 @@ class Metalico extends Model
    *
    * @var array
    */
-  protected $fillable = ['nombre', 'simbolo', 'users_id', 'estado', 'alicuota'];
+  protected $fillable = ['nombre', 'simbolo', 'users_id', 'estado', 'alicuota', 'tipo_mercado'];
 
 
   /**

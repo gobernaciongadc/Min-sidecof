@@ -37,6 +37,10 @@
                         {{ $metalico->alicuota }}
                     </div>
                     <div class="form-group mt-3">
+                        <strong>Tipo Mercado:</strong>
+                        {{ $metalico->tipo_mercado }}
+                    </div>
+                    <div class="form-group mt-3">
                         <strong>Usuario a cargo del registro:</strong>
                         {{ $metalico->user->name }}
                     </div>

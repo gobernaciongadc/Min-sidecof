@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('simbolo');
             $table->double('alicuota');
+            $table->string('tipo_mercado');
             $table->string('estado')->default('Habilitado');
             $table->foreignId('users_id')->constrained('users')->onUpdate('cascade')->onDelete('restrict');
             $table->timestamps();

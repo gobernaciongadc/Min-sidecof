@@ -243,7 +243,11 @@ Puesto en ecena
                                 '<td>' + rowData.origen + '</td>' +
                                 '<td>' + rowData.fecha_emision + '</td>' +
                                 '<td>' + (rowData.fecha_valides !== null ? rowData.fecha_valides : '---') + '</td>' +
-                                '<td>' + (rowData.tipo_min_metalico !== null ? rowData.tipo_min_metalico : rowData.tipo_min_nometalico) + '</td>' + // Operador ternario
+                                '<td>' +
+                                (rowData.tipo_min_metalico ?? '') +
+                                (rowData.tipo_min_metalico && rowData.tipo_min_nometalico ? ', ' : '') +
+                                (rowData.tipo_min_nometalico ?? '') +
+                                '</td>' +
                                 '<td>' + rowData.placa + '</td>' +
                                 '<td>' + rowData.comprador + '</td>' +
                                 '</tr>';

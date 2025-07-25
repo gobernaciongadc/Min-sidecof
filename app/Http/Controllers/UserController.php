@@ -214,6 +214,11 @@ class UserController extends Controller
                         Empresa::where('id', $user->id_login)
                             ->update(['estado' => 'No habilitado']);
                         break;
+                    case 'mineros':
+                        $actualizar = $user->update(['estado' => 'No habilitado']);
+                        Minero::where('id', $user->id_login)
+                            ->update(['estado' => 'No habilitado']);
+                        break;
                     default:
                         # code...
                         break;
@@ -307,6 +312,10 @@ class UserController extends Controller
                     break;
                 case 'empresas':
                     Empresa::where('id', $user->id_login)
+                        ->update(['estado' => 'Habilitado']);
+                    break;
+                case 'mineros':
+                    Minero::where('id', $user->id_login)
                         ->update(['estado' => 'Habilitado']);
                     break;
                 default:

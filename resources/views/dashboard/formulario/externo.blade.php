@@ -487,7 +487,8 @@
                                             url: '{{ route("admin.buscaralicuotametalico") }}',
                                             data: {
                                                 _token: '{{ csrf_token() }}',
-                                                simbolo: value
+                                                simbolo: value,
+                                                comercio: 'externo'
                                             },
                                             beforeSend: function() {
                                                 // console.log('Está buscando');
@@ -578,7 +579,8 @@
                                             url: '{{ route("admin.buscaralicuotanometalico") }}',
                                             data: {
                                                 _token: '{{ csrf_token() }}',
-                                                simbolo: value
+                                                simbolo: value,
+                                                comercio: 'externo'
                                             },
                                             beforeSend: function() {
                                                 // console.log('Está buscando');
@@ -1251,7 +1253,7 @@
         origenInput.addEventListener("input", function() {
             const inputOrigenValue = origenInput.value;
             if (inputOrigenValue.length > 50) {
-                errorOrigen.textContent = "El campo Origen no debe contener más de 13 caracteres.";
+                errorOrigen.textContent = "El campo Origen no debe contener más de 50 caracteres.";
                 origenInput.classList.add("is-invalid");
 
             } else if (inputOrigenValue.length <= 50) {
@@ -1285,7 +1287,7 @@
         destinoInput.addEventListener("input", function() {
             const inputDestinoValue = destinoInput.value;
             if (inputDestinoValue.length > 50) {
-                errorDestino.textContent = "El campo Destino no debe contener más de 13 caracteres.";
+                errorDestino.textContent = "El campo Destino no debe contener más de 50 caracteres.";
                 destinoInput.classList.add("is-invalid");
 
             } else if (inputDestinoValue.length <= 50) {
@@ -1317,11 +1319,11 @@
 
         alicuotaInput.addEventListener("input", function() {
             const inputAlicuotaValue = alicuotaInput.value;
-            if (inputAlicuotaValue.length > 50) {
-                errorAlicuota.textContent = "El campo Alicuota no debe contener más de 10 caracteres.";
+            if (inputAlicuotaValue.length > 100) {
+                errorAlicuota.textContent = "El campo Alicuota no debe contener más de 100 caracteres.";
                 alicuotaInput.classList.add("is-invalid");
 
-            } else if (inputAlicuotaValue.length <= 50) {
+            } else if (inputAlicuotaValue.length <= 100) {
                 errorAlicuota.textContent = "";
                 alicuotaInput.classList.remove("is-invalid");
 

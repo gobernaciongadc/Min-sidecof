@@ -18,6 +18,7 @@ class NometalicoSeeder extends Seeder
         $nometalico->nombre = "Caliza";
         $nometalico->simbolo = "Caliza";
         $nometalico->alicuota = 1.2;
+        $nometalico->tipo_mercado = "Interno";
         $nometalico->users_id = 1;
         $nometalico->save();
 
@@ -26,6 +27,7 @@ class NometalicoSeeder extends Seeder
         $nometalico->nombre = "Yeso";
         $nometalico->simbolo = "Yeso";
         $nometalico->alicuota = 8.5;
+        $nometalico->tipo_mercado = "Interno";
         $nometalico->users_id = 1;
         $nometalico->save();
 
@@ -34,6 +36,7 @@ class NometalicoSeeder extends Seeder
         $nometalico->nombre = "Baritina";
         $nometalico->simbolo = "Baritina";
         $nometalico->alicuota = 7.6;
+        $nometalico->tipo_mercado = "Interno";
         $nometalico->users_id = 1;
         $nometalico->save();
 
@@ -42,6 +45,7 @@ class NometalicoSeeder extends Seeder
         $nometalico->nombre = "Sodalita";
         $nometalico->simbolo = "Sodalita";
         $nometalico->alicuota = 5.5;
+        $nometalico->tipo_mercado = "Interno";
         $nometalico->users_id = 1;
         $nometalico->save();
 
@@ -50,6 +54,7 @@ class NometalicoSeeder extends Seeder
         $nometalico->nombre = "Fosforita";
         $nometalico->simbolo = "Fosforita";
         $nometalico->alicuota = 5.5;
+        $nometalico->tipo_mercado = "Interno";
         $nometalico->users_id = 1;
         $nometalico->save();
 
@@ -58,6 +63,7 @@ class NometalicoSeeder extends Seeder
         $nometalico->nombre = "Sílice";
         $nometalico->simbolo = "Sílice";
         $nometalico->alicuota = 5.5;
+        $nometalico->tipo_mercado = "Interno";
         $nometalico->users_id = 1;
         $nometalico->save();
 
@@ -66,6 +72,7 @@ class NometalicoSeeder extends Seeder
         $nometalico->nombre = "Bentonita";
         $nometalico->simbolo = "Bentonita";
         $nometalico->alicuota = 5.5;
+        $nometalico->tipo_mercado = "Interno";
         $nometalico->users_id = 1;
         $nometalico->save();
 
@@ -74,6 +81,7 @@ class NometalicoSeeder extends Seeder
         $nometalico->nombre = "Puzolana";
         $nometalico->simbolo = "Puzolana";
         $nometalico->alicuota = 5.5;
+        $nometalico->tipo_mercado = "Interno";
         $nometalico->users_id = 1;
         $nometalico->save();
 
@@ -82,6 +90,89 @@ class NometalicoSeeder extends Seeder
         $nometalico->nombre = "Arcilla";
         $nometalico->simbolo = "Arcilla";
         $nometalico->alicuota = 5.5;
+        $nometalico->tipo_mercado = "Interno";
+        $nometalico->users_id = 1;
+        $nometalico->save();
+
+        // externo
+        // 1.-
+        $nometalico = new Nometalico();
+        $nometalico->nombre = "Caliza";
+        $nometalico->simbolo = "Caliza";
+        $nometalico->alicuota = 1.2;
+        $nometalico->tipo_mercado = "Externo";
+        $nometalico->users_id = 1;
+        $nometalico->save();
+
+        // 2.-
+        $nometalico = new Nometalico();
+        $nometalico->nombre = "Yeso";
+        $nometalico->simbolo = "Yeso";
+        $nometalico->alicuota = 8.5;
+        $nometalico->tipo_mercado = "Externo";
+        $nometalico->users_id = 1;
+        $nometalico->save();
+
+        // 3.-
+        $nometalico = new Nometalico();
+        $nometalico->nombre = "Baritina";
+        $nometalico->simbolo = "Baritina";
+        $nometalico->alicuota = 7.6;
+        $nometalico->tipo_mercado = "Externo";
+        $nometalico->users_id = 1;
+        $nometalico->save();
+
+        // 4.-
+        $nometalico = new Nometalico();
+        $nometalico->nombre = "Sodalita";
+        $nometalico->simbolo = "Sodalita";
+        $nometalico->alicuota = 5.5;
+        $nometalico->tipo_mercado = "Externo";
+        $nometalico->users_id = 1;
+        $nometalico->save();
+
+        // 5.-
+        $nometalico = new Nometalico();
+        $nometalico->nombre = "Fosforita";
+        $nometalico->simbolo = "Fosforita";
+        $nometalico->alicuota = 5.5;
+        $nometalico->tipo_mercado = "Externo";
+        $nometalico->users_id = 1;
+        $nometalico->save();
+
+        // 6.-
+        $nometalico = new Nometalico();
+        $nometalico->nombre = "Sílice";
+        $nometalico->simbolo = "Sílice";
+        $nometalico->alicuota = 5.5;
+        $nometalico->tipo_mercado = "Externo";
+        $nometalico->users_id = 1;
+        $nometalico->save();
+
+        // 7.-
+        $nometalico = new Nometalico();
+        $nometalico->nombre = "Bentonita";
+        $nometalico->simbolo = "Bentonita";
+        $nometalico->alicuota = 5.5;
+        $nometalico->tipo_mercado = "Externo";
+        $nometalico->users_id = 1;
+        $nometalico->save();
+
+        // 8.-
+        $nometalico = new Nometalico();
+        $nometalico->nombre = "Puzolana";
+        $nometalico->simbolo = "Puzolana";
+        $nometalico->alicuota = 5.5;
+        $nometalico->tipo_mercado = "Externo";
+        $nometalico->users_id = 1;
+        $nometalico->save();
+
+        // 9.-
+        $nometalico = new Nometalico();
+        $nometalico->nombre = "Arcilla";
+        $nometalico->simbolo = "Arcilla";
+        $nometalico->alicuota = 5.5;
+        $nometalico->tipo_mercado = "Externo";
         $nometalico->users_id = 1;
         $nometalico->save();
     }

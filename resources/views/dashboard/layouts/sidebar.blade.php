@@ -19,7 +19,13 @@
       <a class="nav-link collapsed" data-bs-target="#components-reportes" data-bs-toggle="collapse" href="#">
         <i class="bi bi-file-pdf"></i><span>Reportes</span><i class="bi bi-chevron-down ms-auto"></i>
       </a>
+
       <ul id="components-reportes" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="{{route('admin.viewformulariolista')}}">
+            <i class="bi bi-circle"></i><span>Buscar y filtrar por diferentes campos</span>
+          </a>
+        </li>
         <li>
           <a href="{{route('admin.cantidadformularios')}}">
             <i class="bi bi-circle"></i><span>Cantidad Formularios por actor productivo</span>
@@ -40,11 +46,7 @@
             <i class="bi bi-circle"></i><span>Cantidad de empresas inscritas por año</span>
           </a>
         </li>
-        <li>
-          <a href="{{route('admin.viewformulariolista')}}">
-            <i class="bi bi-circle"></i><span>Lista de formularios por empresa</span>
-          </a>
-        </li>
+
       </ul>
     </li><!-- End Reportes -->
     @endhasrole

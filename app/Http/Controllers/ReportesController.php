@@ -606,42 +606,107 @@ class ReportesController extends Controller
     function dataFormularioLista(Request $request)
     {
 
-        $params = (object) $request->all(); // Devulve un obejto
-        $paramsArray = $request->all(); // Devulve un Array
+        // Campos que SIEMPRE envía DataTables, aunque no filtres
+        $camposPorDefecto = ['draw', 'columns', 'order', 'start', 'length', 'search', '_token'];
 
+        // Eliminamos esos campos y nos quedamos con los personalizados
+        $inputs = collect($request->except($camposPorDefecto));
 
-        $fechaHora = $params->periodo;
+        // Filtramos sólo los que NO están vacíos (ej: '', null, [])
+        $inputsConValor = $inputs->filter(function ($valor) {
+            return !is_null($valor) && $valor !== '';
+        });
 
-        // Extraer año y mes de $fechaHora
-        $año = date('Y', strtotime($fechaHora));
-        $mes = date('m', strtotime($fechaHora));
-
-        if ($params->empresaId != null || $params->periodo != null) {
-
-            // Consulta año actual
-            $usuarios = User::where('id_login', $params->empresaId)
-                ->where('name_bd', 'empresas')
-                ->first();
-
-            $usuariosId = $usuarios->id;
-
-            // Consulta en la base de datos con selección de campos y orden descendente por nro_formulario
-            $formulario = Formulario::where('users_id', $usuariosId)
-                ->whereYear('fecha_emision', $año)
-                ->whereMonth('fecha_emision', $mes)
-                ->orderBy('nro_formulario', 'desc')
-                // ->select('nro_formulario', 'razon_social', 'tipo_min_metalico', 'tipo_min_nometalico')
-                ->get();
-
-            return datatables($formulario)->toJson(); // paginacion del lado del servidor
-
-        } else {
-            $data = array(
-                'code' => 200,
-                'status' => 'sin datos',
-                'message' => 'Ingrese todos los datos para relizar una consulta',
-            );
-            return response()->json($data, $data['code']);
+        // Si no hay campos con valores útiles, devolvemos array vacío
+        if ($inputsConValor->isEmpty()) {
+            return response()->json([
+                'draw' => intval($request->input('draw')),
+                'recordsTotal' => 0,
+                'recordsFiltered' => 0,
+                'david' => $request->all(), // para debug si quieres ver qué llegó
+                'status' => 'success',
+                'data' => [] // sin resultados
+            ]);
         }
+
+        $query = Formulario::query();
+
+        // Metalico / Nometalico
+        if ($request->filled('mineral')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('tipo_min_metalico', 'ILIKE', '%' . $request->mineral . '%')
+                    ->orWhere('tipo_min_nometalico', 'ILIKE', '%' . $request->mineral . '%');
+            });
+        }
+
+
+        // NIM
+        if ($request->filled('nim')) {
+            $query->where('nro_nim', 'ILIKE', '%' . $request->nim . '%');
+        }
+
+        // RUIM/ROCMIN
+        if ($request->filled('comercio')) {
+            $query->where('comercio', 'ILIKE', '%' . $request->comercio . '%');
+        }
+
+        // Municipio
+        if ($request->filled('municipio')) {
+            $query->where('municipio', 'ILIKE', '%' . $request->municipio . '%');
+        }
+
+        // Comercializadora/comprador
+        if ($request->filled('comercializadora')) {
+            $query->where('comprador', 'ILIKE', '%' . $request->comercializadora . '%');
+        }
+
+        // Cooperativa/razon social
+        if ($request->filled('cooperativa')) {
+            $query->where('razon_social', 'ILIKE', '%' . $request->cooperativa . '%');
+        }
+
+
+        if (
+            ($request->filled('mes_inicio') && !$request->filled('mes_fin')) ||
+            (!$request->filled('mes_inicio') && $request->filled('mes_fin')) ||
+            (!$request->filled('anio') && ($request->filled('mes_inicio') || $request->filled('mes_fin')))
+        ) {
+            return response()->json([
+                'draw' => intval($request->input('draw')),
+                'recordsTotal' => 0,
+                'recordsFiltered' => 0,
+                'data' => [],
+                'status' => 'error',
+                'message' => 'Debe seleccionar mes inicio, mes fin y año para aplicar el filtro de fecha'
+            ]);
+        }
+
+        if ($request->filled('mes_inicio') && $request->filled('mes_fin') && $request->filled('anio')) {
+            $query->whereBetween(DB::raw('EXTRACT(MONTH FROM fecha_emision)::int'), [
+                (int) $request->mes_inicio,
+                (int) $request->mes_fin
+            ])->where(DB::raw('EXTRACT(YEAR FROM fecha_emision)::int'), (int) $request->anio);
+        }
+
+        // Filtro final: solo los que tienen nro_formulario con valor (no null)
+        $query->whereNotNull('nro_formulario');
+
+        // Aquí aplicas paginación para DataTables
+        $total = $query->count(); // total antes de paginar
+
+        $formularios = $query
+            ->skip($request->input('start', 0))
+            ->take($request->input('length', 10))
+            ->get();
+
+        // Estructura correcta que espera DataTables
+        return response()->json([
+            'draw' => intval($request->input('draw')),
+            'recordsTotal' => $total,
+            'recordsFiltered' => $total,
+            'david' => $request->all(),
+            'status' => 'success',
+            'data' => $formularios
+        ]);
     }
 }

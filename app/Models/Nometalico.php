@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property $nombre
  * @property $simbolo
  * @property $alicuota
+ * @property $tipo_mercado
  * @property $users_id
  * @property $created_at
  * @property $updated_at
@@ -23,10 +24,11 @@ class Nometalico extends Model
 {
 
   static $rules = [
-    'nombre' => 'required|unique:nometalicos,nombre|max:20',
+    'nombre' => 'required|max:20',
     'simbolo' => 'required|max:20',
     'alicuota' => 'required',
     'estado' => 'required',
+    'tipo_mercado' => 'required'
   ];
 
 
@@ -37,7 +39,7 @@ class Nometalico extends Model
    *
    * @var array
    */
-  protected $fillable = ['nombre', 'simbolo', 'users_id', 'estado', 'alicuota'];
+  protected $fillable = ['nombre', 'simbolo', 'users_id', 'estado', 'alicuota', 'tipo_mercado'];
 
 
   /**

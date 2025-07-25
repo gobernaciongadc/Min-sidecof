@@ -56,6 +56,7 @@
                                                 tipo
                                             } = data;
 
+
                                             // Limpiar y cargar los datos en el segundo select
                                             var select2 = $('#select2-multiselect');
                                             select2.empty();
@@ -78,7 +79,7 @@
                     <!-- Campo multiselect de mineral -->
                     <div class="col-12 mt-3">
                         <div class="form-group">
-                            {{ Form::label('mineral', 'Seleccione los minerales de operación ') }}
+                            {{ Form::label('mineral', 'Seleccione los minerales de operación') }}
                             <span class="text-danger">*</span>
                             <select class="form-control" id="select2-multiselect" multiple style="width: 100%;">
                                 @if($opcion=='edit')

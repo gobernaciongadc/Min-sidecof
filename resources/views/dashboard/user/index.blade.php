@@ -116,7 +116,7 @@ User
                                                 function confirmDelete(deleteUrl) {
                                                     Swal.fire({
                                                         title: '¿Estás seguro?',
-                                                        text: "¡Puedes revertir en la opción editar!",
+                                                        text: "¡Puedes revertir con el boton habilitar!",
                                                         icon: 'warning',
                                                         showCancelButton: true,
                                                         confirmButtonColor: '#3085d6',

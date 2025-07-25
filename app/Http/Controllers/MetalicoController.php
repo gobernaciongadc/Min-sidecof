@@ -147,20 +147,40 @@ class MetalicoController extends Controller
         $params = (object) $request->all(); // Devulve un obejto
         $paramsArray = $request->all(); // Devulve un Array
 
-        try {
-            $alicuota = Metalico::where('simbolo', $params->simbolo)
-                ->get();
-            $data = array(
-                'code' => 200,
-                'status' => 'success',
-                'alicuota' => $alicuota
-            );
-        } catch (Exception $e) {
-            $data = array(
-                'code' => 400,
-                'status' => 'error',
-                'error' => $e->getMessage()
-            );
+        if ($params->comercio == "externo") {
+            try {
+                $alicuota = Metalico::where('simbolo', $params->simbolo)
+                    ->where('tipo_mercado', 'Externo')
+                    ->get();
+                $data = array(
+                    'code' => 200,
+                    'status' => 'success',
+                    'alicuota' => $alicuota
+                );
+            } catch (Exception $e) {
+                $data = array(
+                    'code' => 400,
+                    'status' => 'error',
+                    'error' => $e->getMessage()
+                );
+            }
+        } else {
+            try {
+                $alicuota = Metalico::where('simbolo', $params->simbolo)
+                    ->where('tipo_mercado', 'Interno')
+                    ->get();
+                $data = array(
+                    'code' => 200,
+                    'status' => 'success',
+                    'alicuota' => $alicuota
+                );
+            } catch (Exception $e) {
+                $data = array(
+                    'code' => 400,
+                    'status' => 'error',
+                    'error' => $e->getMessage()
+                );
+            }
         }
         return response()->json($data);
     }

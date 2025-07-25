@@ -54,8 +54,10 @@ class FormularioController extends Controller
 
         // Pasando varias variables por un arreglo asociativo
         $formulario = new Formulario();
-        $metales = Metalico::all();
-        $nometales = Nometalico::all();
+        $metales = Metalico::where('estado', 'Habilitado')
+            ->where('tipo_mercado', 'Interno')->get();;
+        $nometales = Nometalico::where('estado', 'Habilitado')
+            ->where('tipo_mercado', 'Interno')->get();;
         $municipios = Municipio::all();
 
         $user = Auth::user(); // Accede al usuario autenticado
@@ -131,14 +133,22 @@ class FormularioController extends Controller
 
         if ($opcion == 'interno') {
             $comercios = 'Interno';
+            $metales = Metalico::where('estado', 'Habilitado')
+                ->where('tipo_mercado', 'Interno')->get();
+            $nometales = Nometalico::where('estado', 'Habilitado')
+                ->where('tipo_mercado', 'Interno')->get();
         } else {
             $comercios = 'Externo';
+
+            $metales = Metalico::where('estado', 'Habilitado')
+                ->where('tipo_mercado', 'Externo')->get();
+            $nometales = Nometalico::where('estado', 'Habilitado')
+                ->where('tipo_mercado', 'Externo')->get();
         }
 
         // Pasando varias variables por un arreglo asociativo
         $formulario = new Formulario();
-        $metales = Metalico::all();
-        $nometales = Nometalico::all();
+
         $municipios = Municipio::all();
 
         $listMineros = Minero::where('user_active', 1)->get();
@@ -215,19 +225,9 @@ class FormularioController extends Controller
             $minero = Minero::where('id', $user->id_login)
                 ->first(); // Devuelve un objeto
         }
-        // else {
-        //     $empresa = json_decode(json_encode([
-        //         'nombres' => '',
-        //         'ruim' => '',
-        //         'nro_nit' => '',
-        //         'nro_nim' => '',
-        //         'municipio' => json_decode(json_encode([
-        //             'codigo' => '',
-        //             'municipio' => ''
-        //         ]))
-        //     ]));
-        // }
-        // dd($listMineros);
+
+        // dd($metales, $nometales);
+
         return view('dashboard/formulario.create', compact('formulario', 'metales', 'nometales', 'municipios', 'cantStaging', 'tipo', 'empresa', 'mensaje', 'alta', 'comercios', 'opcion', 'minero', 'nameBd', 'listMineros', 'municipiosCoincidentes'));
     }
 
@@ -317,9 +317,19 @@ class FormularioController extends Controller
         $alta = $user->estado;
         $nameBd = $user->name_bd;
 
+        $metales = Metalico::where('estado', 'Habilitado')
+            ->where('tipo_mercado', 'Interno')->get();
+        $nometales = Nometalico::where('estado', 'Habilitado')
+            ->where('tipo_mercado', 'Interno')->get();
+
         // Mensaje de caducidad a 5 dias del reistro del NIM
         $user = User::find($user->id);
         if ($user->name_bd == 'empresas') {
+
+            $metales = Metalico::where('estado', 'Habilitado')
+                ->where('tipo_mercado', 'Externo')->get();
+            $nometales = Nometalico::where('estado', 'Habilitado')
+                ->where('tipo_mercado', 'Externo')->get();
 
             $empresa = Empresa::find($user->id_login);
 
