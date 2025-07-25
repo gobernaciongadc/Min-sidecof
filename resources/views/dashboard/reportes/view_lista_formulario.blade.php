@@ -189,6 +189,7 @@ $cooperativas = $mineros->merge($empresas);
                         <hr>
                         <!-- FIN formulario de consulta -->
                         <div class="table-responsive--custom">
+                            <button id="exportExcel" class="btn btn-success mb-3">📥 Exportar a Excel</button>
                             <table class="table table-striped mt-4" id="gestion_buscar_1" style="width: 100%;">
                                 <thead class="thead border">
                                     <tr>
@@ -208,6 +209,7 @@ $cooperativas = $mineros->merge($empresas);
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
                                 </tbody>
                             </table>
                         </div>
@@ -223,6 +225,8 @@ $cooperativas = $mineros->merge($empresas);
     document.addEventListener("DOMContentLoaded", () => {
         $('#form-filtro').on('submit', function(e) {
             e.preventDefault();
+
+            localStorage.setItem('comercio', $('select[name="comercio"]').val());
 
             // Destruir DataTables anterior
             $('#gestion_buscar_1').DataTable().destroy();
@@ -330,6 +334,9 @@ $cooperativas = $mineros->merge($empresas);
                     status
                 } = json;
 
+                // console.log(data);
+
+
                 if (data.length === 0 && status === 'success') {
                     Toastify({
                         text: '❌ No se encontraron registros con los criterios seleccionados.',
@@ -370,6 +377,444 @@ $cooperativas = $mineros->merge($empresas);
                     }).showToast();
                 }
             });
+        });
+        document.getElementById('exportExcel').addEventListener('click', function() {
+            const table = $('#gestion_buscar_1').DataTable();
+
+            // 🔁 Todos los datos del DataTable (filtrados o no, según lo que quieras)
+            const data = table.rows({
+                search: 'applied'
+            }).data().toArray();
+
+            if (!data.length) {
+                Toastify({
+                    text: '❌ No hay datos para exportar.',
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    style: {
+                        background: "#dc3545",
+                        padding: "15px",
+                        borderRadius: "5px"
+                    }
+                }).showToast();
+                return;
+            }
+
+            const comercio = localStorage.getItem('comercio');
+            console.log(comercio);
+
+            switch (comercio) {
+                case 'Interno':
+                    // Definimos columnas y títulos personalizados RUIM
+                    const columns = [{
+                            key: 'nro_formulario',
+                            title: 'NRO.DE FORMULARIO'
+                        },
+                        {
+                            key: 'fecha_emision',
+                            title: 'FECHA DE EMISION'
+                        },
+                        {
+                            key: 'fecha_valides',
+                            title: 'FECHA DE VENCIMIENTO'
+                        },
+                        {
+                            key: 'razon_social',
+                            title: 'RAZON SOCIAL/NOMBRE COMPLETO'
+                        },
+                        {
+                            key: 'nro_nim',
+                            title: 'NÚMERO DE NIM'
+                        },
+                        {
+                            key: 'nro_nit',
+                            title: 'NIT'
+                        },
+                        {
+                            key: 'ruim',
+                            title: 'NRO. DE RUIM'
+                        },
+                        {
+                            key: 'tipo_min_metalico',
+                            title: 'TIPO DE MINERAL METÁLICO'
+                        },
+                        {
+                            key: 'tipo_min_nometalico',
+                            title: 'TIPO DE MINERAL NO METÁLICO'
+                        },
+                        {
+                            key: 'presentacion',
+                            title: 'PRESENTACIÓN'
+                        },
+                        {
+                            key: 'nro_lote',
+                            title: 'NRO. LOTE'
+                        },
+                        {
+                            key: 'ley',
+                            title: 'LEY'
+                        },
+                        {
+                            key: 'hum_merma',
+                            title: 'HUM-MERMA(%)'
+                        },
+                        {
+                            key: 'alicuota',
+                            title: 'ALICUOTA'
+                        },
+                        {
+                            key: 'peso_bruto_kg',
+                            title: 'PESO BRUTO'
+                        },
+                        {
+                            key: 'unidad',
+                            title: 'UNIDAD'
+                        },
+                        {
+                            key: 'tara_kg',
+                            title: 'TARA'
+                        },
+                        {
+                            key: 'peso_neto_kg',
+                            title: 'PESO NETO'
+                        },
+                        {
+                            key: 'municipio',
+                            title: 'MUNICIPIO PRODUCTOR'
+                        },
+                        {
+                            key: 'codigo',
+                            title: 'CODIGO MUNICIPIO'
+                        },
+                        {
+                            key: 'comprador',
+                            title: 'COMERCIALIZADORA'
+                        },
+                        {
+                            key: 'origen',
+                            title: 'ORIGEN'
+                        },
+                        {
+                            key: 'destino',
+                            title: 'DESTINO'
+                        },
+                        {
+                            key: 'transporte',
+                            title: 'TIPO DE TRANSPORTE'
+                        },
+                        {
+                            key: 'placa',
+                            title: 'PLACA'
+                        },
+                        {
+                            key: 'chofer',
+                            title: 'CONDUCTOR'
+                        },
+                        {
+                            key: 'observaciones',
+                            title: 'OBSERVACIONES'
+                        },
+                    ];
+
+                    // Construimos encabezados con títulos personalizados
+                    const headers = columns.map(col => col.title);
+
+                    // Construimos el contenido con el orden y keys que definiste
+                    const body = data.map(row => columns.map(col => row[col.key] ?? ''));
+
+                    const excelData = [headers, ...body];
+
+                    const worksheet = XLSX.utils.aoa_to_sheet(excelData);
+                    const workbook = XLSX.utils.book_new();
+                    XLSX.utils.book_append_sheet(workbook, worksheet, "DatosFiltrados");
+
+                    XLSX.writeFile(workbook, "Formularios_interno.xlsx");
+                    break;
+                case 'Externo':
+                    // Definimos columnas y títulos personalizados RUIM
+                    const columnsExt = [{
+                            key: 'nro_formulario',
+                            title: 'NRO.DE FORMULARIO'
+                        },
+                        {
+                            key: 'fecha_emision',
+                            title: 'FECHA DE EMISION'
+                        },
+                        {
+                            key: 'fecha_valides',
+                            title: 'FECHA DE VENCIMIENTO'
+                        },
+                        {
+                            key: 'razon_social',
+                            title: 'RAZON SOCIAL/NOMBRE COMPLETO'
+                        },
+                        {
+                            key: 'nro_nim',
+                            title: 'NÚMERO DE NIM'
+                        },
+                        {
+                            key: 'nro_nit',
+                            title: 'NIT'
+                        },
+                        {
+                            key: 'ruim',
+                            title: 'NRO. DE ROCMIN'
+                        },
+                        {
+                            key: 'nro_lote',
+                            title: 'NRO. LOTE'
+                        },
+                        {
+                            key: 'tara_kg',
+                            title: 'TARA'
+                        },
+                        {
+                            key: 'tipo_min_metalico',
+                            title: 'TIPO DE MINERAL METÁLICO'
+                        },
+                        {
+                            key: 'tipo_min_nometalico',
+                            title: 'TIPO DE MINERAL NO METÁLICO'
+                        },
+                        {
+                            key: 'humedad',
+                            title: 'HUMEDAD'
+                        },
+                        {
+                            key: 'presentacion',
+                            title: 'PRESENTACIÓN'
+                        },
+                        {
+                            key: 'hum_merma',
+                            title: 'HUM-MERMA(%)'
+                        },
+                        {
+                            key: 'alicuota',
+                            title: 'ALICUOTA'
+                        },
+                        {
+                            key: 'peso_neto_kg',
+                            title: 'PESO NETO'
+                        },
+                        {
+                            key: 'unidad',
+                            title: 'UNIDAD'
+                        },
+
+                        {
+                            key: 'peso_bruto_kg',
+                            title: 'PESO BRUTO'
+                        },
+
+                        {
+                            key: 'ley',
+                            title: 'LEY'
+                        },
+                        {
+                            key: 'municipio',
+                            title: 'MUNICIPIO PRODUCTOR'
+                        },
+                        {
+                            key: 'codigo',
+                            title: 'CODIGO MUNICIPIO'
+                        },
+                        {
+                            key: 'origen',
+                            title: 'ORIGEN DE EXPORTACIÓN'
+                        },
+                        {
+                            key: 'comprador',
+                            title: 'COMPRADOR'
+                        },
+                        {
+                            key: 'destino',
+                            title: 'DESTINO'
+                        },
+                        {
+                            key: 'aduana',
+                            title: 'ADUANA'
+                        },
+                        {
+                            key: 'transporte',
+                            title: 'TIPO DE TRANSPORTE'
+                        },
+                        {
+                            key: 'placa',
+                            title: 'PLACA'
+                        },
+                        {
+                            key: 'chofer',
+                            title: 'CONDUCTOR'
+                        },
+                        {
+                            key: 'senarecom',
+                            title: 'NRO. DE FORMULARIO M-03 SENARECOM'
+                        },
+                        {
+                            key: 'observaciones',
+                            title: 'OBSERVACIONES'
+                        },
+                    ];
+
+                    // Construimos encabezados con títulos personalizados
+                    const headersExt = columnsExt.map(col => col.title);
+
+                    // Construimos el contenido con el orden y keys que definiste
+                    const bodyExt = data.map(row => columnsExt.map(col => row[col.key] ?? ''));
+
+                    const excelDataExt = [headersExt, ...bodyExt];
+
+                    const worksheetExt = XLSX.utils.aoa_to_sheet(excelDataExt);
+                    const workbookExt = XLSX.utils.book_new();
+                    XLSX.utils.book_append_sheet(workbookExt, worksheetExt, "DatosFiltrados");
+
+                    XLSX.writeFile(workbookExt, "Formularios_externo.xlsx");
+                    break;
+                case '':
+                    // Definimos columnas y títulos personalizados RUIM
+                    const columnsTodos = [{
+                            key: 'nro_formulario',
+                            title: 'NRO.DE FORMULARIO'
+                        },
+                        {
+                            key: 'fecha_emision',
+                            title: 'FECHA DE EMISION'
+                        },
+                        {
+                            key: 'fecha_valides',
+                            title: 'FECHA DE VENCIMIENTO'
+                        },
+                        {
+                            key: 'razon_social',
+                            title: 'RAZON SOCIAL/NOMBRE COMPLETO'
+                        },
+                        {
+                            key: 'nro_nim',
+                            title: 'NÚMERO DE NIM'
+                        },
+                        {
+                            key: 'nro_nit',
+                            title: 'NIT'
+                        },
+                        {
+                            key: 'ruim',
+                            title: 'NRO. DE ROCMIN/RUIM'
+                        },
+                        {
+                            key: 'nro_lote',
+                            title: 'NRO. LOTE'
+                        },
+                        {
+                            key: 'tara_kg',
+                            title: 'TARA'
+                        },
+                        {
+                            key: 'tipo_min_metalico',
+                            title: 'TIPO DE MINERAL METÁLICO'
+                        },
+                        {
+                            key: 'tipo_min_nometalico',
+                            title: 'TIPO DE MINERAL NO METÁLICO'
+                        },
+                        {
+                            key: 'humedad',
+                            title: 'HUMEDAD'
+                        },
+                        {
+                            key: 'presentacion',
+                            title: 'PRESENTACIÓN'
+                        },
+                        {
+                            key: 'hum_merma',
+                            title: 'HUM-MERMA(%)'
+                        },
+                        {
+                            key: 'alicuota',
+                            title: 'ALICUOTA'
+                        },
+                        {
+                            key: 'peso_neto_kg',
+                            title: 'PESO NETO'
+                        },
+                        {
+                            key: 'unidad',
+                            title: 'UNIDAD'
+                        },
+
+                        {
+                            key: 'peso_bruto_kg',
+                            title: 'PESO BRUTO'
+                        },
+
+                        {
+                            key: 'ley',
+                            title: 'LEY'
+                        },
+                        {
+                            key: 'municipio',
+                            title: 'MUNICIPIO PRODUCTOR'
+                        },
+                        {
+                            key: 'codigo',
+                            title: 'CODIGO MUNICIPIO'
+                        },
+                        {
+                            key: 'origen',
+                            title: 'ORIGEN DE EXPORTACIÓN'
+                        },
+                        {
+                            key: 'comprador',
+                            title: 'COMPRADOR'
+                        },
+                        {
+                            key: 'destino',
+                            title: 'DESTINO'
+                        },
+                        {
+                            key: 'aduana',
+                            title: 'ADUANA'
+                        },
+                        {
+                            key: 'transporte',
+                            title: 'TIPO DE TRANSPORTE'
+                        },
+                        {
+                            key: 'placa',
+                            title: 'PLACA'
+                        },
+                        {
+                            key: 'chofer',
+                            title: 'CONDUCTOR'
+                        },
+                        {
+                            key: 'senarecom',
+                            title: 'NRO. DE FORMULARIO M-03 SENARECOM'
+                        },
+                        {
+                            key: 'observaciones',
+                            title: 'OBSERVACIONES'
+                        },
+                    ];
+
+                    // Construimos encabezados con títulos personalizados
+                    const headersTodos = columnsTodos.map(col => col.title);
+
+                    // Construimos el contenido con el orden y keys que definiste
+                    const bodyTodos = data.map(row => columnsTodos.map(col => row[col.key] ?? ''));
+
+                    const excelDataTodos = [headersTodos, ...bodyTodos];
+
+                    const worksheetTodos = XLSX.utils.aoa_to_sheet(excelDataTodos);
+                    const workbookTodos = XLSX.utils.book_new();
+                    XLSX.utils.book_append_sheet(workbookTodos, worksheetTodos, "DatosFiltrados");
+
+                    XLSX.writeFile(workbookTodos, "Formularios_todos.xlsx");
+                    break;
+
+                default:
+                    break;
+            }
         });
     });
 </script>
