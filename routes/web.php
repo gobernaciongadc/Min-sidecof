@@ -32,8 +32,13 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
-Auth::routes();
 
+// En routes/web.php
+Auth::routes(['register' => false, 'reset' => false, 'logout' => true]);
+
+Route::get('/logout', function () {
+    return redirect('/')->with('error', 'Debes cerrar sesión desde el botón de logout.');
+});
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::group(['middleware' => ['auth']], function () {
